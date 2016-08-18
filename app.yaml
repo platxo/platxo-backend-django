@@ -12,6 +12,9 @@ handlers:
 - url: /.*
   script: platxo.wsgi.application
 
+includes:
+- static.yaml
+
 skip_files:
 - manage.py
 - requirements.txt

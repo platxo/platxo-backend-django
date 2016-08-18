@@ -1,0 +1,33 @@
+handlers:
+- url: /static/img
+  static_dir: static/img
+
+- url: /static/js
+  static_dir: static/js
+
+- url: /static/css
+  static_dir: static/css
+
+- url: /static/fonts
+  static_dir: static/fonts
+
+- url: /static/admin/css
+  static_dir: lib/django/contrib/admin/static/admin/css
+
+- url: /static/admin/js
+  static_dir: lib/django/contrib/admin/static/admin/js
+
+- url: /static/admin/img
+  static_dir: lib/django/contrib/admin/static/admin/img
+
+- url: /static/admin/fonts
+  static_dir: lib/django/contrib/admin/static/admin/fonts
+
+- url: /static/rest_framework/css
+  static_dir: lib/rest_framework/static/rest_framework/css
+
+- url: /static/rest_framework/js
+  static_dir: lib/rest_framework/static/rest_framework/js
+
+- url: /static/rest_framework/img
+  static_dir: lib/rest_framework/static/rest_framework/img
