@@ -6,11 +6,11 @@ from .models import Product
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'stock', 'category', 'type', 'name', 'price', 'quantity', 'picture', 'url')
+        fields = ('id', 'name', 'price', 'quantity', 'url')
 
 
 # Viewsets
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
-    serializers_class = ProductSerializer
+    serializer_class = ProductSerializer
