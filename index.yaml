@@ -45,3 +45,5 @@ indexes:
   - name: category_id
   - name: created
     direction: desc
+
+
