@@ -30,7 +30,7 @@ router.register(r'service_categories', ServiceCategoryViewSet)
 router.register(r'service_types', ServiceTypeViewSet)
 router.register(r'services', ServiceViewSet)
 router.register(r'sales', SaleViewSet)
-router.register(r'purchase', PurchaseViewSet)
+router.register(r'purchases', PurchaseViewSet)
 router.register(r'contact', ContactViewSet)
 
 urlpatterns = [
