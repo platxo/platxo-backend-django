@@ -1,20 +1,20 @@
 from rest_framework import serializers, viewsets
-from .models import Service, Category, Type
+from .models import Service, ServiceCategory, ServiceType
 
 # Serializers
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
+class ServiceCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Category
+        model = ServiceCategory
         fields = ('id', 'name', 'created', 'updated', 'url')
 
 
-class TypeSerializer(serializers.HyperlinkedModelSerializer):
+class ServiceTypeSerializer(serializers.HyperlinkedModelSerializer):
     #category = serializers.HyperlinkedIdentityField(view_name='category-detail')
 
     class Meta:
-        model = Type
-        fields = ('id', 'category', 'name', 'created', 'updated', 'url')
+        model = ServiceType
+        fields = ('id', 'service_category', 'name', 'created', 'updated', 'url')
 
 
 class ServiceSerializer(serializers.HyperlinkedModelSerializer):
@@ -22,19 +22,19 @@ class ServiceSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Service
-        fields = ('id', 'category', 'type', 'name', 'description', 'supplier', 'price', 'image', 'picture', 'created', 'updated', 'url')
+        fields = ('id', 'service_category', 'service_type', 'name', 'description', 'supplier', 'price', 'image', 'picture', 'created', 'updated', 'url')
 
 
 # Viewsets
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class ServiceCategoryViewSet(viewsets.ModelViewSet):
+    queryset = ServiceCategory.objects.all()
+    serializer_class = ServiceCategorySerializer
 
 
-class TypeViewSet(viewsets.ModelViewSet):
-    queryset = Type.objects.all()
-    serializer_class = TypeSerializer
+class ServiceTypeViewSet(viewsets.ModelViewSet):
+    queryset = ServiceType.objects.all()
+    serializer_class = ServiceTypeSerializer
 
 
 class ServiceViewSet(viewsets.ModelViewSet):

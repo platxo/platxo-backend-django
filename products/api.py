@@ -1,20 +1,20 @@
 from rest_framework import serializers, viewsets
-from .models import Product, Category, Type
+from .models import Product, ProductCategory, ProductType
 
 # Serializers
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
+class ProductCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Category
+        model = ProductCategory
         fields = ('id', 'name', 'created', 'updated', 'url')
 
 
-class TypeSerializer(serializers.HyperlinkedModelSerializer):
+class ProductTypeSerializer(serializers.HyperlinkedModelSerializer):
     #category = serializers.HyperlinkedIdentityField(view_name='category-detail')
 
     class Meta:
-        model = Type
-        fields = ('id', 'category', 'name', 'created', 'updated', 'url')
+        model = ProductType
+        fields = ('id', 'product_category', 'name', 'created', 'updated', 'url')
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
@@ -22,19 +22,19 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'category', 'type', 'name', 'description', 'supplier', 'location', 'price', 'quantity', 'stock', 'image', 'picture', 'created', 'updated', 'url')
+        fields = ('id', 'product_category', 'product_type', 'name', 'description', 'supplier', 'location', 'price', 'quantity', 'stock', 'image', 'picture', 'created', 'updated', 'url')
 
 
 # Viewsets
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class ProductCategoryViewSet(viewsets.ModelViewSet):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
 
 
-class TypeViewSet(viewsets.ModelViewSet):
-    queryset = Type.objects.all()
-    serializer_class = TypeSerializer
+class ProductTypeViewSet(viewsets.ModelViewSet):
+    queryset = ProductType.objects.all()
+    serializer_class = ProductTypeSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):

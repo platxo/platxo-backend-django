@@ -16,14 +16,18 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
-from products.api import CategoryViewSet, TypeViewSet, ProductViewSet
-from services.api import CategoryViewSet, TypeViewSet, ServiceViewSet
+from products.api import ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet
+from services.api import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
+from sales.api import SaleViewSet
 
 router = routers.DefaultRouter()
-router.register(r'categories', CategoryViewSet)
-router.register(r'types', TypeViewSet)
+router.register(r'product_categories', ProductCategoryViewSet)
+router.register(r'product_types', ProductTypeViewSet)
 router.register(r'products', ProductViewSet)
+router.register(r'service_categories', ServiceCategoryViewSet)
+router.register(r'service_types', ServiceTypeViewSet)
 router.register(r'services', ServiceViewSet)
+router.register(r'sales', SaleViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
