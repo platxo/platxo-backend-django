@@ -19,6 +19,8 @@ from rest_framework import routers
 from products.api import ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet
 from services.api import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
 from sales.api import SaleViewSet
+from purchases.api import PurchaseViewSet
+from contact.api import ContactViewSet
 
 router = routers.DefaultRouter()
 router.register(r'product_categories', ProductCategoryViewSet)
@@ -28,6 +30,8 @@ router.register(r'service_categories', ServiceCategoryViewSet)
 router.register(r'service_types', ServiceTypeViewSet)
 router.register(r'services', ServiceViewSet)
 router.register(r'sales', SaleViewSet)
+router.register(r'purchase', PurchaseViewSet)
+router.register(r'contact', ContactViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

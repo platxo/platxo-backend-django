@@ -12,38 +12,42 @@ indexes:
 
 - kind: products_product
   properties:
-  - name: category_id
+  - name: product_category_id
   - name: created
     direction: desc
 
 - kind: products_product
   properties:
-  - name: type_id
+  - name: product_type_id
   - name: created
     direction: desc
 
-- kind: products_type
+- kind: products_producttype
   properties:
-  - name: category_id
+  - name: product_category_id
+  - name: created
+    direction: desc
+
+- kind: sales_sale
+  properties:
+  - name: product_id
   - name: created
     direction: desc
 
 - kind: services_service
   properties:
-  - name: category_id
+  - name: service_category_id
   - name: created
     direction: desc
 
 - kind: services_service
   properties:
-  - name: type_id
+  - name: service_type_id
   - name: created
     direction: desc
 
-- kind: services_type
+- kind: services_servicetype
   properties:
-  - name: category_id
+  - name: service_category_id
   - name: created
     direction: desc
-
-
