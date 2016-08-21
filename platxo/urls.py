@@ -21,6 +21,7 @@ from services.api import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceView
 from sales.api import SaleViewSet
 from purchases.api import PurchaseViewSet
 from contact.api import ContactViewSet
+from business.api import DataViewSet, InformationViewSet, KnowledgeViewSet
 
 router = routers.DefaultRouter()
 router.register(r'product_categories', ProductCategoryViewSet)
@@ -32,6 +33,9 @@ router.register(r'services', ServiceViewSet)
 router.register(r'sales', SaleViewSet)
 router.register(r'purchases', PurchaseViewSet)
 router.register(r'contact', ContactViewSet)
+router.register(r'datas', DataViewSet)
+router.register(r'informations', InformationViewSet)
+router.register(r'knowledges', KnowledgeViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

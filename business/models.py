@@ -1,5 +1,55 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from djangae import fields
 
-# Create your models here.
+from products.models import *
+from services.models import *
+from sales.models import *
+from purchases.models import *
+from contact.models import *
+from customers.models import *
+
+
+class Data(models.Model):
+    name = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'data'
+        verbose_name_plural = 'datas'
+
+    def __str__(self):
+        return self.name
+
+
+class Information(models.Model):
+    name = models.CharField(max_length=255)
+    datas = fields.RelatedSetField(Data)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'information'
+        verbose_name_plural = 'informations'
+
+    def __str__(self):
+        return self.name
+
+
+class Knowledge(models.Model):
+    name = models.CharField(max_length=255)
+    informations = fields.RelatedSetField(Information)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'knowledge'
+        verbose_name_plural = 'knowledges'
+
+    def __str__(self):
+        return self.name
