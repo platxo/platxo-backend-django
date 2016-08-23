@@ -1,11 +1,15 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from djangae import fields
 from products.models import Product
+from services.models import Service
+
 
 class Sale(models.Model):
     customer = models.CharField(max_length=255)
-    product = models.ForeignKey(Product, related_name='products')
+    products = fields.RelatedSetField(Product)
+    services = fields.RelatedSetField(Service)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
