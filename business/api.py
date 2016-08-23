@@ -8,12 +8,14 @@ class DataSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Data
         fields = ('id', 'name', 'created', 'updated', 'url')
-        
+
 
 class InformationSerializer(serializers.HyperlinkedModelSerializer):
-    datas = serializers.HyperlinkedRelatedField(many=True,
-                                                queryset=Data.objects.all(),
-                                                view_name='data-detail')
+    datas = serializers.HyperlinkedRelatedField(
+        many=True,
+        queryset=Data.objects.all(),
+        view_name='data-detail'
+    )
 
     class Meta:
         model = Information
@@ -21,9 +23,11 @@ class InformationSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class KnowledgeSerializer(serializers.HyperlinkedModelSerializer):
-    informations = serializers.HyperlinkedRelatedField(many=True,
-                                                       queryset=Information.objects.all(),
-                                                       view_name='information-detail')
+    informations = serializers.HyperlinkedRelatedField(
+        many=True,
+        queryset=Information.objects.all(),
+        view_name='information-detail'
+    )
 
     class Meta:
         model = Knowledge

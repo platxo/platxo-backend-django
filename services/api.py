@@ -4,13 +4,13 @@ from .models import Service, ServiceCategory, ServiceType
 # Serializers
 
 class ServiceCategorySerializer(serializers.HyperlinkedModelSerializer):
+    
     class Meta:
         model = ServiceCategory
         fields = ('id', 'name', 'created', 'updated', 'url')
 
 
 class ServiceTypeSerializer(serializers.HyperlinkedModelSerializer):
-    #category = serializers.HyperlinkedIdentityField(view_name='category-detail')
 
     class Meta:
         model = ServiceType
@@ -18,7 +18,6 @@ class ServiceTypeSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ServiceSerializer(serializers.HyperlinkedModelSerializer):
-
 
     class Meta:
         model = Service

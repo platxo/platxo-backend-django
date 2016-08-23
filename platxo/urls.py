@@ -24,11 +24,11 @@ from contact.api import ContactViewSet
 from business.api import DataViewSet, InformationViewSet, KnowledgeViewSet
 
 router = routers.DefaultRouter()
-router.register(r'product_categories', ProductCategoryViewSet)
-router.register(r'product_types', ProductTypeViewSet)
+router.register(r'product-categories', ProductCategoryViewSet)
+router.register(r'product-types', ProductTypeViewSet)
 router.register(r'products', ProductViewSet)
-router.register(r'service_categories', ServiceCategoryViewSet)
-router.register(r'service_types', ServiceTypeViewSet)
+router.register(r'service-categories', ServiceCategoryViewSet)
+router.register(r'service-types', ServiceTypeViewSet)
 router.register(r'services', ServiceViewSet)
 router.register(r'sales', SaleViewSet)
 router.register(r'purchases', PurchaseViewSet)

@@ -4,13 +4,13 @@ from .models import Product, ProductCategory, ProductType
 # Serializers
 
 class ProductCategorySerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = ProductCategory
         fields = ('id', 'name', 'created', 'updated', 'url')
 
 
 class ProductTypeSerializer(serializers.HyperlinkedModelSerializer):
-    #category = serializers.HyperlinkedIdentityField(view_name='category-detail')
 
     class Meta:
         model = ProductType
@@ -18,7 +18,6 @@ class ProductTypeSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
-
 
     class Meta:
         model = Product
