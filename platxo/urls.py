@@ -16,12 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
-from products.api import ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet
-from services.api import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
-from sales.api import SaleViewSet
-from purchases.api import PurchaseViewSet
-from contact.api import ContactViewSet
-from business.api import DataViewSet, InformationViewSet, KnowledgeViewSet
+from products.views import ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet
+from services.views import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
+from sales.views import SaleViewSet
+from purchases.views import PurchaseViewSet
+from contact.views import ContactViewSet
+from business.views import DataViewSet, InformationViewSet, KnowledgeViewSet
 
 router = routers.DefaultRouter()
 router.register(r'product-categories', ProductCategoryViewSet)

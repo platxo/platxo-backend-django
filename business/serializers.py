@@ -1,7 +1,7 @@
-from rest_framework import serializers, viewsets
+from rest_framework import serializers
+
 from .models import Data, Information, Knowledge
 
-# Serializers
 
 class DataSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -32,19 +32,3 @@ class KnowledgeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Knowledge
         fields = ('id', 'name', 'informations', 'created', 'updated', 'url')
-
-# Viewsets
-
-class DataViewSet(viewsets.ModelViewSet):
-    queryset = Data.objects.all()
-    serializer_class = DataSerializer
-
-
-class InformationViewSet(viewsets.ModelViewSet):
-    queryset = Information.objects.all()
-    serializer_class = InformationSerializer
-
-
-class KnowledgeViewSet(viewsets.ModelViewSet):
-    queryset = Knowledge.objects.all()
-    serializer_class = KnowledgeSerializer
