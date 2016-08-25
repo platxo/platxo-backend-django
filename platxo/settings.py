@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_jwt',
     'business.apps.BusinessConfig',
     'customers.apps.CustomersConfig',
     'products.apps.ProductsConfig',
@@ -121,52 +120,7 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# See: http://getblimp.github.io/django-rest-framework-jwt/#additional-settings
-JWT_AUTH = {
-    'JWT_SECRET_KEY': None, # TODO: Can put the django secret key
-    'JWT_ALGORITHM': 'HS256',
-    'JWT_VERIFY_EXPIRATION': True,
-    'JWT_LEEWAY': 1,
-    # 'JWT_DECODE_HANDLER': 'ecommerce.extensions.api.handlers.jwt_decode_handler',
-'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=900),
-}
-
-
-# DJANGO REST FRAMEWORK
-"""
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'edx_rest_framework_extensions.authentication.JwtAuthentication',
-        'ecommerce.extensions.api.authentication.BearerAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-    'DEFAULT_PAGINATION_CLASS': 'ecommerce.extensions.api.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20,
-    'DEFAULT_THROTTLE_CLASSES': (
-        'rest_framework.throttling.UserRateThrottle',
-    ),
-    'DEFAULT_THROTTLE_RATES': {
-        'user': '50/minute',
-    },
-}
-
-EDX_DRF_EXTENSIONS = {
-    'JWT_PAYLOAD_USER_ATTRIBUTE_MAPPING': {
-        'administrator': 'is_staff',
-        'email': 'email',
-        'full_name': 'full_name',
-        'tracking_context': 'tracking_context',
-    },
-}
-"""
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
-# TODO: Allow anonym user
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
 }
