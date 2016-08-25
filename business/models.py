@@ -3,13 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from djangae import fields
 
-from products.models import *
-from services.models import *
-from sales.models import *
-from purchases.models import *
-from contact.models import *
-from customers.models import *
-from accounts.models import *
+from accounts.models import Owner, Employed, Customer
 
 
 class Business(models.Model):
