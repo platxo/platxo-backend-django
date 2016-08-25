@@ -3,14 +3,6 @@ from __future__ import unicode_literals
 from django.db import models
 from djangae import fields
 
-from products.models import *
-from services.models import *
-from sales.models import *
-from purchases.models import *
-from contact.models import *
-from customers.models import *
-
-
 class Data(models.Model):
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
