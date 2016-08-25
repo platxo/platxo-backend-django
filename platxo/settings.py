@@ -161,7 +161,7 @@ EDX_DRF_EXTENSIONS = {
 """
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
 # TODO: Allow anonym user
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
