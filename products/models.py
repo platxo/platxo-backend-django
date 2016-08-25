@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+#from business.models import Business
+from accounts.models import Employed
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=255)
@@ -32,6 +34,8 @@ class ProductType(models.Model):
 
 
 class Product(models.Model):
+    #business = models.ForeignKey(Business, related_name='products')
+    employed = models.ForeignKey(Employed, related_name='products')
     product_category = models.ForeignKey(ProductCategory, related_name='products')
     product_type = models.ForeignKey(ProductType, related_name='products')
     name = models.CharField(max_length=255)

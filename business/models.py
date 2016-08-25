@@ -9,9 +9,28 @@ from sales.models import *
 from purchases.models import *
 from contact.models import *
 from customers.models import *
+from accounts.models import *
+
+
+class Business(models.Model):
+    name = models.CharField(max_length=255)
+    owner = models.ForeignKey(Owner, related_name='business')
+    employees = fields.RelatedSetField(Employed)
+    customers = fields.RelatedSetField(Customer)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'business'
+        verbose_name_plural = 'business'
+
+    def __str__(self):
+        return self.name
 
 
 class Data(models.Model):
+    business = models.ForeignKey(Business, related_name='products')
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
