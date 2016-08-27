@@ -2,6 +2,10 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+from business.models import Business
+from accounts.models import Employed
+
+
 class ServiceCategory(models.Model):
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -32,6 +36,8 @@ class ServiceType(models.Model):
 
 
 class Service(models.Model):
+    business = models.ForeignKey(Business, related_name='products')
+    employed = models.ForeignKey(Employed, related_name='services')
     service_category = models.ForeignKey(ServiceCategory, related_name='services')
     service_type = models.ForeignKey(ServiceType, related_name='services')
     name = models.CharField(max_length=255)

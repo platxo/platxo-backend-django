@@ -10,6 +10,12 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: django_admin_log
+  properties:
+  - name: user_id
+  - name: action_time
+    direction: desc
+
 - kind: products_product
   properties:
   - name: product_category_id
