@@ -8,9 +8,9 @@ from accounts.models import Owner, Employed, Customer
 
 class Business(models.Model):
     name = models.CharField(max_length=255)
-    owner = models.ForeignKey(Owner, related_name='business')
-    employees = fields.RelatedSetField(Employed)
-    customers = fields.RelatedSetField(Customer)
+    #owner = models.ForeignKey(Owner, related_name='business')
+    #employees = fields.RelatedSetField(Employed)
+    #customers = fields.RelatedSetField(Customer)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -24,7 +24,7 @@ class Business(models.Model):
 
 
 class Data(models.Model):
-    business = models.ForeignKey(Business, related_name='products')
+    #business = models.ForeignKey(Business, related_name='products')
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
