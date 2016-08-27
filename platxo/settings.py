@@ -123,8 +123,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        #'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+        #'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
@@ -133,7 +133,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-# JWT_AUTH = {
+JWT_AUTH = {
 #     'JWT_ENCODE_HANDLER':
 #     'rest_framework_jwt.utils.jwt_encode_handler',
 #
@@ -154,7 +154,7 @@ REST_FRAMEWORK = {
 #     'JWT_VERIFY': True,
 #     'JWT_VERIFY_EXPIRATION': True,
 #     'JWT_LEEWAY': 0,
-#     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3000),
 #     'JWT_AUDIENCE': None,
 #     'JWT_ISSUER': None,
 #
@@ -162,4 +162,4 @@ REST_FRAMEWORK = {
 #     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 #
 #     'JWT_AUTH_HEADER_PREFIX': 'JWT',
-# }
+}
