@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Platxo</title>
+    <link rel="stylesheet" href="static/css/index.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img class="logo" src="static/img/platxo_logo.jpg" alt="">
+    </div>
+
+    <div class="countdown">
+      <ul class="countdown">
+          <li>
+              <span class="days">00</span>
+              <p class="days_ref">days</p>
+          </li>
+          <li class="seperator">.</li>
+          <li>
+              <span class="hours">00</span>
+              <p class="hours_ref">hours</p>
+          </li>
+          <li class="seperator">:</li>
+          <li>
+              <span class="minutes">00</span>
+              <p class="minutes_ref">minutes</p>
+          </li>
+          <li class="seperator">:</li>
+          <li>
+              <span class="seconds">00</span>
+              <p class="seconds_ref">seconds</p>
+          </li>
+      </ul>
+
+      <div class="">
+        <h1>WE ARE WORKING</h1>
+        <h4>IN A SMART WAY TO MANAGE YOUR BUSINESS.</h4>
+      </div>
+      <div class=imput"">
+        <input type="mail" name="mail" value="your email">
+        <input type="button" name="name" value="send">
+      </div>
+    </div>
+
+    <div class="launch">
+      <img class="launch" src="static/img/platxo_launch.jpg" alt="">
+    </div>
+  </div>
+
+
+
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery.downCount.js"></script>
+
+    <script class="" type="text/javascript">
+        $('.countdown').downCount({
+            date: '10/15/2016 12:00:00',
+            offset: -5
+        }, function () {
+            alert('WOOT WOOT, done!');
+        });
+    </script>
+
+    <a href="https://github.com/sonnyt/downCount" class="btn">Fork Me</a>
+</body>
+</html>

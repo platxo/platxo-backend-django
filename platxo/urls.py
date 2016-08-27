@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib import admin
+from views import IndexView
 
 from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token
@@ -31,6 +32,7 @@ router.register(r'users', UserViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', IndexView.as_view(), name='index'),
     #url(r'^_ah/', include('djangae.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'api/', include(router.urls)),
