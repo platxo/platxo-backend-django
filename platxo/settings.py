@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -129,6 +129,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
 }
@@ -146,8 +147,8 @@ JWT_AUTH = {
 #     'JWT_PAYLOAD_GET_USER_ID_HANDLER':
 #     'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
 #
-#     'JWT_RESPONSE_PAYLOAD_HANDLER':
-#     'rest_framework_jwt.utils.jwt_response_payload_handler',
+     'JWT_RESPONSE_PAYLOAD_HANDLER':
+     'rest_framework_jwt.utils.jwt_response_payload_handler',
 #
 #     'JWT_SECRET_KEY': settings.SECRET_KEY,
 #     'JWT_ALGORITHM': 'HS256',
