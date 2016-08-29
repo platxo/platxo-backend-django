@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from djangae import fields
 
+from django.contrib.auth.models import User
 from accounts.models import Owner, Employed, Customer
 
 
@@ -24,6 +25,7 @@ class Business(models.Model):
 
 class Data(models.Model):
     #business = models.ForeignKey(Business, related_name='products')
+    user = models.ForeignKey(User, related_name='datas')
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)

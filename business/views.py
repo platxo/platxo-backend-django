@@ -8,6 +8,9 @@ class DataViewSet(viewsets.ModelViewSet):
     queryset = Data.objects.all()
     serializer_class = DataSerializer
 
+    def get_queryset(self):
+        return self.request.user.datas.all()
+
 
 class InformationViewSet(viewsets.ModelViewSet):
     queryset = Information.objects.all()

@@ -7,7 +7,7 @@ class DataSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Data
-        fields = ('id', 'name', 'created', 'updated', 'url')
+        fields = ('id', 'user', 'name', 'created', 'updated', 'url')
 
 
 class InformationSerializer(serializers.HyperlinkedModelSerializer):

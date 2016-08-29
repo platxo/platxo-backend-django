@@ -57,3 +57,15 @@ indexes:
   - name: service_category_id
   - name: created
     direction: desc
+#test relation
+- kind: business_data
+  properties:
+  - name: user_id
+  - name: created
+    direction: desc
+#test relation
+- kind: products_product
+  properties:
+  - name: user_id
+  - name: created
+    direction: desc
