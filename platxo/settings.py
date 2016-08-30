@@ -1,3 +1,4 @@
+from djangae.settings_base import *
 import datetime
 import os
 
@@ -21,6 +22,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'djangae',
+    'djangae.contrib.security',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+    'djangae.contrib.security.middleware.AppEngineSecurityMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',

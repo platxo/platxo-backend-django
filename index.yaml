@@ -10,6 +10,24 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: business_data
+  properties:
+  - name: user_id
+  - name: created
+    direction: desc
+
+- kind: business_information
+  properties:
+  - name: user_id
+  - name: created
+    direction: desc
+
+- kind: business_knowledge
+  properties:
+  - name: user_id
+  - name: created
+    direction: desc
+
 - kind: django_admin_log
   properties:
   - name: user_id
@@ -25,6 +43,12 @@ indexes:
 - kind: products_product
   properties:
   - name: product_type_id
+  - name: created
+    direction: desc
+
+- kind: products_product
+  properties:
+  - name: user_id
   - name: created
     direction: desc
 
@@ -55,17 +79,5 @@ indexes:
 - kind: services_servicetype
   properties:
   - name: service_category_id
-  - name: created
-    direction: desc
-#test relation
-- kind: business_data
-  properties:
-  - name: user_id
-  - name: created
-    direction: desc
-#test relation
-- kind: products_product
-  properties:
-  - name: user_id
   - name: created
     direction: desc

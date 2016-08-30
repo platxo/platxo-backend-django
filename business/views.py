@@ -16,7 +16,13 @@ class InformationViewSet(viewsets.ModelViewSet):
     queryset = Information.objects.all()
     serializer_class = InformationSerializer
 
+    def get_queryset(self):
+        return self.request.user.informations.all()
+
 
 class KnowledgeViewSet(viewsets.ModelViewSet):
     queryset = Knowledge.objects.all()
     serializer_class = KnowledgeSerializer
+
+    def get_queryset(self):
+        return self.request.user.knowledges.all()

@@ -19,7 +19,7 @@ class InformationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Information
-        fields = ('id', 'name', 'datas', 'created', 'updated', 'url')
+        fields = ('id', 'user', 'name', 'datas', 'created', 'updated', 'url')
 
 
 class KnowledgeSerializer(serializers.HyperlinkedModelSerializer):
@@ -31,4 +31,4 @@ class KnowledgeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Knowledge
-        fields = ('id', 'name', 'informations', 'created', 'updated', 'url')
+        fields = ('id', 'user', 'name', 'informations', 'created', 'updated', 'url')

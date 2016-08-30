@@ -40,6 +40,7 @@ class Data(models.Model):
 
 
 class Information(models.Model):
+    user = models.ForeignKey(User, related_name='informations')
     name = models.CharField(max_length=255)
     datas = fields.RelatedSetField(Data)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -55,6 +56,7 @@ class Information(models.Model):
 
 
 class Knowledge(models.Model):
+    user = models.ForeignKey(User, related_name='knowledges')
     name = models.CharField(max_length=255)
     informations = fields.RelatedSetField(Information)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
