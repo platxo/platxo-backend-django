@@ -18,3 +18,15 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+def jwt_response_payload_handler(token, user=None, request=None):
+    """
+    Returns the response data for both the login and refresh views.
+    Override to return a custom response such as including the
+    serialized representation of the User.
+    """
+    return {
+        'token': token,
+        'user': UserSerializer(user, context={'request': request},).data
+    }

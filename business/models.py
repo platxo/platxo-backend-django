@@ -4,7 +4,6 @@ from django.db import models
 from djangae import fields
 
 from django.contrib.auth.models import User
-from djangae.contrib.gauth.datastore.models import GaeDatastoreUser
 from accounts.models import Owner, Employed, Customer
 
 TAGS_CHOICES = (
@@ -19,9 +18,10 @@ TAGS_CHOICES = (
 
 
 class Business(models.Model):
+    user = models.ForeignKey(User, related_name='business')
     name = models.CharField(max_length=255)
     #owner = models.ForeignKey(Owner, related_name='business')
-    #employees = fields.RelatedSetField(Employed)
+    #employees = models.ForeignKey(Employed, related_name='business')
     #customers = fields.RelatedSetField(Customer)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -36,8 +36,8 @@ class Business(models.Model):
 
 
 class Data(models.Model):
-    #business = models.ForeignKey(Business, related_name='products')
-    user = models.ForeignKey(GaeDatastoreUser, related_name='datas')
+    #business = models.ForeignKey(Business, related_name='datas')
+    user = models.ForeignKey(User, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -53,7 +53,8 @@ class Data(models.Model):
 
 
 class Information(models.Model):
-    user = models.ForeignKey(GaeDatastoreUser, related_name='informations')
+    #business = models.ForeignKey(Business, related_name='informations')
+    user = models.ForeignKey(User, related_name='informations')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     datas = fields.RelatedSetField(Data)
@@ -70,7 +71,8 @@ class Information(models.Model):
 
 
 class Knowledge(models.Model):
-    user = models.ForeignKey(GaeDatastoreUser, related_name='knowledges')
+    #business = models.ForeignKey(Business, related_name='knowledges')
+    user = models.ForeignKey(User, related_name='knowledges')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     informations = fields.RelatedSetField(Information)
