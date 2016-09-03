@@ -38,9 +38,8 @@ class ProductType(models.Model):
 
 
 class Product(models.Model):
-    #business = models.ForeignKey(Business, related_name='products')
-    #employed = models.ForeignKey(Employed, related_name='products')
-    user = models.ForeignKey(User, related_name='products')
+    business = models.ForeignKey(Business, related_name='products')
+    employed = models.ForeignKey(Employed, related_name='products')
     product_category = models.ForeignKey(ProductCategory, related_name='products')
     product_type = models.ForeignKey(ProductType, related_name='products')
     name = models.CharField(max_length=255)

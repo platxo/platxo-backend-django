@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from .models import Data, Information, Knowledge
-from .serializers import DataSerializer, InformationSerializer, KnowledgeSerializer
+from .models import Business, Data, Information, Knowledge
+from .serializers import BusinessSerializer, DataSerializer, InformationSerializer, KnowledgeSerializer
+
+class BusinessViewSet(viewsets.ModelViewSet):
+    queryset = Business.objects.all()
+    serializer_class = BusinessSerializer
+
 
 class DataViewSet(viewsets.ModelViewSet):
     queryset = Data.objects.all()

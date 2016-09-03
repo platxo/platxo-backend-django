@@ -19,6 +19,9 @@ class Owner(models.Model):
         verbose_name = "owner"
         verbose_name_plural = "owners"
 
+    def __str__(self):
+        return self.user.username
+
     @receiver(post_save, sender=User)
     def create_owner(sender, instance, created, **kwargs):
         if created and instance.is_owner == True:
@@ -42,6 +45,9 @@ class Employed(models.Model):
         verbose_name = "employed"
         verbose_name_plural = "employees"
 
+    def __str__(self):
+        return self.user.username
+
     @receiver(post_save, sender=User)
     def create_employed(sender, instance, created, **kwargs):
         if created and instance.is_employed == True:
@@ -64,6 +70,9 @@ class Customer(models.Model):
     class meta:
         verbose_name = "customer"
         verbose_name_plural = "customers"
+
+    def __str__(self):
+        return self.user.username
 
     @receiver(post_save, sender=User)
     def create_customer(sender, instance, created, **kwargs):

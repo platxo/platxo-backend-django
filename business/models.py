@@ -18,10 +18,9 @@ TAGS_CHOICES = (
 
 
 class Business(models.Model):
-    user = models.ForeignKey(User, related_name='business')
+    owner = models.ForeignKey(Owner, related_name='business')
     name = models.CharField(max_length=255)
-    #owner = models.ForeignKey(Owner, related_name='business')
-    #employees = models.ForeignKey(Employed, related_name='business')
+    employees = models.ForeignKey(Employed, related_name='business')
     #customers = fields.RelatedSetField(Customer)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)

@@ -1,6 +1,14 @@
 from rest_framework import serializers
 
-from .models import Data, Information, Knowledge, TAGS_CHOICES
+from .models import Business, Data, Information, Knowledge, TAGS_CHOICES
+from accounts.models import Owner
+
+
+class BusinessSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Business
+        fields = ('id', 'owner', 'name', 'employees', 'created', 'updated', 'url')
 
 
 class DataSerializer(serializers.HyperlinkedModelSerializer):
