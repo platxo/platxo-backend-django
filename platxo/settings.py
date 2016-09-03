@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_jwt',
     'corsheaders',
+    'users.apps.UsersConfig',
+    'accounts.apps.AccountsConfig',
     'business.apps.BusinessConfig',
     'customers.apps.CustomersConfig',
     'products.apps.ProductsConfig',
@@ -40,7 +42,6 @@ INSTALLED_APPS = [
     'sales.apps.SalesConfig',
     'purchases.apps.PurchasesConfig',
     'contact.apps.ContactConfig',
-    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -126,6 +127,8 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+AUTH_USER_MODEL = 'users.User'
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -153,7 +156,7 @@ JWT_AUTH = {
 #     'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
 #
      'JWT_RESPONSE_PAYLOAD_HANDLER':
-     'accounts.serializers.jwt_response_payload_handler',
+     'users.serializers.jwt_response_payload_handler',
 #
 #     'JWT_SECRET_KEY': settings.SECRET_KEY,
 #     'JWT_ALGORITHM': 'HS256',

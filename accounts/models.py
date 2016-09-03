@@ -1,36 +1,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from djangae.contrib.gauth.datastore.models import GaeAbstractDatastoreUser
+from users.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
-
-class User(GaeAbstractDatastoreUser):
-    is_owner = models.BooleanField(default=False)
-    is_employed = models.BooleanField(default=False)
-    is_customer = models.BooleanField(default=False)
-
-    def get_owner_profile(self):
-        owner_profile = None
-        if hasattr(self, 'ownerprofile'):
-            owner_profile = self.ownerprofile
-        return owner_profile
-
-    def get_employed_profile(self):
-        employed_profile = None
-        if hasattr(self, 'employedprofile'):
-            employed_profile = self.employedprofile
-        return employed_profile
-
-    def get_customer_profile(self):
-        customer_profile = None
-        if hasattr(self, 'customerprofile'):
-            customer_profile = self.customerprofile
-        return customer_profile
-
-    class Meta:
-        db_table = 'auth_user'
 
 
 class Owner(models.Model):
@@ -48,7 +21,7 @@ class Owner(models.Model):
 
     @receiver(post_save, sender=User)
     def create_owner(sender, instance, created, **kwargs):
-        if created:
+        if created and instance.is_owner == True:
             owner, new = Owner.objects.get_or_create(user=instance,
                                                      first_name=instance.first_name,
                                                      last_name=instance.last_name,
@@ -71,7 +44,7 @@ class Employed(models.Model):
 
     @receiver(post_save, sender=User)
     def create_employed(sender, instance, created, **kwargs):
-        if created:
+        if created and instance.is_employed == True:
             employed, new = Employed.objects.get_or_create(user=instance,
                                                            first_name=instance.first_name,
                                                            last_name=instance.last_name,
@@ -94,7 +67,7 @@ class Customer(models.Model):
 
     @receiver(post_save, sender=User)
     def create_customer(sender, instance, created, **kwargs):
-        if created:
+        if created and instance.is_customer == True:
             customer, new = Customer.objects.get_or_create(user=instance,
                                                            first_name=instance.first_name,
                                                            last_name=instance.last_name,

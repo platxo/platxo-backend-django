@@ -13,7 +13,7 @@ from sales.views import SaleViewSet
 from purchases.views import PurchaseViewSet
 from contact.views import ContactViewSet
 from business.views import DataViewSet, InformationViewSet, KnowledgeViewSet
-from accounts.views import UserViewSet
+from users.views import UserViewSet
 
 router = routers.DefaultRouter()
 router.register(r'product-categories', ProductCategoryViewSet)
