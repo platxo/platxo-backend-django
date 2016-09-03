@@ -52,15 +52,45 @@ indexes:
   - name: created
     direction: desc
 
+- kind: products_productcategory
+  properties:
+  - name: user_id
+  - name: created
+    direction: desc
+
 - kind: products_producttype
   properties:
   - name: product_category_id
   - name: created
     direction: desc
 
+- kind: products_producttype
+  properties:
+  - name: user_id
+  - name: created
+    direction: desc
+
+- kind: sales_sale
+  properties:
+  - name: customer_id
+  - name: created
+    direction: desc
+
 - kind: sales_sale
   properties:
   - name: product_id
+  - name: created
+    direction: desc
+
+- kind: sales_sale
+  properties:
+  - name: user_id
+  - name: created
+    direction: desc
+
+- kind: services_service
+  properties:
+  - name: employed_id
   - name: created
     direction: desc
 

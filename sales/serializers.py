@@ -20,4 +20,4 @@ class SaleSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Sale
-        fields = ('id', 'customer', 'products', 'services', 'created', 'updated', 'url')
+        fields = ('id', 'user', 'products', 'services', 'total', 'created', 'updated', 'url')

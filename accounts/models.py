@@ -2,11 +2,12 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from djangae.contrib.gauth.datastore.models import GaeAbstractDatastoreUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-class User(AbstractUser):
+class PlatxoUser(GaeAbstractDatastoreUser):
     is_owner = models.BooleanField(default=False)
     is_employed = models.BooleanField(default=False)
     is_customer = models.BooleanField(default=False)
@@ -34,7 +35,7 @@ class User(AbstractUser):
 
 
 class Owner(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(PlatxoUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
@@ -46,7 +47,7 @@ class Owner(models.Model):
         verbose_name = "owner"
         verbose_name_plural = "owners"
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=PlatxoUser)
     def create_owner(sender, instance, created, **kwargs):
         if created:
             owner, new = Owner.objects.get_or_create(user=instance,
@@ -57,7 +58,7 @@ class Owner(models.Model):
 
 
 class Employed(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(PlatxoUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
@@ -69,7 +70,7 @@ class Employed(models.Model):
         verbose_name = "employed"
         verbose_name_plural = "employees"
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=PlatxoUser)
     def create_employed(sender, instance, created, **kwargs):
         if created:
             employed, new = Employed.objects.get_or_create(user=instance,
@@ -80,7 +81,7 @@ class Employed(models.Model):
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(PlatxoUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
@@ -92,7 +93,7 @@ class Customer(models.Model):
         verbose_name = "customer"
         verbose_name_plural = "customers"
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=PlatxoUser)
     def create_customer(sender, instance, created, **kwargs):
         if created:
             customer, new = Customer.objects.get_or_create(user=instance,

@@ -4,7 +4,18 @@ from django.db import models
 from djangae import fields
 
 from django.contrib.auth.models import User
+from djangae.contrib.gauth.datastore.models import GaeDatastoreUser
 from accounts.models import Owner, Employed, Customer
+
+TAGS_CHOICES = (
+('grey', 'Grey'),
+('red', 'Red'),
+('yellow', 'Yellow'),
+('blue', 'Blue'),
+('orange', 'Orange'),
+('green', 'Green'),
+('purple', 'Purple'),
+)
 
 
 class Business(models.Model):
@@ -23,10 +34,12 @@ class Business(models.Model):
     def __str__(self):
         return self.name
 
+
 class Data(models.Model):
     #business = models.ForeignKey(Business, related_name='products')
-    user = models.ForeignKey(User, related_name='datas')
+    user = models.ForeignKey(GaeDatastoreUser, related_name='datas')
     name = models.CharField(max_length=255)
+    tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -40,8 +53,9 @@ class Data(models.Model):
 
 
 class Information(models.Model):
-    user = models.ForeignKey(User, related_name='informations')
+    user = models.ForeignKey(GaeDatastoreUser, related_name='informations')
     name = models.CharField(max_length=255)
+    tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     datas = fields.RelatedSetField(Data)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -56,8 +70,9 @@ class Information(models.Model):
 
 
 class Knowledge(models.Model):
-    user = models.ForeignKey(User, related_name='knowledges')
+    user = models.ForeignKey(GaeDatastoreUser, related_name='knowledges')
     name = models.CharField(max_length=255)
+    tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     informations = fields.RelatedSetField(Information)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
