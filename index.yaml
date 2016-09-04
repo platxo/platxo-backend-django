@@ -10,6 +10,30 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: auth_group
+  properties:
+  - name: name
+  - name: __key__
+    direction: desc
+
+- kind: business_business
+  properties:
+  - name: employees_id
+  - name: created
+    direction: desc
+
+- kind: business_data
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: business_data
+  properties:
+  - name: employed_id
+  - name: created
+    direction: desc
+
 - kind: business_data
   properties:
   - name: user_id
@@ -18,7 +42,31 @@ indexes:
 
 - kind: business_information
   properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: business_information
+  properties:
+  - name: employed_id
+  - name: created
+    direction: desc
+
+- kind: business_information
+  properties:
   - name: user_id
+  - name: created
+    direction: desc
+
+- kind: business_knowledge
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: business_knowledge
+  properties:
+  - name: employed_id
   - name: created
     direction: desc
 
@@ -32,6 +80,18 @@ indexes:
   properties:
   - name: user_id
   - name: action_time
+    direction: desc
+
+- kind: products_product
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: products_product
+  properties:
+  - name: employed_id
+  - name: created
     direction: desc
 
 - kind: products_product
@@ -54,7 +114,31 @@ indexes:
 
 - kind: products_productcategory
   properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: products_productcategory
+  properties:
+  - name: employed_id
+  - name: created
+    direction: desc
+
+- kind: products_productcategory
+  properties:
   - name: user_id
+  - name: created
+    direction: desc
+
+- kind: products_producttype
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: products_producttype
+  properties:
+  - name: employed_id
   - name: created
     direction: desc
 
@@ -85,6 +169,12 @@ indexes:
 - kind: sales_sale
   properties:
   - name: user_id
+  - name: created
+    direction: desc
+
+- kind: services_service
+  properties:
+  - name: business_id
   - name: created
     direction: desc
 

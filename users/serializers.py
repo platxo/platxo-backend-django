@@ -3,6 +3,10 @@ from rest_framework import serializers
 from .models import User
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    is_owner = serializers.BooleanField(default=False)
+    is_employed = serializers.BooleanField(default=False)
+    is_customer = serializers.BooleanField(default=False)
+    is_supplier = serializers.BooleanField(default=False)
 
     class Meta:
         model = User
@@ -11,6 +15,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'is_owner',
                   'is_employed',
                   'is_customer',
+                  'is_supplier',
                   'first_name',
                   'last_name',
                   'username',
@@ -28,6 +33,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                     is_owner=validated_data['is_owner'],
                     is_employed=validated_data['is_employed'],
                     is_customer=validated_data['is_customer'],
+                    is_supplier=validated_data['is_supplier'],
         )
         user.set_password(validated_data['password'])
         user.save()

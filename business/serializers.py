@@ -1,14 +1,24 @@
 from rest_framework import serializers
 
 from .models import Business, Data, Information, Knowledge, TAGS_CHOICES
-from accounts.models import Owner
+from accounts.models import Owner, Employed, Customer
 
 
 class BusinessSerializer(serializers.HyperlinkedModelSerializer):
+    employees = serializers.HyperlinkedRelatedField(
+        many=True,
+        queryset=Employed.objects.all(),
+        view_name='employed-detail'
+    )
+    customers = serializers.HyperlinkedRelatedField(
+        many=True,
+        queryset=Customer.objects.all(),
+        view_name='customer-detail'
+    )
 
     class Meta:
         model = Business
-        fields = ('id', 'owner', 'name', 'employees', 'created', 'updated', 'url')
+        fields = ('id', 'owner', 'name', 'customers', 'employees', 'created', 'updated', 'url')
 
 
 class DataSerializer(serializers.HyperlinkedModelSerializer):
@@ -16,7 +26,7 @@ class DataSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Data
-        fields = ('id', 'user', 'name', 'tag', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employed', 'name', 'tag', 'created', 'updated', 'url')
 
 
 class InformationSerializer(serializers.HyperlinkedModelSerializer):
@@ -30,7 +40,7 @@ class InformationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Information
-        fields = ('id', 'user', 'name', 'tag', 'datas', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employed', 'name', 'tag', 'datas', 'created', 'updated', 'url')
 
 
 class KnowledgeSerializer(serializers.HyperlinkedModelSerializer):
@@ -43,4 +53,4 @@ class KnowledgeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Knowledge
-        fields = ('id', 'user', 'name', 'tag', 'informations', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employed', 'name', 'tag', 'informations', 'created', 'updated', 'url')

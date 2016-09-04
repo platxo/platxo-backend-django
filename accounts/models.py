@@ -1,17 +1,12 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from users.models import User
+from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-
 class Owner(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    email = models.EmailField(max_length=200)
-    active = models.BooleanField(default=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -22,22 +17,14 @@ class Owner(models.Model):
     def __str__(self):
         return self.user.username
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_owner(sender, instance, created, **kwargs):
-        if created and instance.is_owner == True:
-            owner, new = Owner.objects.get_or_create(user=instance,
-                                                     first_name=instance.first_name,
-                                                     last_name=instance.last_name,
-                                                     email=instance.email
-                                                    )
+        if created and instance.is_owner is True:
+            owner, new = Owner.objects.get_or_create(user=instance)
 
 
 class Employed(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    email = models.EmailField(max_length=200)
-    active = models.BooleanField(default=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -48,22 +35,14 @@ class Employed(models.Model):
     def __str__(self):
         return self.user.username
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_employed(sender, instance, created, **kwargs):
-        if created and instance.is_employed == True:
-            employed, new = Employed.objects.get_or_create(user=instance,
-                                                           first_name=instance.first_name,
-                                                           last_name=instance.last_name,
-                                                           email=instance.email
-                                                           )
+        if created and instance.is_employed is True:
+            employed, new = Employed.objects.get_or_create(user=instance)
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    email = models.EmailField(max_length=200)
-    active = models.BooleanField(default=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -74,11 +53,24 @@ class Customer(models.Model):
     def __str__(self):
         return self.user.username
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_customer(sender, instance, created, **kwargs):
-        if created and instance.is_customer == True:
-            customer, new = Customer.objects.get_or_create(user=instance,
-                                                           first_name=instance.first_name,
-                                                           last_name=instance.last_name,
-                                                           email=instance.email
-                                                           )
+        if created and instance.is_customer is True:
+            customer, new = Customer.objects.get_or_create(user=instance)
+
+class Supplier(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    class meta:
+        verbose_name = "supplier"
+        verbose_name_plural = "suppliers"
+
+    def __str__(self):
+        return self.user.username
+
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+    def create_customer(sender, instance, created, **kwargs):
+        if created and instance.is_supplier is True:
+            supplier, new = Supplier.objects.get_or_create(user=instance)

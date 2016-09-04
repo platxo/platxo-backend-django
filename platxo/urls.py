@@ -11,7 +11,7 @@ from products.views import ProductCategoryViewSet, ProductTypeViewSet, ProductVi
 from services.views import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
 from sales.views import SaleViewSet
 from purchases.views import PurchaseViewSet
-from contact.views import ContactViewSet
+from contacts.views import ContactViewSet
 from business.views import BusinessViewSet, DataViewSet, InformationViewSet, KnowledgeViewSet
 from users.views import UserViewSet
 from accounts.views import OwnerViewSet, EmployedViewSet, CustomerViewSet

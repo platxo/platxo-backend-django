@@ -24,6 +24,7 @@ class User(GaeAbstractDatastoreUser):
     is_owner = models.BooleanField(default=False)
     is_employed = models.BooleanField(default=False)
     is_customer = models.BooleanField(default=False)
+    is_supplier = models.BooleanField(default=False)
 
     def get_owner_profile(self):
         owner_profile = None
@@ -42,6 +43,12 @@ class User(GaeAbstractDatastoreUser):
         if hasattr(self, 'customerprofile'):
             customer_profile = self.customerprofile
         return customer_profile
+
+    def get_supplier_profile(self):
+        supplier_profile = None
+        if hasattr(self, 'supplierprofile'):
+            supplier_profile = self.supplierprofile
+        return supplier_profile
 
     class Meta:
         app_label = "users"

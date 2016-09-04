@@ -3,8 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from djangae import fields
 
-from django.contrib.auth.models import User
-from accounts.models import Owner, Employed, Customer
+from accounts.models import Owner, Employed, Customer, Supplier
 
 TAGS_CHOICES = (
 ('grey', 'Grey'),
@@ -18,10 +17,11 @@ TAGS_CHOICES = (
 
 
 class Business(models.Model):
-    owner = models.ForeignKey(Owner, related_name='business')
+    owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='business')
     name = models.CharField(max_length=255)
-    employees = models.ForeignKey(Employed, related_name='business')
-    #customers = fields.RelatedSetField(Customer)
+    employees = fields.RelatedSetField(Employed)
+    customers = fields.RelatedSetField(Customer)
+    suppliers = fields.RelatedSetField(Supplier)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -35,8 +35,7 @@ class Business(models.Model):
 
 
 class Data(models.Model):
-    #business = models.ForeignKey(Business, related_name='datas')
-    user = models.ForeignKey(User, related_name='datas')
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -52,8 +51,7 @@ class Data(models.Model):
 
 
 class Information(models.Model):
-    #business = models.ForeignKey(Business, related_name='informations')
-    user = models.ForeignKey(User, related_name='informations')
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='informations')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     datas = fields.RelatedSetField(Data)
@@ -70,8 +68,7 @@ class Information(models.Model):
 
 
 class Knowledge(models.Model):
-    #business = models.ForeignKey(Business, related_name='knowledges')
-    user = models.ForeignKey(User, related_name='knowledges')
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='knowledges')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     informations = fields.RelatedSetField(Information)

@@ -32,16 +32,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_jwt',
+    'django_filters',
     'corsheaders',
     'users.apps.UsersConfig',
     'accounts.apps.AccountsConfig',
     'business.apps.BusinessConfig',
     'customers.apps.CustomersConfig',
+    'suppliers.apps.SuppliersConfig',
     'products.apps.ProductsConfig',
     'services.apps.ServicesConfig',
     'sales.apps.SalesConfig',
     'purchases.apps.PurchasesConfig',
-    'contact.apps.ContactConfig',
+    'contacts.apps.ContactsConfig',
 ]
 
 MIDDLEWARE_CLASSES = [

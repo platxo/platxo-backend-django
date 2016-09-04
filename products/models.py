@@ -7,7 +7,8 @@ from accounts.models import Employed
 from django.contrib.auth.models import User
 
 class ProductCategory(models.Model):
-    user = models.ForeignKey(User, related_name='product_categories')
+    business = models.ForeignKey(Business, related_name='product_categories')
+    employed = models.ForeignKey(Employed, related_name='product_categories')
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -22,7 +23,8 @@ class ProductCategory(models.Model):
 
 
 class ProductType(models.Model):
-    user = models.ForeignKey(User, related_name='product_types')
+    business = models.ForeignKey(Business, related_name='product_types')
+    employed = models.ForeignKey(Employed, related_name='product_types')
     product_category = models.ForeignKey(ProductCategory, related_name='product_types')
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
