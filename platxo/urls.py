@@ -13,8 +13,8 @@ from sales.views import SaleViewSet
 from purchases.views import PurchaseViewSet
 from contacts.views import ContactViewSet
 from business.views import BusinessViewSet, DataViewSet, InformationViewSet, KnowledgeViewSet
-from users.views import UserViewSet
-from accounts.views import OwnerViewSet, EmployedViewSet, CustomerViewSet
+from users.views import UserViewSet, GroupViewSet
+from accounts.views import OwnerViewSet, EmployedViewSet, CustomerViewSet, SupplierViewSet
 
 router = routers.DefaultRouter()
 router.register(r'product-categories', ProductCategoryViewSet)
@@ -31,9 +31,11 @@ router.register(r'datas', DataViewSet)
 router.register(r'informations', InformationViewSet)
 router.register(r'knowledges', KnowledgeViewSet)
 router.register(r'users', UserViewSet)
+router.register(r'groups', GroupViewSet)
 router.register(r'owners', OwnerViewSet)
 router.register(r'employees', EmployedViewSet)
 router.register(r'customers', CustomerViewSet)
+router.register(r'suppliers', SupplierViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

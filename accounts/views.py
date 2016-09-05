@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from .serializers import OwnerSerializer, EmployedSerializer, CustomerSerializer
-from.models import Owner, Employed, Customer
+from .serializers import OwnerSerializer, EmployedSerializer, CustomerSerializer, SupplierSerializer
+from.models import Owner, Employed, Customer, Supplier
 
 class OwnerViewSet(viewsets.ModelViewSet):
     queryset = Owner.objects.all()
@@ -17,3 +17,8 @@ class EmployedViewSet(viewsets.ModelViewSet):
 class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+
+
+class SupplierViewSet(viewsets.ModelViewSet):
+    queryset = Supplier.objects.all()
+    serializer_class = SupplierSerializer

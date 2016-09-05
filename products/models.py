@@ -4,7 +4,7 @@ from django.db import models
 
 from business.models import Business
 from accounts.models import Employed
-from django.contrib.auth.models import User
+
 
 class ProductCategory(models.Model):
     business = models.ForeignKey(Business, related_name='product_categories')

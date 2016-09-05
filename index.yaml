@@ -22,6 +22,12 @@ indexes:
   - name: created
     direction: desc
 
+- kind: business_business
+  properties:
+  - name: owner_id
+  - name: created
+    direction: desc
+
 - kind: business_data
   properties:
   - name: business_id
@@ -157,6 +163,12 @@ indexes:
 - kind: sales_sale
   properties:
   - name: customer_id
+  - name: created
+    direction: desc
+
+- kind: sales_sale
+  properties:
+  - name: employed_id
   - name: created
     direction: desc
 

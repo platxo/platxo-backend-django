@@ -36,6 +36,7 @@ class Business(models.Model):
 
 class Data(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='datas')
+    owner = models.ForeignKey(Owner, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -52,6 +53,7 @@ class Data(models.Model):
 
 class Information(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='informations')
+    owner = models.ForeignKey(Owner, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     datas = fields.RelatedSetField(Data)
@@ -69,6 +71,7 @@ class Information(models.Model):
 
 class Knowledge(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='knowledges')
+    owner = models.ForeignKey(Owner, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     informations = fields.RelatedSetField(Information)

@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
 from .models import User
+from djangae.contrib.gauth.datastore.models import Group
+from django.contrib.auth.models import Permission
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     is_owner = serializers.BooleanField(default=False)
@@ -38,6 +40,16 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    permissions = serializers.HyperlinkedRelatedField(
+        many=True,
+        queryset=Permission.objects.all(),
+        view_name='permission-detail'
+    )
+    class Meta:
+        model = Group
+        fields = ('id', 'name', 'permissions', 'url')
 
 
 def jwt_response_payload_handler(token, user=None, request=None):
