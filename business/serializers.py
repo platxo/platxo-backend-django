@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Business, Data, Information, Knowledge, TAGS_CHOICES
-from accounts.models import Owner, Employed, Customer
+from accounts.models import Owner, Employed, Customer, Supplier
 
 
 class BusinessSerializer(serializers.HyperlinkedModelSerializer):
@@ -15,10 +15,15 @@ class BusinessSerializer(serializers.HyperlinkedModelSerializer):
         queryset=Customer.objects.all(),
         view_name='customer-detail'
     )
+    suppliers = serializers.HyperlinkedRelatedField(
+        many=True,
+        queryset=Supplier.objects.all(),
+        view_name='supplier-detail'
+    )
 
     class Meta:
         model = Business
-        fields = ('id', 'owner', 'name', 'customers', 'employees', 'created', 'updated', 'url')
+        fields = ('id', 'owner', 'name', 'employees', 'customers', 'suppliers', 'created', 'updated', 'url')
 
 
 class DataSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,7 +31,7 @@ class DataSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Data
-        fields = ('id', 'business', 'owner', 'employed', 'name', 'tag', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name', 'tag', 'created', 'updated', 'url')
 
 
 class InformationSerializer(serializers.HyperlinkedModelSerializer):
@@ -40,7 +45,7 @@ class InformationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Information
-        fields = ('id', 'business', 'owner', 'employed', 'name', 'tag', 'datas', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name', 'tag', 'datas', 'created', 'updated', 'url')
 
 
 class KnowledgeSerializer(serializers.HyperlinkedModelSerializer):
@@ -53,4 +58,4 @@ class KnowledgeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Knowledge
-        fields = ('id', 'business', 'owner', 'employed', 'name', 'tag', 'informations', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name', 'tag', 'informations', 'created', 'updated', 'url')

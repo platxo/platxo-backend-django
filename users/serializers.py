@@ -3,12 +3,37 @@ from rest_framework import serializers
 from .models import User
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
+from accounts.models import Owner, Employed, Customer, Supplier
+
+
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     is_owner = serializers.BooleanField(default=False)
     is_employed = serializers.BooleanField(default=False)
     is_customer = serializers.BooleanField(default=False)
     is_supplier = serializers.BooleanField(default=False)
+    owner = serializers.HyperlinkedRelatedField(
+        view_name='owner-detail',
+        read_only=True,
+        allow_null=True
+    )
+    employed = serializers.HyperlinkedRelatedField(
+        view_name='employed-detail',
+        read_only=True,
+        allow_null=True
+    )
+    customer = serializers.HyperlinkedRelatedField(
+        view_name='customer-detail',
+        read_only=True,
+        allow_null=True
+    )
+    supplier = serializers.HyperlinkedRelatedField(
+        view_name='supplier-detail',
+        read_only=True,
+        allow_null=True
+    )
+
 
     class Meta:
         model = User
@@ -22,6 +47,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'last_name',
                   'username',
                   'email',
+                  'owner',
+                  'employed',
+                  'customer',
+                  'supplier',
                   'password',
                   'url'
                   )
