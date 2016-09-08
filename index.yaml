@@ -24,6 +24,12 @@ indexes:
 
 - kind: business_business
   properties:
+  - name: employees_ids
+  - name: created
+    direction: desc
+
+- kind: business_business
+  properties:
   - name: owner_id
   - name: created
     direction: desc

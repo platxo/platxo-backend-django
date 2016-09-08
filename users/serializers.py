@@ -1,14 +1,28 @@
 from rest_framework import serializers
 
 from .models import User
+from business.models import Business
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
+from rest_framework.reverse import reverse
+
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     is_owner = serializers.BooleanField(default=False)
     is_employed = serializers.BooleanField(default=False)
     is_customer = serializers.BooleanField(default=False)
     is_supplier = serializers.BooleanField(default=False)
+    business = serializers.SerializerMethodField()
+
+    def get_business(self, foo):
+        if foo.is_owner:
+            return [busi.pk for busi in Business.objects.filter(owner=foo.owner)]
+        if foo.is_employed:
+            return [busi.pk for busi in Business.objects.filter(employees__contains=foo.employed)]
+        else:
+            return None
+
+
 
     class Meta:
         model = User
@@ -22,6 +36,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'last_name',
                   'username',
                   'email',
+                  'business',
                   'password',
                   'url'
                   )
