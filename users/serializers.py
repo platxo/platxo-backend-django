@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import User
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
+from accounts.serializers import OwnerSerializer
 
 
 
@@ -13,6 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
     is_customer = serializers.BooleanField(default=False)
     is_supplier = serializers.BooleanField(default=False)
     groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())
+    owner = OwnerSerializer()
 
     class Meta:
         model = User
@@ -57,13 +59,13 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'permissions', 'url')
 
 
-def jwt_response_payload_handler(token, user=None, request=None):
-    """
-    Returns the response data for both the login and refresh views.
-    Override to return a custom response such as including the
-    serialized representation of the User.
-    """
-    return {
-        'token': token,
-        'user': UserSerializer(user, context={'request': request},).data
-    }
+# def jwt_response_payload_handler(token, user=None, request=None):
+#     """
+#     Returns the response data for both the login and refresh views.
+#     Override to return a custom response such as including the
+#     serialized representation of the User.
+#     """
+#     return {
+#         'token': token,
+#         'user': UserSerializer(user, context={'request': request},).data
+#     }
