@@ -1,56 +1,45 @@
 from rest_framework import serializers
 
 from .models import Business, Data, Information, Knowledge, TAGS_CHOICES
-from accounts.models import Owner, Employed, Customer
+from accounts.models import Employed, Customer, Supplier
 
 
-class BusinessSerializer(serializers.HyperlinkedModelSerializer):
-    employees = serializers.HyperlinkedRelatedField(
-        many=True,
-        queryset=Employed.objects.all(),
-        view_name='employed-detail'
-    )
-    customers = serializers.HyperlinkedRelatedField(
-        many=True,
-        queryset=Customer.objects.all(),
-        view_name='customer-detail'
-    )
+class BusinessSerializer(serializers.ModelSerializer):
+    employees = serializers.PrimaryKeyRelatedField(many=True, queryset=Employed.objects.all())
+    customers = serializers.PrimaryKeyRelatedField(many=True, queryset=Customer.objects.all())
+    suppliers = serializers.PrimaryKeyRelatedField(many=True, queryset=Supplier.objects.all())
+
 
     class Meta:
         model = Business
-        fields = ('id', 'owner', 'name', 'customers', 'employees', 'created', 'updated', 'url')
+        fields = ('id', 'owner', 'name', 'employees', 'customers', 'suppliers', 'created', 'updated', 'url')
 
 
-class DataSerializer(serializers.HyperlinkedModelSerializer):
+class DataSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=TAGS_CHOICES, default='grey')
+    business = BusinessSerializer()
 
     class Meta:
         model = Data
-        fields = ('id', 'business', 'owner', 'employed', 'name', 'tag', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name', 'tag', 'created', 'updated', 'url')
 
 
-class InformationSerializer(serializers.HyperlinkedModelSerializer):
+class InformationSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=TAGS_CHOICES, default='grey')
-    datas = serializers.HyperlinkedRelatedField(
-        many=True,
-        queryset=Data.objects.all(),
-        view_name='data-detail'
-    )
+    datas = serializers.PrimaryKeyRelatedField(many=True, queryset=Data.objects.all())
+    business = BusinessSerializer()
 
 
     class Meta:
         model = Information
-        fields = ('id', 'business', 'owner', 'employed', 'name', 'tag', 'datas', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name', 'tag', 'datas', 'created', 'updated', 'url')
 
 
-class KnowledgeSerializer(serializers.HyperlinkedModelSerializer):
+class KnowledgeSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=TAGS_CHOICES, default='grey')
-    informations = serializers.HyperlinkedRelatedField(
-        many=True,
-        queryset=Information.objects.all(),
-        view_name='information-detail'
-    )
+    informations = serializers.PrimaryKeyRelatedField(many=True, queryset=Information.objects.all())
+    business = BusinessSerializer()
 
     class Meta:
         model = Knowledge
-        fields = ('id', 'business', 'owner', 'employed', 'name', 'tag', 'informations', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name', 'tag', 'informations', 'created', 'updated', 'url')

@@ -214,6 +214,30 @@ indexes:
   - name: created
     direction: desc
 
+- kind: services_servicecategory
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: services_servicecategory
+  properties:
+  - name: employed_id
+  - name: created
+    direction: desc
+
+- kind: services_servicetype
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: services_servicetype
+  properties:
+  - name: employed_id
+  - name: created
+    direction: desc
+
 - kind: services_servicetype
   properties:
   - name: service_category_id

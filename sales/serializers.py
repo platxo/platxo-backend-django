@@ -5,18 +5,9 @@ from products.models import Product
 from services.models import  Service
 
 
-class SaleSerializer(serializers.HyperlinkedModelSerializer):
-    products = serializers.HyperlinkedRelatedField(
-        many=True,
-        queryset=Product.objects.all(),
-        view_name='product-detail'
-    )
-
-    services = serializers.HyperlinkedRelatedField(
-        many=True,
-        queryset=Service.objects.all(),
-        view_name='service-detail'
-        )
+class SaleSerializer(serializers.ModelSerializer):
+    products = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
+    services = serializers.PrimaryKeyRelatedField(many=True, queryset=Service.objects.all())
 
     class Meta:
         model = Sale

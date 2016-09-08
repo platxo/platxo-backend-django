@@ -1,28 +1,20 @@
 from rest_framework import serializers
 
 from .models import User
-from business.models import Business
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
-from rest_framework.reverse import reverse
+from accounts.serializers import OwnerSerializer
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+
+
+class UserSerializer(serializers.ModelSerializer):
     is_owner = serializers.BooleanField(default=False)
     is_employed = serializers.BooleanField(default=False)
     is_customer = serializers.BooleanField(default=False)
     is_supplier = serializers.BooleanField(default=False)
-    business = serializers.SerializerMethodField()
-
-    def get_business(self, foo):
-        if foo.is_owner:
-            return [busi.pk for busi in Business.objects.filter(owner=foo.owner)]
-        if foo.is_employed:
-            return [busi.pk for busi in Business.objects.filter(employees__contains=foo.employed)]
-        else:
-            return None
-
-
+    groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())
+    owner = OwnerSerializer()
 
     class Meta:
         model = User
@@ -36,7 +28,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'last_name',
                   'username',
                   'email',
-                  'business',
+                  'owner',
+                  'employed',
+                  'customer',
+                  'supplier',
+                  'groups',
                   'password',
                   'url'
                   )
@@ -56,24 +52,20 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         user.save()
         return user
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    permissions = serializers.HyperlinkedRelatedField(
-        many=True,
-        queryset=Permission.objects.all(),
-        view_name='permission-detail'
-    )
+class GroupSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Group
         fields = ('id', 'name', 'permissions', 'url')
 
 
-def jwt_response_payload_handler(token, user=None, request=None):
-    """
-    Returns the response data for both the login and refresh views.
-    Override to return a custom response such as including the
-    serialized representation of the User.
-    """
-    return {
-        'token': token,
-        'user': UserSerializer(user, context={'request': request},).data
-    }
+# def jwt_response_payload_handler(token, user=None, request=None):
+#     """
+#     Returns the response data for both the login and refresh views.
+#     Override to return a custom response such as including the
+#     serialized representation of the User.
+#     """
+#     return {
+#         'token': token,
+#         'user': UserSerializer(user, context={'request': request},).data
+#     }
