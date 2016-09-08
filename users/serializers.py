@@ -3,37 +3,16 @@ from rest_framework import serializers
 from .models import User
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
-from accounts.models import Owner, Employed, Customer, Supplier
 
 
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     is_owner = serializers.BooleanField(default=False)
     is_employed = serializers.BooleanField(default=False)
     is_customer = serializers.BooleanField(default=False)
     is_supplier = serializers.BooleanField(default=False)
-    owner = serializers.HyperlinkedRelatedField(
-        view_name='owner-detail',
-        read_only=True,
-        allow_null=True
-    )
-    employed = serializers.HyperlinkedRelatedField(
-        view_name='employed-detail',
-        read_only=True,
-        allow_null=True
-    )
-    customer = serializers.HyperlinkedRelatedField(
-        view_name='customer-detail',
-        read_only=True,
-        allow_null=True
-    )
-    supplier = serializers.HyperlinkedRelatedField(
-        view_name='supplier-detail',
-        read_only=True,
-        allow_null=True
-    )
-
+    groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())
 
     class Meta:
         model = User
@@ -51,6 +30,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'employed',
                   'customer',
                   'supplier',
+                  'groups',
                   'password',
                   'url'
                   )
@@ -70,12 +50,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         user.save()
         return user
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    permissions = serializers.HyperlinkedRelatedField(
-        many=True,
-        queryset=Permission.objects.all(),
-        view_name='permission-detail'
-    )
+class GroupSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Group
         fields = ('id', 'name', 'permissions', 'url')

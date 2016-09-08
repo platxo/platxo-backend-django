@@ -1,5 +1,5 @@
 application: platxo-bi
-version: development
+version: feature-serializers
 runtime: python27
 api_version: 1
 threadsafe: true
