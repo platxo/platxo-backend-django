@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Product, ProductCategory, ProductType
 
+
 class ProductCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -10,7 +11,6 @@ class ProductCategorySerializer(serializers.ModelSerializer):
 
 
 class ProductTypeSerializer(serializers.ModelSerializer):
-    product_category = ProductCategorySerializer()
 
     class Meta:
         model = ProductType
@@ -18,8 +18,6 @@ class ProductTypeSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    product_category = ProductCategorySerializer()
-    product_type = ProductTypeSerializer()
 
     class Meta:
         model = Product

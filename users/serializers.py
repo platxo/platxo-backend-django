@@ -4,7 +4,6 @@ from business.models import Business
 from .models import User
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
-from accounts.serializers import OwnerSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,12 +12,17 @@ class UserSerializer(serializers.ModelSerializer):
     is_customer = serializers.BooleanField(default=False)
     is_supplier = serializers.BooleanField(default=False)
     groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())
-    owner = OwnerSerializer()
     business = serializers.SerializerMethodField()
 
     def get_business(self, user):
+        if user.is_owner:
+            return [business.pk for business in Business.objects.filter(owner=user.owner)]
         if user.is_employed:
-            return [busi.pk for busi in Business.objects.filter(employees__contains=user.employed)]
+            return [business.pk for business in Business.objects.filter(employees__contains=user.employed)]
+        if user.is_customer:
+            return [business.pk for business in Business.objects.filter(customers__contains=user.customer)]
+        if user.is_supplier:
+            return [business.pk for business in Business.objects.filter(suppliers__contains=user.supplier)]
         else:
             return None
 
@@ -26,14 +30,14 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
                   'id',
-                  'is_owner',
-                  'is_employed',
-                  'is_customer',
-                  'is_supplier',
                   'first_name',
                   'last_name',
                   'username',
                   'email',
+                  'is_owner',
+                  'is_employed',
+                  'is_customer',
+                  'is_supplier',
                   'owner',
                   'employed',
                   'customer',
@@ -64,15 +68,3 @@ class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ('id', 'name', 'permissions', 'url')
-
-
-# def jwt_response_payload_handler(token, user=None, request=None):
-#     """
-#     Returns the response data for both the login and refresh views.
-#     Override to return a custom response such as including the
-#     serialized representation of the User.
-#     """
-#     return {
-#         'token': token,
-#         'user': UserSerializer(user, context={'request': request},).data
-#     }
