@@ -1,5 +1,5 @@
 application: platxo-bi
-version: 201609-feature-jc-filters-busines01
+version: development
 runtime: python27
 api_version: 1
 threadsafe: true
