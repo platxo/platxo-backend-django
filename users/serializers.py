@@ -1,11 +1,10 @@
 from rest_framework import serializers
 
+from business.models import Business
 from .models import User
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
 from accounts.serializers import OwnerSerializer
-
-
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,6 +14,13 @@ class UserSerializer(serializers.ModelSerializer):
     is_supplier = serializers.BooleanField(default=False)
     groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())
     owner = OwnerSerializer()
+    business = serializers.SerializerMethodField()
+
+    def get_business(self, user):
+        if user.is_employed:
+            return [busi.pk for busi in Business.objects.filter(employees__contains=user.employed)]
+        else:
+            return None
 
     class Meta:
         model = User
@@ -32,6 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'employed',
                   'customer',
                   'supplier',
+                  'business',
                   'groups',
                   'password',
                   'url'
