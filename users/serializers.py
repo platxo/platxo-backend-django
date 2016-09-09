@@ -10,12 +10,15 @@ class UserSerializer(serializers.ModelSerializer):
     is_employed = serializers.BooleanField(default=False)
     is_customer = serializers.BooleanField(default=False)
     is_supplier = serializers.BooleanField(default=False)
-    groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+    employed = serializers.PrimaryKeyRelatedField(read_only=True)
+    customer = serializers.PrimaryKeyRelatedField(read_only=True)
+    supplier = serializers.PrimaryKeyRelatedField(read_only=True)
     business = serializers.SerializerMethodField()
 
     @staticmethod
     def business_query(query_kargs):
-        return [{'id':business.pk, 'name':business.name} for business in Business.objects.filter(**query_kargs)]
+        return [{'id':bs.pk, 'name':bs.name} for bs in Business.objects.filter(**query_kargs)]
 
     def get_business(self, user):
         if user.is_owner:
@@ -46,7 +49,6 @@ class UserSerializer(serializers.ModelSerializer):
                   'customer',
                   'supplier',
                   'business',
-                  'groups',
                   'password',
                   'url'
                   )

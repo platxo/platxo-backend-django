@@ -11,11 +11,9 @@ class BusinessViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_owner and user.owner.business:
-            business_query = user.owner.business.all()
-        else:
-            business_query = list()
-        return self.queryset.filter(business__in=business_query)
+        if user.is_owner and user.owner:
+            owner_query = user.owner
+            return self.queryset.filter(owner=owner_query)
 
 
 class DataViewSet(viewsets.ModelViewSet):
