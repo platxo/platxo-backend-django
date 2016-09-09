@@ -5,7 +5,6 @@ from .models import User
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
 
-
 class UserSerializer(serializers.ModelSerializer):
     is_owner = serializers.BooleanField(default=False)
     is_employed = serializers.BooleanField(default=False)
@@ -14,15 +13,19 @@ class UserSerializer(serializers.ModelSerializer):
     groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())
     business = serializers.SerializerMethodField()
 
+    @staticmethod
+    def business_query(query_kargs):
+        return [{'id':business.pk, 'name':business.name} for business in Business.objects.filter(**query_kargs)]
+
     def get_business(self, user):
         if user.is_owner:
-            return [business.pk for business in Business.objects.filter(owner=user.owner)]
+            return self.business_query({'owner':user.owner})
         if user.is_employed:
-            return [business.pk for business in Business.objects.filter(employees__contains=user.employed)]
+            return self.business_query({'employees__contains': user.employed})
         if user.is_customer:
-            return [business.pk for business in Business.objects.filter(customers__contains=user.customer)]
+            return self.business_query({'customers__contains': user.customer})
         if user.is_supplier:
-            return [business.pk for business in Business.objects.filter(suppliers__contains=user.supplier)]
+            return self.business_query({'suppliers__contains': user.supplier})
         else:
             return None
 
