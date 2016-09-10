@@ -9,7 +9,7 @@ from rest_framework_jwt.views import verify_jwt_token
 
 from products.views import ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet
 from services.views import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
-from sales.views import SaleViewSet
+from sales.views import SaleViewSet, OrderPurchaseViewSet
 from purchases.views import PurchaseViewSet
 from contacts.views import ContactViewSet
 from business.views import BusinessViewSet, DataViewSet, InformationViewSet, KnowledgeViewSet
@@ -23,7 +23,7 @@ router.register(r'products', ProductViewSet)
 router.register(r'service-categories', ServiceCategoryViewSet)
 router.register(r'service-types', ServiceTypeViewSet)
 router.register(r'services', ServiceViewSet)
-router.register(r'sales', SaleViewSet)
+#router.register(r'sales', SaleViewSet)
 router.register(r'purchases', PurchaseViewSet)
 router.register(r'contact', ContactViewSet)
 router.register(r'business', BusinessViewSet)
@@ -36,6 +36,7 @@ router.register(r'owners', OwnerViewSet)
 router.register(r'employees', EmployedViewSet)
 router.register(r'customers', CustomerViewSet)
 router.register(r'suppliers', SupplierViewSet)
+router.register(r'sales', OrderPurchaseViewSet, base_name='sales')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

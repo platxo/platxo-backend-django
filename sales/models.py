@@ -25,3 +25,25 @@ class Sale(models.Model):
 
     def __str__(self):
         return self.customer
+
+
+class PurchaseOrder(models.Model):
+    CASH = 'cash'
+    CREDIT_CARD = 'credit_card'
+    DEBIT_CARD = 'debit_card'
+    PAYMENT_CHOICES = (
+        (CASH, 'cash'),
+        (CREDIT_CARD, 'credit card'),
+        (DEBIT_CARD, 'debit card')
+    )
+
+    employee = models.ForeignKey(Employed)
+    business = models.ForeignKey(Business)
+    customer = models.CharField(max_length=250, blank=True, null=True)
+    payment_method = models.CharField(max_length=150, choices=PAYMENT_CHOICES)
+    products = fields.ListField(fields.JSONField())
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "Products: {product}, by: {employee} in: {business}".format(product=len(self.products), employee=self.employee.__str__(), business=self.business.name)
