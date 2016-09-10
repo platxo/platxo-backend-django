@@ -17,7 +17,6 @@ class BusinessSerializer(serializers.ModelSerializer):
 
 class DataSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=TAGS_CHOICES, default='grey')
-    business = BusinessSerializer()
 
     class Meta:
         model = Data
@@ -27,7 +26,6 @@ class DataSerializer(serializers.ModelSerializer):
 class InformationSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=TAGS_CHOICES, default='grey')
     datas = serializers.PrimaryKeyRelatedField(many=True, queryset=Data.objects.all())
-    business = BusinessSerializer()
 
 
     class Meta:
@@ -38,7 +36,6 @@ class InformationSerializer(serializers.ModelSerializer):
 class KnowledgeSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=TAGS_CHOICES, default='grey')
     informations = serializers.PrimaryKeyRelatedField(many=True, queryset=Information.objects.all())
-    business = BusinessSerializer()
 
     class Meta:
         model = Knowledge
