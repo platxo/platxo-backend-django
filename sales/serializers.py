@@ -28,11 +28,19 @@ class OrderRequestSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         """
-        Validate that employee and customer belongs to the business.
-
-        Ensure at least the products or service comes.
+        Validate each product / service condition is applicable
         """
 
-        maped_products = []
+        if data.get('products'):
+            try:
+                products_id = [product['id'] for product in data.get('products')]
+            except KeyError as e:
+                print e.message
+                raise serializers.ValidationError({'product': 'Missing id.'})
 
+        products = Product.objects.filter(pk__in=products_id)
+
+        if len(products_id) != len(products):
+            raise serializers.ValidationError({'product': 'Duplicated or missing id.'})
+        print len(products)
         return data

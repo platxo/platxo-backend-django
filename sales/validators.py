@@ -4,6 +4,9 @@ from business.models import Business
 
 
 class OneProductOrService(object):
+    """
+    Ensure at least one product or service comes.
+    """
     def __init__(self):
         pass
 
@@ -13,6 +16,9 @@ class OneProductOrService(object):
 
 
 class UserInBusiness(object):
+    """
+    Validate that employee and customer belongs to the business.
+    """
     def __init__(self, field, anonymous=False):
         self.field = field
         self.anonymous = anonymous
