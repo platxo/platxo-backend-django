@@ -10,6 +10,12 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: sales_sale
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
 - kind: auth_group
   properties:
   - name: name

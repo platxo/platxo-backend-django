@@ -16,7 +16,7 @@ class ProductCategoryViewSet(viewsets.ModelViewSet):
         if user.is_owner and user.owner.business:
             business_query = user.owner.business.all()
         elif user.is_employed:
-            business_query = Business.objects.filter(employees__contains=user.employed) #user.employed.business.all()
+            business_query = Business.objects.filter(employees__contains=user.employed)
         else:
             business_query = list()
 
@@ -33,7 +33,7 @@ class ProductTypeViewSet(viewsets.ModelViewSet):
         if user.is_owner and user.owner.business:
             business_query = user.owner.business.all()
         elif user.is_employed:
-            business_query = Business.objects.filter(employees__contains=user.employed) #user.employed.business.all()
+            business_query = Business.objects.filter(employees__contains=user.employed)
         else:
             business_query = list()
 
@@ -55,4 +55,3 @@ class ProductViewSet(viewsets.ModelViewSet):
             business_query = list()
 
         return self.queryset.filter(business__in=business_query)
-
