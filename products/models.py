@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 from django.db import models
 
 from business.models import Business
-from accounts.models import Employed
+from accounts.models import Employee
 
 
 class ProductCategory(models.Model):
     business = models.ForeignKey(Business, related_name='product_categories')
-    employed = models.ForeignKey(Employed, related_name='product_categories')
+    employee = models.ForeignKey(Employee, related_name='product_categories')
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -24,7 +24,7 @@ class ProductCategory(models.Model):
 
 class ProductType(models.Model):
     business = models.ForeignKey(Business, related_name='product_types')
-    employed = models.ForeignKey(Employed, related_name='product_types')
+    employee = models.ForeignKey(Employee, related_name='product_types')
     product_category = models.ForeignKey(ProductCategory, related_name='product_types')
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -41,7 +41,7 @@ class ProductType(models.Model):
 
 class Product(models.Model):
     business = models.ForeignKey(Business, related_name='products')
-    employed = models.ForeignKey(Employed, related_name='products')
+    employee = models.ForeignKey(Employee, related_name='products')
     product_category = models.ForeignKey(ProductCategory, related_name='products')
     product_type = models.ForeignKey(ProductType, related_name='products')
     name = models.CharField(max_length=255)

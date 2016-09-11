@@ -15,8 +15,8 @@ class ServiceCategoryViewSet(viewsets.ModelViewSet):
 
         if user.is_owner and user.owner.business:
             business_query = user.owner.business.all()
-        elif user.is_employed:
-            business_query = Business.objects.filter(employees__contains=user.employed)
+        elif user.is_employee:
+            business_query = Business.objects.filter(employees__contains=user.employee)
         else:
             business_query = list()
 
@@ -32,8 +32,8 @@ class ServiceTypeViewSet(viewsets.ModelViewSet):
 
         if user.is_owner and user.owner.business:
             business_query = user.owner.business.all()
-        elif user.is_employed:
-            business_query = Business.objects.filter(employees__contains=user.employed)
+        elif user.is_employee:
+            business_query = Business.objects.filter(employees__contains=user.employee)
         else:
             business_query = list()
 
@@ -49,8 +49,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
 
         if user.is_owner and user.owner.business:
             business_query = user.owner.business.all()
-        elif user.is_employed:
-            business_query = Business.objects.filter(employees__contains=user.employed)
+        elif user.is_employee:
+            business_query = Business.objects.filter(employees__contains=user.employee)
         else:
             business_query = list()
 

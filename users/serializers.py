@@ -7,11 +7,11 @@ from django.contrib.auth.models import Permission
 
 class UserSerializer(serializers.ModelSerializer):
     is_owner = serializers.BooleanField(default=False)
-    is_employed = serializers.BooleanField(default=False)
+    is_employee = serializers.BooleanField(default=False)
     is_customer = serializers.BooleanField(default=False)
     is_supplier = serializers.BooleanField(default=False)
     owner = serializers.PrimaryKeyRelatedField(read_only=True)
-    employed = serializers.PrimaryKeyRelatedField(read_only=True)
+    employee = serializers.PrimaryKeyRelatedField(read_only=True)
     customer = serializers.PrimaryKeyRelatedField(read_only=True)
     supplier = serializers.PrimaryKeyRelatedField(read_only=True)
     business = serializers.SerializerMethodField()
@@ -23,8 +23,8 @@ class UserSerializer(serializers.ModelSerializer):
     def get_business(self, user):
         if user.is_owner:
             return self.business_query({'owner':user.owner})
-        if user.is_employed:
-            return self.business_query({'employees__contains': user.employed})
+        if user.is_employee:
+            return self.business_query({'employees__contains': user.employee})
         if user.is_customer:
             return self.business_query({'customers__contains': user.customer})
         if user.is_supplier:
@@ -41,11 +41,11 @@ class UserSerializer(serializers.ModelSerializer):
                   'username',
                   'email',
                   'is_owner',
-                  'is_employed',
+                  'is_employee',
                   'is_customer',
                   'is_supplier',
                   'owner',
-                  'employed',
+                  'employee',
                   'customer',
                   'supplier',
                   'business',
@@ -60,7 +60,7 @@ class UserSerializer(serializers.ModelSerializer):
                     username=validated_data['username'],
                     email=validated_data['email'],
                     is_owner=validated_data['is_owner'],
-                    is_employed=validated_data['is_employed'],
+                    is_employee=validated_data['is_employee'],
                     is_customer=validated_data['is_customer'],
                     is_supplier=validated_data['is_supplier'],
         )
@@ -69,6 +69,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class GroupSerializer(serializers.ModelSerializer):
+    permissions = serializers.PrimaryKeyRelatedField(many=True, queryset=Permission.objects.all())
 
     class Meta:
         model = Group

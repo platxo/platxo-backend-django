@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Owner, Employed, Customer, Supplier
+from .models import Owner, Employee, Customer, Supplier
 
 
 class OwnerSerializer(serializers.ModelSerializer):
@@ -9,10 +9,10 @@ class OwnerSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'business', 'created', 'updated', 'url')
 
 
-class EmployedSerializer(serializers.ModelSerializer):
+class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Employed
+        model = Employee
         fields = ('id', 'user', 'created', 'updated', 'url')
 
 

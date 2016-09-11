@@ -3,14 +3,14 @@ from __future__ import unicode_literals
 from django.db import models
 from djangae import fields
 from business.models import Business
-from accounts.models import Employed, Customer
+from accounts.models import Employee, Customer
 from products.models import Product
 from services.models import Service
 
 
 class Sale(models.Model):
     business = models.ForeignKey(Business, related_name='sales')
-    employed = models.ForeignKey(Employed, related_name='sales')
+    employee = models.ForeignKey(Employee, related_name='sales')
     customer = models.ForeignKey(Customer, related_name='sales')
     products = fields.RelatedSetField(Product)
     services = fields.RelatedSetField(Service)
