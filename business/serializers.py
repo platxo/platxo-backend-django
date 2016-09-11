@@ -17,20 +17,22 @@ class BusinessSerializer(serializers.ModelSerializer):
 
 class DataSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=TAGS_CHOICES, default='grey')
+    informations = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Data
-        fields = ('id', 'business', 'owner', 'name', 'tag', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name', 'tag', 'informations', 'created', 'updated', 'url')
 
 
 class InformationSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=TAGS_CHOICES, default='grey')
     datas = serializers.PrimaryKeyRelatedField(many=True, queryset=Data.objects.all())
+    knowledges = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
 
     class Meta:
         model = Information
-        fields = ('id', 'business', 'owner', 'name', 'tag', 'datas', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name', 'tag', 'datas', 'knowledges', 'created', 'updated', 'url')
 
 
 class KnowledgeSerializer(serializers.ModelSerializer):

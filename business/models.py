@@ -19,9 +19,9 @@ TAGS_CHOICES = (
 class Business(models.Model):
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='business')
     name = models.CharField(max_length=255)
-    employees = fields.RelatedSetField(Employee)
-    customers = fields.RelatedSetField(Customer)
-    suppliers = fields.RelatedSetField(Supplier)
+    employees = fields.RelatedSetField(Employee, related_name='business')
+    customers = fields.RelatedSetField(Customer, related_name='business')
+    suppliers = fields.RelatedSetField(Supplier, related_name='business')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -56,7 +56,7 @@ class Information(models.Model):
     owner = models.ForeignKey(Owner, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
-    datas = fields.RelatedSetField(Data)
+    datas = fields.RelatedSetField(Data, related_name='informations')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -74,7 +74,7 @@ class Knowledge(models.Model):
     owner = models.ForeignKey(Owner, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
-    informations = fields.RelatedSetField(Information)
+    informations = fields.RelatedSetField(Information, related_name='knowledges')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 

@@ -66,6 +66,12 @@ indexes:
 
 - kind: business_information
   properties:
+  - name: datas_ids
+  - name: created
+    direction: desc
+
+- kind: business_information
+  properties:
   - name: employed_id
   - name: created
     direction: desc
@@ -85,6 +91,12 @@ indexes:
 - kind: business_knowledge
   properties:
   - name: employed_id
+  - name: created
+    direction: desc
+
+- kind: business_knowledge
+  properties:
+  - name: informations_ids
   - name: created
     direction: desc
 
