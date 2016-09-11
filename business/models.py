@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from djangae import fields
 
-from accounts.models import Owner, Employed, Customer, Supplier
+from accounts.models import Owner, Employee, Customer, Supplier
 
 TAGS_CHOICES = (
 ('grey', 'Grey'),
@@ -19,7 +19,7 @@ TAGS_CHOICES = (
 class Business(models.Model):
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='business')
     name = models.CharField(max_length=255)
-    employees = fields.RelatedSetField(Employed)
+    employees = fields.RelatedSetField(Employee)
     customers = fields.RelatedSetField(Customer)
     suppliers = fields.RelatedSetField(Supplier)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)

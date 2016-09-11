@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
 from .models import Business, Data, Information, Knowledge, TAGS_CHOICES
-from accounts.models import Employed, Customer, Supplier
+from accounts.models import Employee, Customer, Supplier
 
 
 class BusinessSerializer(serializers.ModelSerializer):
-    employees = serializers.PrimaryKeyRelatedField(many=True, queryset=Employed.objects.all())
+    employees = serializers.PrimaryKeyRelatedField(many=True, queryset=Employee.objects.all())
     customers = serializers.PrimaryKeyRelatedField(many=True, queryset=Customer.objects.all())
     suppliers = serializers.PrimaryKeyRelatedField(many=True, queryset=Supplier.objects.all())
 
