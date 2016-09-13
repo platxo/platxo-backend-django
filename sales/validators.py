@@ -17,7 +17,7 @@ class OneProductOrService(object):
 
 class UserInBusiness(object):
     """
-    Validate that employee and customer belongs to the business.
+    Validate  that employee and customer belongs to the business.
     """
     def __init__(self, field, anonymous=False):
         self.field = field

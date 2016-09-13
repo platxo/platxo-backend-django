@@ -40,6 +40,8 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
         if not order_serialized.is_valid():
             return Response({'error': order_serialized.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+        order_saved = order_serialized.save()
+
         # Validate that
-        return Response()
+        return Response({'message': 'Order stored.', 'total': round(order_saved.total, 2)})
 

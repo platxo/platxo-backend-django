@@ -41,7 +41,9 @@ class PurchaseOrder(models.Model):
     business = models.ForeignKey(Business)
     customer = models.CharField(max_length=250, blank=True, null=True)
     payment_method = models.CharField(max_length=150, choices=PAYMENT_CHOICES)
-    products = fields.ListField(fields.JSONField())
+    products = fields.JSONField()
+    services = fields.JSONField()
+    total = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
