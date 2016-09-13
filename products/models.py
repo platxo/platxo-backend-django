@@ -10,8 +10,8 @@ class ProductCategory(models.Model):
     business = models.ForeignKey(Business, related_name='product_categories')
     employee = models.ForeignKey(Employee, related_name='product_categories')
     name = models.CharField(max_length=255)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)
@@ -27,8 +27,8 @@ class ProductType(models.Model):
     employee = models.ForeignKey(Employee, related_name='product_types')
     product_category = models.ForeignKey(ProductCategory, related_name='product_types')
     name = models.CharField(max_length=255)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)
@@ -53,8 +53,8 @@ class Product(models.Model):
     stock = models.BooleanField(default=False)
     image = models.ImageField(upload_to='product/image', blank=True, null=True)
     picture = models.ImageField(upload_to='product/picture', blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)

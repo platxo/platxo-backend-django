@@ -15,7 +15,10 @@ class BusinessViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.is_owner and user.owner:
             owner_query = user.owner
-            return self.queryset.filter(owner=owner_query)
+        else:
+            owner_query = None
+        return self.queryset.filter(owner=owner_query)
+
 
 
 class DataViewSet(viewsets.ModelViewSet):

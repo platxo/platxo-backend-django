@@ -12,14 +12,12 @@ class ProductCategoryViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-
         if user.is_owner and user.owner.business:
             business_query = user.owner.business.all()
         elif user.is_employee:
             business_query = Business.objects.filter(employees__contains=user.employee)
         else:
             business_query = list()
-
         return self.queryset.filter(business__in=business_query)
 
 
@@ -29,14 +27,12 @@ class ProductTypeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-
         if user.is_owner and user.owner.business:
             business_query = user.owner.business.all()
         elif user.is_employee:
             business_query = Business.objects.filter(employees__contains=user.employee)
         else:
             business_query = list()
-
         return self.queryset.filter(business__in=business_query)
 
 
@@ -46,12 +42,10 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-
         if user.is_owner and user.owner.business:
             business_query = user.owner.business.all()
         elif user.is_employee:
             business_query = Business.objects.filter(employees__contains=user.employee)
         else:
             business_query = list()
-
         return self.queryset.filter(business__in=business_query)
