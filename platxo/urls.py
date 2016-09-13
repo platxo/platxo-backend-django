@@ -9,10 +9,7 @@ from rest_framework_jwt.views import verify_jwt_token
 
 from products.views import ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet
 from services.views import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
-<<<<<<< HEAD
-from sales.views import SaleViewSet, OrderPurchaseViewSet
-=======
->>>>>>> development
+from sales.views import  OrderPurchaseViewSet
 from purchases.views import PurchaseViewSet
 from contacts.views import ContactViewSet
 from business.views import BusinessViewSet, DataViewSet, InformationViewSet, KnowledgeViewSet
