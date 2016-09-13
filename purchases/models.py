@@ -1,12 +1,13 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from accounts.models import Supplier
 
 class Purchase(models.Model):
-    supplier = models.CharField(max_length=255)
+    supplier = models.ForeignKey(Supplier, related_name='purchases')
     value = models.DecimalField(max_digits=12, decimal_places=2)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)

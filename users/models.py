@@ -79,11 +79,11 @@ class User(AbstractUser):
             'Unselect this instead of deleting accounts.'
         ),
     )
-    is_employed = models.BooleanField(
-        _('is employed'),
+    is_employee = models.BooleanField(
+        _('is employee'),
         default=False,
         help_text=_(
-            'Designates whether this user is employed. '
+            'Designates whether this user is employee. '
             'Unselect this instead of deleting accounts.'
         ),
     )
@@ -110,11 +110,11 @@ class User(AbstractUser):
             owner_profile = self.ownerprofile
         return owner_profile
 
-    def get_employed_profile(self):
-        employed_profile = None
-        if hasattr(self, 'employedprofile'):
-            employed_profile = self.employedprofile
-        return employed_profile
+    def get_employee_profile(self):
+        employee_profile = None
+        if hasattr(self, 'employeeprofile'):
+            employee_profile = self.employeeprofile
+        return employee_profile
 
     def get_customer_profile(self):
         customer_profile = None

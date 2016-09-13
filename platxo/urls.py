@@ -9,12 +9,15 @@ from rest_framework_jwt.views import verify_jwt_token
 
 from products.views import ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet
 from services.views import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
+<<<<<<< HEAD
 from sales.views import SaleViewSet, OrderPurchaseViewSet
+=======
+>>>>>>> development
 from purchases.views import PurchaseViewSet
 from contacts.views import ContactViewSet
 from business.views import BusinessViewSet, DataViewSet, InformationViewSet, KnowledgeViewSet
 from users.views import UserViewSet, GroupViewSet
-from accounts.views import OwnerViewSet, EmployedViewSet, CustomerViewSet, SupplierViewSet
+from accounts.views import OwnerViewSet, EmployeeViewSet, CustomerViewSet, SupplierViewSet
 
 router = routers.DefaultRouter()
 router.register(r'product-categories', ProductCategoryViewSet)
@@ -23,7 +26,6 @@ router.register(r'products', ProductViewSet)
 router.register(r'service-categories', ServiceCategoryViewSet)
 router.register(r'service-types', ServiceTypeViewSet)
 router.register(r'services', ServiceViewSet)
-#router.register(r'sales', SaleViewSet)
 router.register(r'purchases', PurchaseViewSet)
 router.register(r'contact', ContactViewSet)
 router.register(r'business', BusinessViewSet)
@@ -33,7 +35,7 @@ router.register(r'knowledges', KnowledgeViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
 router.register(r'owners', OwnerViewSet)
-router.register(r'employees', EmployedViewSet)
+router.register(r'employees', EmployeeViewSet)
 router.register(r'customers', CustomerViewSet)
 router.register(r'suppliers', SupplierViewSet)
 router.register(r'sales', OrderPurchaseViewSet, base_name='sales')

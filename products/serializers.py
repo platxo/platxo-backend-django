@@ -7,18 +7,18 @@ class ProductCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductCategory
-        fields = ('id', 'business', 'employed', 'name', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'name', 'created', 'updated', 'url')
 
 
 class ProductTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductType
-        fields = ('id', 'business', 'employed', 'product_category', 'name', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'product_category', 'name', 'created', 'updated', 'url')
 
 
 class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'business', 'employed', 'product_category', 'product_type', 'name', 'description', 'supplier', 'location', 'price', 'quantity', 'stock', 'image', 'picture', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'product_category', 'product_type', 'name', 'description', 'supplier', 'location', 'price', 'quantity', 'stock', 'image', 'picture', 'created', 'updated', 'url')

@@ -18,7 +18,7 @@ indexes:
 
 - kind: business_business
   properties:
-  - name: employees_id
+  - name: customers_ids
   - name: created
     direction: desc
 
@@ -42,13 +42,7 @@ indexes:
 
 - kind: business_data
   properties:
-  - name: employed_id
-  - name: created
-    direction: desc
-
-- kind: business_data
-  properties:
-  - name: user_id
+  - name: owner_id
   - name: created
     direction: desc
 
@@ -60,13 +54,13 @@ indexes:
 
 - kind: business_information
   properties:
-  - name: employed_id
+  - name: datas_ids
   - name: created
     direction: desc
 
 - kind: business_information
   properties:
-  - name: user_id
+  - name: owner_id
   - name: created
     direction: desc
 
@@ -78,13 +72,13 @@ indexes:
 
 - kind: business_knowledge
   properties:
-  - name: employed_id
+  - name: informations_ids
   - name: created
     direction: desc
 
 - kind: business_knowledge
   properties:
-  - name: user_id
+  - name: owner_id
   - name: created
     direction: desc
 
@@ -108,6 +102,12 @@ indexes:
 
 - kind: products_product
   properties:
+  - name: employee_id
+  - name: created
+    direction: desc
+
+- kind: products_product
+  properties:
   - name: product_category_id
   - name: created
     direction: desc
@@ -118,12 +118,6 @@ indexes:
   - name: created
     direction: desc
 
-- kind: products_product
-  properties:
-  - name: user_id
-  - name: created
-    direction: desc
-
 - kind: products_productcategory
   properties:
   - name: business_id
@@ -133,12 +127,6 @@ indexes:
 - kind: products_productcategory
   properties:
   - name: employed_id
-  - name: created
-    direction: desc
-
-- kind: products_productcategory
-  properties:
-  - name: user_id
   - name: created
     direction: desc
 
@@ -160,9 +148,9 @@ indexes:
   - name: created
     direction: desc
 
-- kind: products_producttype
+- kind: sales_sale
   properties:
-  - name: user_id
+  - name: business_id
   - name: created
     direction: desc
 
@@ -186,13 +174,13 @@ indexes:
 
 - kind: sales_sale
   properties:
-  - name: product_id
+  - name: employee_id
   - name: created
     direction: desc
 
 - kind: sales_sale
   properties:
-  - name: user_id
+  - name: product_id
   - name: created
     direction: desc
 
@@ -205,6 +193,12 @@ indexes:
 - kind: services_service
   properties:
   - name: employed_id
+  - name: created
+    direction: desc
+
+- kind: services_service
+  properties:
+  - name: employee_id
   - name: created
     direction: desc
 
@@ -232,6 +226,12 @@ indexes:
   - name: created
     direction: desc
 
+- kind: services_servicecategory
+  properties:
+  - name: employee_id
+  - name: created
+    direction: desc
+
 - kind: services_servicetype
   properties:
   - name: business_id
@@ -241,6 +241,12 @@ indexes:
 - kind: services_servicetype
   properties:
   - name: employed_id
+  - name: created
+    direction: desc
+
+- kind: services_servicetype
+  properties:
+  - name: employee_id
   - name: created
     direction: desc
 
