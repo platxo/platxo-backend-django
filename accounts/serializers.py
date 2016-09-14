@@ -3,6 +3,7 @@ from .models import Owner, Employee, Customer, Supplier
 
 
 class OwnerSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Owner
@@ -10,6 +11,7 @@ class OwnerSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Employee
@@ -17,12 +19,15 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 
 class CustomerSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Customer
         fields = ('id', 'user', 'business', 'created', 'updated', 'url')
 
+
 class SupplierSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
 
     class Meta:
         model = Supplier
