@@ -37,7 +37,7 @@ class PurchaseOrder(models.Model):
         (DEBIT_CARD, 'debit card')
     )
 
-    employee = models.ForeignKey(Employed)
+    employee = models.ForeignKey(Employee)
     business = models.ForeignKey(Business)
     customer = models.CharField(max_length=250, blank=True, null=True)
     payment_method = models.CharField(max_length=150, choices=PAYMENT_CHOICES)
