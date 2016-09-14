@@ -156,12 +156,6 @@ indexes:
 
 - kind: sales_sale
   properties:
-  - name: business_id
-  - name: created
-    direction: desc
-
-- kind: sales_sale
-  properties:
   - name: customer_id
   - name: created
     direction: desc

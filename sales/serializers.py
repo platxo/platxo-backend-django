@@ -97,7 +97,7 @@ class OrderRequestSerializer(serializers.ModelSerializer):
         if self.validated_data.get('products'):
             for product in self.validated_data.get('product'):
                 Product.objects.filter(pk=product['products'].id).update(quantity=F('quantity')-product['qty'])
-                total_price += float(product['products'].price * product['qty']) * (1 - (product['discount']/100.0))
+                total_price += round(float(product['products'].price * product['qty']) * (1 - (product['discount']/100.0)), 2)
 
         self.validated_data.pop('product')
         purchase_order = PurchaseOrder(total=total_price, **self.validated_data)
