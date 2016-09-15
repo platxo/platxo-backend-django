@@ -54,5 +54,9 @@ def default_business_creation():
     add_employee_to_business(busi, employee)
 
 
-
-default_business_creation()
+#####
+if __name__ == '__main__':
+    """
+    Run test
+    """
+    default_business_creation()
