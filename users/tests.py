@@ -9,10 +9,14 @@ import requests
 
 server_url = 'http://localhost:8080'
 users_path = '/api/users/'
+groups_path = '/api/groups/'
+authentication_path = '/api-token-auth/'
 
 # User objects.
 # Currently all user fields are mandatory.
 unique_code = randint(0, 9999)
+OWNER = 'owner'
+EMPLOYEE = 'employee'
 owner = {
     'first_name': 'Owner%i' % unique_code,
     'last_name':  'A',
@@ -45,6 +49,20 @@ customer = {
     'is_customer': True
 }
 
+group_names = ['customer', 'employee', 'owner']
+
+
+def create_groups():
+    """
+    Create default groups, these groups are created only one, and require user authenticated.
+
+    :return:
+    """
+    print ('Creating groups.')
+    url = server_url + groups_path
+    for group in group_names:
+        requests.post(url, json={'name': group, 'permissions': []})
+
 
 def user_creation(user):
     url = server_url + users_path
@@ -58,12 +76,35 @@ def user_creation(user):
         raise Exception(r.text)
 
 
-## Run test
-print ('CUSTOMER(S) CREATION')
-print ('Create owner')
-print (user_creation(owner))
-print ('Groups are not created yet')
-print ('Create employee')
-print (user_creation(employee))
-print ('Create customer')
-print (user_creation(customer))
+def user_authentication():
+    pass
+
+
+def create_user(user_type):
+    if user_type is 'owner':
+        return user_creation(owner)
+    elif user_type is 'employee':
+        return user_creation(employee)
+    elif user_type is 'customer':
+        return user_creation(customer)
+    else:
+        raise (Exception('User type not supported'))
+
+
+def create_all():
+    create_groups()
+    users = {}
+    for user_type in ['owner', 'employee', 'customer']:
+        print('Create %s' % user_type)
+        users[type] = create_user(user_type)
+        print(users[type].get('id'))
+    return users
+
+
+#####
+if __name__ == '__main__':
+    """
+    Run test
+    """
+    print ('CUSTOMER(S) CREATION')
+    create_all()
