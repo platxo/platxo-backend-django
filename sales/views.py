@@ -43,5 +43,5 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
         order_saved = order_serialized.save()
 
         # Validate that
-        return Response({'message': 'Order stored.', 'total': round(order_saved.total, 2)})
+        return Response({'message': 'Order stored.', 'total': order_saved.total})
 
