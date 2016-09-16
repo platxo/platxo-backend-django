@@ -39,7 +39,7 @@ class PurchaseOrder(models.Model):
 
     employee = models.ForeignKey(Employee)
     business = models.ForeignKey(Business)
-    customer = models.CharField(max_length=250, blank=True, null=True)
+    customer = models.ForeignKey(Customer, blank=True, null=True)
     payment_method = models.CharField(max_length=150, choices=PAYMENT_CHOICES)
     products = fields.JSONField()
     services = fields.JSONField()
