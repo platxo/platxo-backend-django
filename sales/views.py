@@ -28,15 +28,12 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
         :return:
         """
         user = self.request.user
-        query = {}
         if user.is_owner and user.owner.business:
             query = {'business__in': user.owner.business.all()}
         elif user.is_employee and user.employee:
-            # Correct this
-            # business_query = Business.objects.filter(employees__contains=user.employee)
-            query = {'employee__in': user.employee.id}
+            query = {'employee': user.employee}
         else:
-            business_query = {'pk': None}
+            query = {'pk': None}
         return self.queryset.filter(**query) #business__in=business_query)
 
     def list(self, request):
