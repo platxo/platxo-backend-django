@@ -66,31 +66,6 @@ class UserSerializer(serializers.ModelSerializer):
     customer = UserCustomerSerializer(read_only=True)
     supplier = UserSupplierSerializer(read_only=True)
 
-    # def validate(self, value):
-    #     mail = value.get('mail')
-    #     mail= mail.lower()
-    #     if User.objects.filter(email=mail, username__iexact=).exists():
-    #         raise serializers.ValidationError({"email": "user with this email address already exists."})
-    #     return mail
-
-    # business = serializers.SerializerMethodField()
-    #
-    # @staticmethod
-    # def business_query(query_kargs):
-    #     return [{'id':bs.pk, 'name':bs.name} for bs in Business.objects.filter(**query_kargs)]
-    #
-    # def get_business(self, user):
-    #     if user.is_owner:
-    #         return self.business_query({'owner':user.owner})
-    #     if user.is_employee:
-    #         return self.business_query({'employees__contains': user.employee})
-    #     if user.is_customer:
-    #         return self.business_query({'customers__contains': user.customer})
-    #     if user.is_supplier:
-    #         return self.business_query({'suppliers__contains': user.supplier})
-    #     else:
-    #         return None
-
     class Meta:
         model = User
         fields = (
