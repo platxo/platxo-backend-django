@@ -15,16 +15,23 @@ class SaleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sale
-        fields = ('id', 'business', 'employed', 'customer', 'products', 'services', 'total', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employed', 'customer', 'products',
+                  'services', 'total', 'created', 'updated', 'url')
 
 
 class OrderRequestSerializer(serializers.ModelSerializer):
+    customer_username = serializers.CharField(read_only=True)
+    employee_username = serializers.CharField(read_only=True)
     products = serializers.ListField(required=False)
     services = serializers.ListField(required=False)
 
     class Meta:
         model = PurchaseOrder
-        fields = ('id', 'customer', 'employee', 'business', 'payment_method', 'products', 'services')
+        fields = ('id', 'customer',
+                  'customer_username', 'employee',
+                  'employee_username', 'business',
+                  'payment_method', 'products',
+                  'services')
         validators = [OneProductOrService(),
                       UserInBusiness(field='employee'),
                       UserInBusiness(field='customer', anonymous=True)]
@@ -67,8 +74,10 @@ class OrderRequestSerializer(serializers.ModelSerializer):
                                                                    'message': 'Discount not in range.'}})
                 # Populate the product field
                 product_object = copy(prod_id)
-                product_object['products'] = {'product_category': product.product_category.id,
+                product_object['details'] = {'product_category': product.product_category.id,
+                                              'product_category_name': product.product_category.name,
                                               'product_type': product.product_type.id,
+                                              'product_type_name': product.product_type.name,
                                               'name': product.name,
                                               'price': product.price
                                               }
@@ -101,7 +110,7 @@ class OrderRequestSerializer(serializers.ModelSerializer):
         if self.validated_data.get('products'):
             for product in self.validated_data.get('products'):
                 Product.objects.filter(pk=product['id']).update(quantity=F('quantity')-product['qty'])
-                total_price += round(float(product['products']['price'] * product['qty']) * (1 - (product['discount']/100.0)), 2)
+                total_price += round(float(product['details']['price'] * product['qty']) * (1 - (product['discount']/100.0)), 2)
 
         # self.validated_data.pop('product')
         purchase_order = PurchaseOrder(total=total_price, **self.validated_data)

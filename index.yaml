@@ -34,6 +34,12 @@ indexes:
   - name: created
     direction: desc
 
+- kind: business_business
+  properties:
+  - name: suppliers_ids
+  - name: created
+    direction: desc
+
 - kind: business_data
   properties:
   - name: business_id
