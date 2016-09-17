@@ -30,8 +30,11 @@ class UserInBusiness(object):
             query_args = {'pk': attrs['business'].id, self.field + 's__contains': attrs[self.field]}
             if not Business.objects.filter(**query_args).exists():
                 raise serializers.ValidationError({self.field: "{field} does not belong to Business".format(field=self.field)})
+
         except serializers.ValidationError as e:
             raise serializers.ValidationError(e.detail)
         except Exception as e:
             print e
             raise serializers.ValidationError(e.message)
+
+        attrs[self.field + '_username'] = attrs[self.field].user.username

@@ -67,11 +67,15 @@ class OrderRequestSerializer(serializers.ModelSerializer):
                                                                    'message': 'Discount not in range.'}})
                 # Populate the product field
                 product_object = copy(prod_id)
-                product_object['products'] = product
+                product_object['products'] = {'product_category': product.product_category.id,
+                                              'product_type': product.product_type.id,
+                                              'name': product.name,
+                                              'price': product.price
+                                              }
                 mapped_products.append(product_object)
 
             # Product now contains all information and save() van use this data.
-            data['product'] = mapped_products
+            data['products'] = mapped_products
 
         return data
 
@@ -95,11 +99,11 @@ class OrderRequestSerializer(serializers.ModelSerializer):
         """
         total_price = 0
         if self.validated_data.get('products'):
-            for product in self.validated_data.get('product'):
-                Product.objects.filter(pk=product['products'].id).update(quantity=F('quantity')-product['qty'])
-                total_price += round(float(product['products'].price * product['qty']) * (1 - (product['discount']/100.0)), 2)
+            for product in self.validated_data.get('products'):
+                Product.objects.filter(pk=product['id']).update(quantity=F('quantity')-product['qty'])
+                total_price += round(float(product['products']['price'] * product['qty']) * (1 - (product['discount']/100.0)), 2)
 
-        self.validated_data.pop('product')
+        # self.validated_data.pop('product')
         purchase_order = PurchaseOrder(total=total_price, **self.validated_data)
         purchase_order.save()
 
