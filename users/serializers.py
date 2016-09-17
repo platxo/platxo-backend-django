@@ -1,36 +1,80 @@
 from rest_framework import serializers
 
-from business.models import Business
 from .models import User
+from accounts.models import (
+    Owner,
+    Employee,
+    Customer,
+    Supplier
+)
+from business.models import Business
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
+
+class AccountsBusinessSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Business
+        fields = ('id', 'name')
+
+class UserOwnerSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    business = AccountsBusinessSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Owner
+        fields = ('id', 'user', 'business')
+
+class UserEmployeeSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    business = AccountsBusinessSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Employee
+        fields = ('id', 'user', 'business')
+
+class UserCustomerSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    business = AccountsBusinessSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Customer
+        fields = ('id', 'user', 'business')
+
+class UserSupplierSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    business = AccountsBusinessSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Supplier
+        fields = ('id', 'user', 'business')
 
 class UserSerializer(serializers.ModelSerializer):
     is_owner = serializers.BooleanField(default=False)
     is_employee = serializers.BooleanField(default=False)
     is_customer = serializers.BooleanField(default=False)
     is_supplier = serializers.BooleanField(default=False)
-    owner = serializers.PrimaryKeyRelatedField(read_only=True)
-    employee = serializers.PrimaryKeyRelatedField(read_only=True)
-    customer = serializers.PrimaryKeyRelatedField(read_only=True)
-    supplier = serializers.PrimaryKeyRelatedField(read_only=True)
-    business = serializers.SerializerMethodField()
-
-    @staticmethod
-    def business_query(query_kargs):
-        return [{'id':bs.pk, 'name':bs.name} for bs in Business.objects.filter(**query_kargs)]
-
-    def get_business(self, user):
-        if user.is_owner:
-            return self.business_query({'owner':user.owner})
-        if user.is_employee:
-            return self.business_query({'employees__contains': user.employee})
-        if user.is_customer:
-            return self.business_query({'customers__contains': user.customer})
-        if user.is_supplier:
-            return self.business_query({'suppliers__contains': user.supplier})
-        else:
-            return None
+    owner = UserOwnerSerializer(read_only=True)
+    employee = UserEmployeeSerializer(read_only=True)
+    customer = UserCustomerSerializer(read_only=True)
+    supplier = UserSupplierSerializer(read_only=True)
+    # business = serializers.SerializerMethodField()
+    #
+    # @staticmethod
+    # def business_query(query_kargs):
+    #     return [{'id':bs.pk, 'name':bs.name} for bs in Business.objects.filter(**query_kargs)]
+    #
+    # def get_business(self, user):
+    #     if user.is_owner:
+    #         return self.business_query({'owner':user.owner})
+    #     if user.is_employee:
+    #         return self.business_query({'employees__contains': user.employee})
+    #     if user.is_customer:
+    #         return self.business_query({'customers__contains': user.customer})
+    #     if user.is_supplier:
+    #         return self.business_query({'suppliers__contains': user.supplier})
+    #     else:
+    #         return None
 
     class Meta:
         model = User
@@ -48,7 +92,6 @@ class UserSerializer(serializers.ModelSerializer):
                   'employee',
                   'customer',
                   'supplier',
-                  'business',
                   'password',
                   'url'
                   )

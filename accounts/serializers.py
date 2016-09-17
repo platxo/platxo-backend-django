@@ -1,9 +1,17 @@
 from rest_framework import serializers
 from .models import Owner, Employee, Customer, Supplier
+from business.models import Business
+
+class AccountsBusinessSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Business
+        fields = ('id', 'name')
 
 
 class OwnerSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+    business = AccountsBusinessSerializer(many=True, read_only=True)
 
     class Meta:
         model = Owner
@@ -12,6 +20,7 @@ class OwnerSerializer(serializers.ModelSerializer):
 
 class EmployeeSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+    business = AccountsBusinessSerializer(many=True, read_only=True)
 
     class Meta:
         model = Employee
@@ -20,6 +29,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 class CustomerSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+    business = AccountsBusinessSerializer(many=True, read_only=True)
 
     class Meta:
         model = Customer
@@ -28,6 +38,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 class SupplierSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+    business = AccountsBusinessSerializer(many=True, read_only=True)
 
     class Meta:
         model = Supplier
