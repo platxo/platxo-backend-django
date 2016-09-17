@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from django.db.utils import IntegrityError
 from .models import User
 from accounts.models import (
     Owner,
@@ -11,11 +12,13 @@ from business.models import Business
 from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
 
+
 class AccountsBusinessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Business
         fields = ('id', 'name')
+
 
 class UserOwnerSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
@@ -25,6 +28,7 @@ class UserOwnerSerializer(serializers.ModelSerializer):
         model = Owner
         fields = ('id', 'user', 'business')
 
+
 class UserEmployeeSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     business = AccountsBusinessSerializer(many=True, read_only=True)
@@ -32,6 +36,7 @@ class UserEmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = ('id', 'user', 'business')
+
 
 class UserCustomerSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
@@ -41,6 +46,7 @@ class UserCustomerSerializer(serializers.ModelSerializer):
         model = Customer
         fields = ('id', 'user', 'business')
 
+
 class UserSupplierSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     business = AccountsBusinessSerializer(many=True, read_only=True)
@@ -48,6 +54,7 @@ class UserSupplierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Supplier
         fields = ('id', 'user', 'business')
+
 
 class UserSerializer(serializers.ModelSerializer):
     is_owner = serializers.BooleanField(default=False)
@@ -58,6 +65,14 @@ class UserSerializer(serializers.ModelSerializer):
     employee = UserEmployeeSerializer(read_only=True)
     customer = UserCustomerSerializer(read_only=True)
     supplier = UserSupplierSerializer(read_only=True)
+
+    # def validate(self, value):
+    #     mail = value.get('mail')
+    #     mail= mail.lower()
+    #     if User.objects.filter(email=mail, username__iexact=).exists():
+    #         raise serializers.ValidationError({"email": "user with this email address already exists."})
+    #     return mail
+
     # business = serializers.SerializerMethodField()
     #
     # @staticmethod
@@ -101,15 +116,36 @@ class UserSerializer(serializers.ModelSerializer):
         user = User(first_name=validated_data['first_name'],
                     last_name=validated_data['last_name'],
                     username=validated_data['username'],
-                    email=validated_data['email'],
+                    email=validated_data['email'].lower(),
                     is_owner=validated_data['is_owner'],
                     is_employee=validated_data['is_employee'],
                     is_customer=validated_data['is_customer'],
                     is_supplier=validated_data['is_supplier'],
-        )
+                    )
         user.set_password(validated_data['password'])
-        user.save()
+        try:
+            user.save()
+        except IntegrityError as e:
+            error = {"message": "Could not create user."}
+            if 'mail' in e.message:
+                error['mail'] = ["user with this email address already exists."]
+            else:
+                error['detail'] = e.message
+            raise serializers.ValidationError(error)
         return user
+
+    def get_extra_kwargs(self):
+        extra_kwargs = super(UserSerializer, self).get_extra_kwargs()
+        action = self.context['view'].action
+
+        if action in ['update', 'partial_update']:
+            kwargs = extra_kwargs.get('password', {})
+            kwargs['read_only'] = True
+            kwargs['write_only'] = False
+            extra_kwargs['password'] = kwargs
+
+        return extra_kwargs
+
 
 class GroupSerializer(serializers.ModelSerializer):
     permissions = serializers.PrimaryKeyRelatedField(many=True, queryset=Permission.objects.all())
