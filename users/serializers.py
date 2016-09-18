@@ -112,16 +112,18 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(error)
         return user
 
-    def get_extra_kwargs(self):
-        extra_kwargs = super(UserSerializer, self).get_extra_kwargs()
-        action = self.context['view'].action
 
-        if action in ['update', 'partial_update']:
-            kwargs = extra_kwargs.get('password', {})
-            kwargs['read_only'] = True
-            kwargs['write_only'] = False
-            extra_kwargs['password'] = kwargs
-        return extra_kwargs
+    # def get_extra_kwargs(self):
+    #     extra_kwargs = super(UserSerializer, self).get_extra_kwargs()
+    #     action = self.context['view'].action
+    #
+    #     if action in ['update', 'partial_update']:
+    #         kwargs = extra_kwargs.get('password', {})
+    #         kwargs['read_only'] = True
+    #         kwargs['write_only'] = False
+    #         extra_kwargs['password'] = kwargs
+    #
+    #     return extra_kwargs
 
 class GroupSerializer(serializers.ModelSerializer):
     permissions = serializers.PrimaryKeyRelatedField(many=True, queryset=Permission.objects.all())
