@@ -131,6 +131,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'users.User'
 
+AUTHENTICATION_BACKENDS = (
+    'users.backends.UserBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',

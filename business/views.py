@@ -11,13 +11,23 @@ class BusinessViewSet(viewsets.ModelViewSet):
     queryset = Business.objects.all()
     serializer_class = BusinessSerializer
 
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     if user.is_owner and user.owner:
+    #         owner_query = user.owner
+    #     else:
+    #         owner_query = None
+    #     return self.queryset.filter(owner=owner_query)
+
     def get_queryset(self):
         user = self.request.user
         if user.is_owner and user.owner:
-            owner_query = user.owner
+            return self.queryset.filter(owner=user.owner)
+        elif user.is_employee and user.employee:
+            return self.queryset.filter(employees__contains=user.employee)
         else:
-            owner_query = None
-        return self.queryset.filter(owner=owner_query)
+            return None
+
 
 
 
