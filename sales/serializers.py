@@ -15,8 +15,7 @@ class SaleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sale
-        fields = ('id', 'business', 'employed', 'customer', 'products',
-                  'services', 'total', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'customer', 'products', 'services', 'payment', 'total', 'created', 'updated', 'url')
 
 
 class OrderRequestSerializer(serializers.ModelSerializer):

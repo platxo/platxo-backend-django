@@ -131,6 +131,17 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'users.User'
 
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 25
+# EMAIL_HOST_USER = ''
+# #EMAIL_HOST_PASSWORD = ''
+# EMAIL_USE_TLS = True
+
+AUTHENTICATION_BACKENDS = (
+    'users.backends.UserBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',

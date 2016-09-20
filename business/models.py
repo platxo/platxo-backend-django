@@ -5,14 +5,22 @@ from djangae import fields
 
 from accounts.models import Owner, Employee, Customer, Supplier
 
+GREY = 'grey'
+RED = 'red'
+YELLOW = 'yellow'
+BLUE = 'blue'
+ORANGE = 'orange'
+GREEN = 'green'
+PURPLE = 'purple'
+
 TAGS_CHOICES = (
-('grey', 'Grey'),
-('red', 'Red'),
-('yellow', 'Yellow'),
-('blue', 'Blue'),
-('orange', 'Orange'),
-('green', 'Green'),
-('purple', 'Purple'),
+(GREY, 'Grey'),
+(RED, 'Red'),
+(YELLOW, 'Yellow'),
+(BLUE, 'Blue'),
+(ORANGE , 'Orange'),
+(GREEN, 'Green'),
+(PURPLE, 'Purple'),
 )
 
 
@@ -22,8 +30,8 @@ class Business(models.Model):
     employees = fields.RelatedSetField(Employee, related_name='business')
     customers = fields.RelatedSetField(Customer, related_name='business')
     suppliers = fields.RelatedSetField(Supplier, related_name='business')
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)
@@ -39,8 +47,8 @@ class Data(models.Model):
     owner = models.ForeignKey(Owner, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)
@@ -57,8 +65,8 @@ class Information(models.Model):
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     datas = fields.RelatedSetField(Data, related_name='informations')
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)
@@ -75,8 +83,8 @@ class Knowledge(models.Model):
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=TAGS_CHOICES)
     informations = fields.RelatedSetField(Information, related_name='knowledges')
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)

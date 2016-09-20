@@ -9,14 +9,24 @@ from services.models import Service
 
 
 class Sale(models.Model):
+    CASH = 'cash'
+    CREDIT_CARD = 'credit_card'
+    DEBIT_CARD = 'debit_card'
+    PAYMENT_CHOICES = (
+        (CASH, 'cash'),
+        (CREDIT_CARD, 'credit card'),
+        (DEBIT_CARD, 'debit card')
+    )
+
     business = models.ForeignKey(Business, related_name='sales')
-    employed = models.ForeignKey(Employee, related_name='sales')
-    customer = models.ForeignKey(Customer, related_name='sales')
-    products = fields.RelatedSetField(Product)
-    services = fields.RelatedSetField(Service)
+    employee = models.ForeignKey(Employee, related_name='sales')
+    customer = models.ForeignKey(Customer, related_name='sales', blank=True, null=True)
+    products = fields.RelatedSetField(Product, related_name='sales')
+    services = fields.RelatedSetField(Service, related_name='sales')
+    payment = models.CharField(max_length=150, choices=PAYMENT_CHOICES)
     total = models.DecimalField(max_digits=12, decimal_places=2)
-    created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('-created',)
@@ -25,7 +35,7 @@ class Sale(models.Model):
 
     def __str__(self):
         return self.customer
-
+        
 
 class PurchaseOrder(models.Model):
     CASH = 'cash'

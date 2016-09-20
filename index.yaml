@@ -102,12 +102,6 @@ indexes:
 
 - kind: products_product
   properties:
-  - name: employed_id
-  - name: created
-    direction: desc
-
-- kind: products_product
-  properties:
   - name: employee_id
   - name: created
     direction: desc
@@ -139,12 +133,6 @@ indexes:
 - kind: products_producttype
   properties:
   - name: business_id
-  - name: created
-    direction: desc
-
-- kind: products_producttype
-  properties:
-  - name: employed_id
   - name: created
     direction: desc
 
@@ -184,12 +172,6 @@ indexes:
 
 - kind: sales_sale
   properties:
-  - name: employed_id
-  - name: created
-    direction: desc
-
-- kind: sales_sale
-  properties:
   - name: employee_id
   - name: created
     direction: desc
@@ -203,12 +185,6 @@ indexes:
 - kind: services_service
   properties:
   - name: business_id
-  - name: created
-    direction: desc
-
-- kind: services_service
-  properties:
-  - name: employed_id
   - name: created
     direction: desc
 
@@ -238,12 +214,6 @@ indexes:
 
 - kind: services_servicecategory
   properties:
-  - name: employed_id
-  - name: created
-    direction: desc
-
-- kind: services_servicecategory
-  properties:
   - name: employee_id
   - name: created
     direction: desc
@@ -251,12 +221,6 @@ indexes:
 - kind: services_servicetype
   properties:
   - name: business_id
-  - name: created
-    direction: desc
-
-- kind: services_servicetype
-  properties:
-  - name: employed_id
   - name: created
     direction: desc
 
