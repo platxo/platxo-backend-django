@@ -48,8 +48,11 @@ class PurchaseOrder(models.Model):
     )
 
     employee = models.ForeignKey(Employee)
+    employee_username = models.CharField(max_length=255, blank=True, null=True)
     business = models.ForeignKey(Business)
+    business_name = models.CharField(max_length=255, blank=True, null=True)
     customer = models.ForeignKey(Customer, blank=True, null=True)
+    customer_username = models.CharField(max_length=255, blank=True, null=True)
     payment_method = models.CharField(max_length=150, choices=PAYMENT_CHOICES)
     products = fields.JSONField()
     services = fields.JSONField()
@@ -59,3 +62,6 @@ class PurchaseOrder(models.Model):
 
     def __str__(self):
         return "Products: {product}, by: {employee} in: {business}".format(product=len(self.products), employee=self.employee.__str__(), business=self.business.name)
+
+    class Meta():
+        ordering = ('-created_at',)

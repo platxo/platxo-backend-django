@@ -1,0 +1,2 @@
+sales_purchaseorder:
+  created_at: [year__exact, month__exact, year__gte, year__lte]
