@@ -44,4 +44,3 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
 
         # Validate that
         return Response({'message': 'Order stored.', 'total': order_saved.total})
-
