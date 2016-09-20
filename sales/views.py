@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
@@ -34,11 +35,25 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
             query = {'employee': user.employee}
         else:
             query = {'pk': None}
-        return self.queryset.filter(**query) #business__in=business_query)
+        return self.queryset.filter(**query)
+
+    def default_date_filter(self):
+        """
+        Returns the purchases made in the last month, according to application default behaviour.
+        :return:
+        """
+        now = datetime.now()
+        next_month = datetime(now.year, now.month+1, 1)
+        return {'created_at__gte': '{year}-{month}-01'.format(year=now.year, month=now.month),
+                'created_at__lt': '{year}-{month}-01'.format(year=next_month.year, month=next_month.month)}
 
     def list(self, request):
-
-        return Response(self.read_serializer(self.get_queryset(), many=True).data)
+        """
+        Show all purchases made.
+        :param request:
+        :return:
+        """
+        return Response(self.read_serializer(self.get_queryset().filter(**self.default_date_filter()), many=True).data)
 
     def retrieve(self, request, pk=None):
         try:

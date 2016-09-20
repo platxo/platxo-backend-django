@@ -24,6 +24,7 @@ class OrderRequestSerializer(serializers.ModelSerializer):
     employee_username = serializers.CharField(read_only=True)
     products = serializers.ListField(required=False)
     services = serializers.ListField(required=False)
+    created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
         model = PurchaseOrder
@@ -31,7 +32,7 @@ class OrderRequestSerializer(serializers.ModelSerializer):
                   'customer_username', 'employee',
                   'employee_username', 'business',
                   'payment_method', 'products',
-                  'services')
+                  'services', 'created_at')
         validators = [OneProductOrService(),
                       UserInBusiness(field='employee'),
                       UserInBusiness(field='customer', anonymous=True)]
