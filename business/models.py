@@ -25,8 +25,19 @@ TAGS_CHOICES = (
 
 
 class Business(models.Model):
+    FIVE = 5
+    TEN= 10
+    FIFTEEN= 15
+
+    CRM_CHOICES = (
+    (FIVE, '5%'),
+    (TEN, '10%'),
+    (FIFTEEN, '15%'),
+    )
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='business')
     name = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
+    crm = models.IntegerField(max_length=2, choices=CRM_CHOICES)
     employees = fields.RelatedSetField(Employee, related_name='business')
     customers = fields.RelatedSetField(Customer, related_name='business')
     suppliers = fields.RelatedSetField(Supplier, related_name='business')
