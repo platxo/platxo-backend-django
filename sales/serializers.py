@@ -23,6 +23,7 @@ class OrderRequestSerializer(serializers.ModelSerializer):
     employee_username = serializers.CharField(read_only=True)
     products = serializers.ListField(required=False)
     services = serializers.ListField(required=False)
+    total = serializers.FloatField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
@@ -31,7 +32,7 @@ class OrderRequestSerializer(serializers.ModelSerializer):
                   'customer_username', 'employee',
                   'employee_username', 'business',
                   'payment_method', 'products',
-                  'services', 'created_at')
+                  'services', 'total', 'created_at')
         validators = [OneProductOrService(),
                       UserInBusiness(field='employee'),
                       UserInBusiness(field='customer', anonymous=True)]
@@ -57,9 +58,9 @@ class OrderRequestSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError({'product': 'Duplicated or missing id.'})
 
             mapped_products = list()
-            # Validation of each product fields.
+            # Validate each product field.
             for prod_id in data.get('products'):
-                # Get the product with it's id
+                # Get the product with its id
                 product = next(prod for prod in products if prod.id == prod_id['id'])
                 if not prod_id.get('qty'):
                     raise serializers.ValidationError({'product': {'id': product.id,
@@ -86,6 +87,47 @@ class OrderRequestSerializer(serializers.ModelSerializer):
             # Product now contains all information and save() van use this data.
             data['products'] = mapped_products
 
+        if data.get('services'):
+            try:
+                # Extract the id of the services to search them in database. And validate initial structure.
+                services_id = [service['id'] for service in data.get('services')]
+            except KeyError as e:
+                print e.message
+                raise serializers.ValidationError({'service': 'Missing id.'})
+
+            # All services exists and belongs to the same business
+            services = list(Service.objects.filter(pk__in=services_id, business=data.get('business').id))
+
+            # If both don't match it's an error
+            if len(services_id) != len(services):
+                raise serializers.ValidationError({'service': 'Duplicated or missing id.'})
+
+            mapped_services = list()
+            # Validate each product field.
+            for serv_id in data.get('services'):
+                # Get the servuct with its id
+                service = next(serv for serv in services if serv.id == serv_id['id'])
+                if not serv_id.get('qty'):
+                    raise serializers.ValidationError({'service': {'id': service.id,
+                                                                   'message': 'Missing or invalid qty.'}})
+                # Discount must be between 0% and 100%
+                elif not(0 <= serv_id.get("discount") <= 100):
+                    raise serializers.ValidationError({'service': {'id': service.id,
+                                                                   'message': 'Discount not in range.'}})
+                # Populate the product field
+                service_object = copy(serv_id)
+                service_object['details'] = {'service_category': service.service_category.id,
+                                             'service_category_name': service.service_category.name,
+                                             'service_type': service.service_type.id,
+                                             'service_type_name': service.service_type.name,
+                                             'name': service.name,
+                                             'price': service.price
+                                             }
+                mapped_services.append(service_object)
+
+            # Product now contains all information and save() van use this data.
+            data['services'] = mapped_services
+
         return data
 
     def save(self, **kwargs):
@@ -110,9 +152,14 @@ class OrderRequestSerializer(serializers.ModelSerializer):
         if self.validated_data.get('products'):
             for product in self.validated_data.get('products'):
                 Product.objects.filter(pk=product['id']).update(quantity=F('quantity')-product['qty'])
-                total_price += round(float(product['details']['price'] * product['qty']) * (1 - (product['discount']/100.0)), 2)
+                total_price += round(
+                    float(product['details']['price'] * product['qty']) * (1 - (product['discount']/100.0)), 2)
 
-        # self.validated_data.pop('product')
+        if self.validated_data.get('services'):
+            for service in self.validated_data.get('services'):
+                total_price += round(
+                    float(service['details']['price'] * service['qty']) * (1 - (service['discount'] / 100.0)), 2)
+
         purchase_order = PurchaseOrder(total=total_price, **self.validated_data)
         purchase_order.save()
 
