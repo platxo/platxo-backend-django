@@ -87,5 +87,30 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
 
         order_saved = order_serialized.save()
 
-        # Validate that
         return Response({'message': 'Order stored.', 'total': order_saved.total})
+
+    def update(self, request, pk=None):
+        """
+        Updated purchase order.
+        Not implemented yet
+        :param request:
+        :param pk:
+        :return:
+        """
+        if True:
+            return Response({'message', 'Not implemented'}, status=status.HTTP_501_NOT_IMPLEMENTED)
+        try:
+            original_order = PurchaseOrder.objects.get(pk=pk)
+        except PurchaseOrder.DoesNotExist:
+            return Response({'error': 'Order does not exists.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        order = request.data.get('order')
+
+        if not order:
+            return Response({'error': 'Missing order field.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        order_serialized = OrderRequestSerializer(original_order, data=order, partial=True)
+        if not order_serialized.is_valid():
+            return Response({'error': order_serialized.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'message': 'Order updated.', 'total': 0})
