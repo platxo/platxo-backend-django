@@ -1,429 +1,517 @@
-# COUNTRY_CHOICES = (
-# ("AF", "Afghanistan"),
-# ("AX", "Åland Islands"),
-# ("AL", "AL", "Albania"),
-# ("DZ", "Algeria"),
-# ("AS", "American Samoa"),
-# ("AD", "Andorra"),
-# ("AO", "Angola"),
-# ("AI", "Anguilla"),
-# ("AQ", "Antarctica"),
-# ("AG", "Antigua and Barbuda"),
-# ("AR", "Argentina"),
-# ("AM", "Armenia"),
-# ("AW", "Aruba"),
-# ("AU", "Australia"),
-# ("AT", "Austria"),
-# ("AZ", "Azerbaijan"),
-# ("BS", "Bahamas"),
-# ("BH", "Bahrain"),
-# ("BD", "Bangladesh"),
-# ("BB", "Barbados"),
-# ("BY", "Belarus"),
-# ("BE", "Belgium"),
-# ("BZ", "Belize"),
-# ("BJ", "Benin"),
-# ("BM", "Bermuda"),
-# ("BT", "Bhutan"),
-# ("BO", "Bolivia Plurinational State of)"),
-# ("BQ", "Bonaire, Sint Eustatius and Saba"),
-# ("BA", "Bosnia and Herzegovina"),
-# ("BW", "Botswana"),
-# ("BV", "Bouvet Island"),
-# ("BR", "Brazil"),
-# ("IO", "British Indian Ocean Territory"),
-# ("BN", "Brunei Darussalam"),
-# ("BG", "Bulgaria"),
-# ("BF", "Burkina Faso"),
-# ("BI", "Burundi"),
-# ("CV", "Cabo Verde"),
-# ("KH", "Cambodia"),
-# ("CM", "Cameroon"),
-# ("CA", "Canada"),
-# ("KY", "Cayman Islands"),
-# ("CF", "Central African Republic"),
-# ("TD", "Chad"),
-# ("CL", "Chile"),
-# ("CN", "China"),
-# ("CX", "Christmas Island"),
-# ("CC", "Cocos (Keeling) Islands"),
-# ("CO", "Colombia"),
-# ("KM", "Comoros"),
-# ("CD", "Congo (the Democratic Republic of the)"),
-# ("CG", "Congo"),
-# ("CK", "Cook Islands"),
-# ("CR", "Costa Rica"),
-# ("CI", "Côte d'Ivoire"),
-# ("HR", "Croatia"),
-# ("CU", "Cuba"),
-# ("CW", "Curaçao"),
-# ("CY", "Cyprus"),
-# ("CZ", "Czech Republic"),
-# ("DK", "Denmark"),
-# ("DJ", "Djibouti"),
-# ("DM", "Dominica"),
-# ("DO", "Dominican Republic"),
-# ("EC", "Ecuador"),
-# ("EG", "Egypt"),
-# ("SV", "El Salvador"),
-# ("GQ", "Equatorial Guinea"),
-# ("ER", "Eritrea"),
-# ("EE", "Estonia"),
-# ("ET", "Ethiopia"),
-# ("FK", "Falkland Islands  [Malvinas]"),
-# ("FO", "Faroe Islands"),
-# ("FJ", "Fiji"),
-# ("FI", "Finland"),
-# ("FR", "France"),
-# ("GF", "French Guiana"),
-# ("PF", "French Polynesia"),
-# ("TF", "French Southern Territories"),
-# ("GA", "Gabon"),
-# ("GM", "Gambia"),
-# ("GE", "Georgia"),
-# ("DE", "Germany"),
-# ("GH", "Ghana"),
-# ("GI", "Gibraltar"),
-# ("GR", "Greece"),
-# ("GL", "Greenland"),
-# ("GD", "Grenada"),
-# ("GP", "Guadeloupe"),
-# ("GU", "Guam"),
-# ("GT", "Guatemala"),
-# ("GG", "Guernsey"),
-# ("GN", "Guinea"),
-# ("GW", "Guinea-Bissau"),
-# ("GY", "Guyana"),
-# ("HT", "Haiti"),
-# ("HM", "Heard Island and McDonald Islands"),
-# ("VA", "Holy See"),
-# ("HN", "Honduras"),
-# ("HK", "Hong Kong"),
-# ("HU", "Hungary"),
-# ("IS", "Iceland"),
-# ("IN", "India"),
-# ("ID", "Indonesia"),
-# ("IR", "Iran (Islamic Republic of)"),
-# ("IQ", "Iraq"),
-# ("IE", "Ireland"),
-# ("IM", "Isle of Man"),
-# ("IL", "Israel"),
-# ("IT", "Italy"),
-# ("JM", "Jamaica"),
-# ("JP", "Japan"),
-# ("JE", "Jersey"),
-# ("JO", "Jordan"),
-# ("KZ", "Kazakhstan"),
-# ("KE", "Kenya"),
-# ("KI", "Kiribati"),
-# ("KP", "Korea (the Democratic People's Republic of)"),
-# ("KR", "Korea (the Republic of)"),
-# ("KW", "Kuwait"),
-# ("KG", "Kyrgyzstan"),
-# ("LA", "Lao People's Democratic Republic"),
-# ("LV", "Latvia"),
-# ("LB", "Lebanon"),
-# ("LS", "Lesotho"),
-# ("LR", "Liberia"),
-# ("LY", "Libya"),
-# ("LI", "Liechtenstein"),
-# ("LT", "Lithuania"),
-# ("LU", "Luxembourg"),
-# ("MO", "Macao"),
-# ("MK", "Macedonia (the former Yugoslav Republic of)"),
-# ("MG", "Madagascar"),
-# ("MW", "Malawi"),
-# ("MY", "Malaysia"),
-# ("MV", "Maldives"),
-# ("ML", "Mali"),
-# ("MT", "Malta"),
-# ("MH", "Marshall Islands"),
-# ("MQ", "Martinique"),
-# ("MR", "Mauritania"),
-# ("MU", "Mauritius"),
-# ("YT", "Mayotte"),
-# ("MX", "Mexico"),
-# ("FM", "Micronesia (Federated States of)"),
-# ("MD", "Moldova (the Republic of)"),
-# ("MC", "Monaco"),
-# ("MN", "Mongolia"),
-# ("ME", "Montenegro"),
-# ("MS", "Montserrat"),
-# ("MA", "Morocco"),
-# ("MZ", "Mozambique"),
-# ("MM", "Myanmar"),
-# ("NA", "Namibia"),
-# ("NR", "Nauru"),
-# ("NP", "Nepal"),
-# ("NL", "Netherlands"),
-# ("NC", "New Caledonia"),
-# ("NZ", "New Zealand"),
-# ("NI", "Nicaragua"),
-# ("NE", "Niger"),
-# ("NG", "Nigeria"),
-# ("NU", "Niue"),
-# ("NF", "Norfolk Island"),
-# ("MP", "Northern Mariana Islands"),
-# ("NO", "Norway"),
-# ("OM", "Oman"),
-# ("PK", "Pakistan"),
-# ("PW", "Palau"),
-# ("PS", "Palestine, State of"),
-# ("PA", "Panama"),
-# ("PG", "Papua New Guinea"),
-# ("PY", "Paraguay"),
-# ("PE", "Peru"),
-# ("PH", "Philippines"),
-# ("PN", "Pitcairn"),
-# ("PL", "Poland"),
-# ("PT", "Portugal"),
-# ("PR", "Puerto Rico"),
-# ("QA", "Qatar"),
-# ("RE", "Réunion"),
-# ("RO", "Romania"),
-# ("RU", "Russian Federation"),
-# ("RW", "Rwanda"),
-# ("BL", "Saint Barthélemy"),
-# ("SH", "Saint Helena, Ascension and Tristan da Cunha"),
-# ("KN", "Saint Kitts and Nevis"),
-# ("LC", "Saint Lucia"),
-# ("MF", "Saint Martin French part)"),
-# ("PM", "Saint Pierre and Miquelon"),
-# ("VC", "Saint Vincent and the Grenadines"),
-# ("WS", "Samoa"),
-# ("SM", "San Marino"),
-# ("ST", "Sao Tome and Principe"),
-# ("SA", "Saudi Arabia"),
-# ("SN", "Senegal"),
-# ("RS", "Serbia"),
-# ("SC", "Seychelles"),
-# ("SL", "Sierra Leone"),
-# ("SG", "Singapore"),
-# ("SX", "Sint Maarten Dutch part)"),
-# ("SK", "Slovakia"),
-# ("SI", "Slovenia"),
-# ("SB", "Solomon Islands"),
-# ("SO", "Somalia"),
-# ("ZA", "South Africa"),
-# ("GS", "South Georgia and the South Sandwich Islands"),
-# ("SS", "South Sudan"),
-# ("ES", "Spain"),
-# ("LK", "Sri Lanka"),
-# ("SD", "Sudan"),
-# ("SR", "Suriname"),
-# ("SJ", "Svalbard and Jan Mayen"),
-# ("SZ", "Swaziland"),
-# ("SE", "Sweden"),
-# ("CH", "Switzerland"),
-# ("SY", "Syrian Arab Republic"),
-# ("TW", "Taiwan (Province of China)"),
-# ("TJ", "Tajikistan"),
-# ("TZ", "Tanzania, United Republic of"),
-# ("TH", "Thailand"),
-# ("TL", "Timor-Leste"),
-# ("TG", "Togo"),
-# ("TK", "Tokelau"),
-# ("TO", "Tonga"),
-# ("TT", "Trinidad and Tobago"),
-# ("TN", "Tunisia"),
-# ("TR", "Turkey"),
-# ("TM", "Turkmenistan"),
-# ("TC", "Turks and Caicos Islands"),
-# ("TV", "Tuvalu"),
-# ("UG", "Uganda"),
-# ("UA", "Ukraine"),
-# ("AE", "United Arab Emirates"),
-# ("GB", "United Kingdom of Great Britain and Northern Ireland"),
-# ("UM", "United States Minor Outlying Islands"),
-# ("US", "United States of America"),
-# ("UY", "Uruguay"),
-# ("UZ", "Uzbekistan"),
-# ("VU", "Vanuatu"),
-# ("VE", "Venezuela (Bolivarian Republic of)"),
-# ("VN", "Viet Nam"),
-# ("VG", "Virgin Islands (British)"),
-# ("VI", "Virgin Islands (U.S.)"),
-# ("WF", "Wallis and Futuna"),
-# ("EH", "Western Sahara"),
-# ("YE", "Yemen"),
-# ("ZM", "Zambia"),
-# ("ZW", "Zimbabwe"),
-# )
-#
-# CURRENCY_CHOICES = (
-# ('AED', 'UAE Dirham')
-# ('AFN', 'Afghani')
-# ('ALL', 'Lek')
-# ('AMD', 'Armenian Dram')
-# ('ANG', 'Netherlands Antillian Guilder')
-# ('AOA', 'Kwanza')
-# ('ARS', 'Argentine Peso')
-# ('AUD', 'Australian Dollar')
-# ('AWG', 'Aruban Guilder')
-# ('AZN', 'Azerbaijanian Manat')
-# ('BAM', 'Convertible Marks')
-# ('BBD', 'Barbados Dollar')
-# ('BDT', 'Taka'
-# ('BGN', 'Bulgarian Lev')
-# ('BHD', 'Bahraini Dinar')
-# ('BIF', 'Burundi Franc')
-# ('BMD', 'Bermudian Dollar (customarily known as Bermuda Dollar)')
-# ('BND', 'Brunei Dollar',)
-# ('BRL', 'Brazilian Real')
-# ('BSD', 'Bahamian Dollar)
-# ('BTN', 'Bhutanese ngultrum')
-# ('BWP', 'Pula')
-# ('BYR', 'Belarussian Ruble')
-# ('BZD', 'Belize Dollar')
-# ('CAD', 'Canadian Dollar')
-# ('CDF', 'Congolese franc')
-# ('CHF', 'Swiss Franc')
-# ('CLP', 'Chilean peso',)
-# ('CNY', 'Yuan Renminbi')
-# ('COP', 'Colombian peso')
-# ('CRC', 'Costa Rican Colon')
-# ('CUC', 'Cuban convertible peso')
-# ('CUP', 'Cuban Peso')
-# ('CVE', 'Cape Verde Escudo')
-# ('CZK', 'Czech Koruna')
-# ('DJF', 'Djibouti Franc')
-# ('DKK', 'Danish Krone')
-# ('DOP', 'Dominican Peso')
-# ('DZD', 'Algerian Dinar')
-# ('EGP', 'Egyptian Pound')
-# ('ERN', 'Nakfa')
-# ('ETB', 'Ethiopian Birr')
-# ('EUR', 'Euro')
-# ('FJD', 'Fiji Dollar')
-# ('FKP', 'Falkland Islands Pound')
-# ('GBP', 'Pound Sterling')
-# ('GEL', 'Lari')
-# ('GHS', 'Ghana Cedi')
-# ('GIP', 'Gibraltar Pound')
-# ('GMD', 'Dalasi')
-# ('GNF', 'Guinea Franc',)
-# ('GTQ', 'Quetzal')
-# ('GYD', 'Guyana Dollar')
-# ('HKD', 'Hong Kong Dollar')
-# ('HNL', 'Lempira')
-# ('HRK', 'Croatian Kuna')
-# ('HTG', 'Haitian gourde')
-# ('HUF', 'Forint')
-# ('IDR', 'Rupiah')
-# ('ILS', 'New Israeli Sheqel')
-# ('IMP', 'Isle of Man pount')
-# ('INR', 'Indian Rupee')
-# ('IQD', 'Iraqi Dinar')
-# ('IRR', 'Iranian Rial')
-# ('ISK', 'Iceland Krona')
-# ('JMD', 'Jamaican Dollar')
-# ('JOD', 'Jordanian Dinar')
-# ('JPY', 'Yen')
-# ('KES', 'Kenyan Shilling')
-# ('KGS', 'Som')
-# ('KHR', 'Riel')
-# ('KMF', 'Comoro Franc')
-# ('KPW', 'North Korean Won')
-# ('KRW', 'Won')
-# ('KWD', 'Kuwaiti Dinar')
-# ('KYD', 'Cayman Islands Dollar')
-# ('KZT', 'Tenge', ['KAZAKHSTAN'])
-# ('LAK', 'Kip', ['LAO PEOPLES DEMOCRATIC REPUBLIC'])
-# ('LBP', 'Lebanese Pound')
-# ('LKR', 'Sri Lanka Rupee')
-# ('LRD', 'Liberian Dollar')
-# ('LSL', 'Lesotho loti')
-# ('LTL', 'Lithuanian Litas')
-# ('LVL', 'Latvian Lats')
-# ('LYD', 'Libyan Dinar')
-# ('MAD', 'Moroccan Dirham')
-# ('MDL', 'Moldovan Leu')
-# ('MGA', 'Malagasy Ariary')
-# ('MKD', 'Denar')
-# ('MMK', 'Kyat')
-# ('MNT', 'Tugrik')
-# ('MOP', 'Pataca')
-# ('MRO', 'Ouguiya'
-# ('MUR', 'Mauritius Rupee')
-# ('MVR', 'Rufiyaa')
-# ('MWK', 'Malawian Kwacha')
-# ('MXN', 'Mexican peso')
-# ('MYR', 'Malaysian Ringgit')
-# ('MZN', 'Metical')
-# ('NAD', 'Namibian Dollar')
-# ('NGN', 'Naira')
-# ('NIO', 'Cordoba Oro')
-# ('NOK', 'Norwegian Krone')
-# ('NPR', 'Nepalese Rupee')
-# ('NZD', 'New Zealand Dollar')
-# ('OMR', 'Rial Omani')
-# ('PEN', 'Nuevo Sol')
-# ('PGK', 'Kina')
-# ('PHP', 'Philippine Peso')
-# ('PKR', 'Pakistan Rupee')
-# ('PLN', 'Zloty')
-# ('PYG', 'Guarani')
-# ('QAR', 'Qatari Rial')
-# ('RON', 'New Leu')
-# ('RSD', 'Serbian Dinar')
-# ('RUB', 'Russian Ruble')
-# ('RWF', 'Rwanda Franc')
-# ('SAR', 'Saudi Riyal')
-# ('SBD', 'Solomon Islands Dollar')
-# ('SCR', 'Seychelles Rupee')
-# ('SDG', 'Sudanese Pound')
-# ('SEK', 'Swedish Krona')
-# ('SGD', 'Singapore Dollar')
-# ('SHP', 'Saint Helena Pound')
-# ('SLL', 'Leone')
-# ('SOS', 'Somali Shilling')
-# ('SRD', 'Surinam Dollar')
-# ('STD', 'Dobra')
-# ('SYP', 'Syrian Pound')
-# ('SZL', 'Lilangeni')
-# ('THB', 'Baht')
-# ('TJS', 'Somoni')
-# ('TMM', 'Manat'
-# ('TND', 'Tunisian Dinar')
-# ('TOP', 'Paanga')
-# ('TRY', 'Turkish Lira')
-# ('TTD', 'Trinidad and Tobago Dollar')
-# ('TVD', 'Tuvalu dollar')
-# ('TWD', 'New Taiwan Dollar')
-# ('TZS', 'Tanzanian Shilling')
-# ('UAH', 'Hryvnia')
-# ('UGX', 'Uganda Shilling')
-# ('USD', 'US Dollar')
-# ('UYU', 'Uruguayan peso')
-# ('UZS', 'Uzbekistan Sum')
-# ('VEF', 'Bolivar Fuerte')
-# ('VND', 'Dong')
-# ('VUV', 'Vatu')
-# ('WST', 'Tala')
-# ('XAF', 'CFA franc BEAC')
-# ('XAG', 'Silver')
-# ('XAU', 'Gold')
-# ('XBA', 'Bond Markets Units European Composite Unit (EURCO)')
-# ('XBB', 'European Monetary Unit (E.M.U.-6)')
-# ('XBC', 'European Unit of Account 9(E.U.A.-9)')
-# ('XBD', 'European Unit of Account 17(E.U.A.-17)')
-# ('XCD', 'East Caribbean Dollar')
-# ('XDR', 'SDR')
-# ('XFO', 'Gold-Franc')
-# ('XFU', 'UIC-Franc')
-# ('XOF', 'CFA Franc BCEAO')
-# ('XPD', 'Palladium')
-# ('XPF', 'CFP Franc')
-# ('XPT', 'Platinum')
-# ('XTS', 'Codes specifically reserved for testing purposes')
-# ('YER', 'Yemeni Rial')
-# ('ZAR', 'Rand')
-# ('ZMK', 'Zambian Kwacha')
-# ('ZMW', 'Zambian Kwacha')
-# ('ZWD', 'Zimbabwe Dollar A/06')
-# ('ZWL', 'Zimbabwe dollar A/09')
-# ('ZWN', 'Zimbabwe dollar A/08')
-# )
+# -*- coding: utf-8 -*-
+#import moneyed
+# CURRENCY_CHOICES = moneyed.CURRENCIES
+# CURRENCY_CHOICES = [(c.code, c.name) for i, c in moneyed.CURRENCIES.items()]
+
+
+""" COUNTRY_CHOICES """
+COUNTRY_CHOICES = (
+("AF", "Afghanistan"),
+("AX", "Åland Islands"),
+("AL", "Albania"),
+("DZ", "Algeria"),
+("AS", "American Samoa"),
+("AD", "Andorra"),
+("AO", "Angola"),
+("AI", "Anguilla"),
+("AQ", "Antarctica"),
+("AG", "Antigua and Barbuda"),
+("AR", "Argentina"),
+("AM", "Armenia"),
+("AW", "Aruba"),
+("AU", "Australia"),
+("AT", "Austria"),
+("AZ", "Azerbaijan"),
+("BS", "Bahamas"),
+("BH", "Bahrain"),
+("BD", "Bangladesh"),
+("BB", "Barbados"),
+("BY", "Belarus"),
+("BE", "Belgium"),
+("BZ", "Belize"),
+("BJ", "Benin"),
+("BM", "Bermuda"),
+("BT", "Bhutan"),
+("BO", "Bolivia Plurinational State of)"),
+("BQ", "Bonaire, Sint Eustatius and Saba"),
+("BA", "Bosnia and Herzegovina"),
+("BW", "Botswana"),
+("BV", "Bouvet Island"),
+("BR", "Brazil"),
+("IO", "British Indian Ocean Territory"),
+("BN", "Brunei Darussalam"),
+("BG", "Bulgaria"),
+("BF", "Burkina Faso"),
+("BI", "Burundi"),
+("CV", "Cabo Verde"),
+("KH", "Cambodia"),
+("CM", "Cameroon"),
+("CA", "Canada"),
+("KY", "Cayman Islands"),
+("CF", "Central African Republic"),
+("TD", "Chad"),
+("CL", "Chile"),
+("CN", "China"),
+("CX", "Christmas Island"),
+("CC", "Cocos (Keeling) Islands"),
+("CO", "Colombia"),
+("KM", "Comoros"),
+("CD", "Congo (the Democratic Republic of the)"),
+("CG", "Congo"),
+("CK", "Cook Islands"),
+("CR", "Costa Rica"),
+("CI", "Côte d'Ivoire"),
+("HR", "Croatia"),
+("CU", "Cuba"),
+("CW", "Curaçao"),
+("CY", "Cyprus"),
+("CZ", "Czech Republic"),
+("DK", "Denmark"),
+("DJ", "Djibouti"),
+("DM", "Dominica"),
+("DO", "Dominican Republic"),
+("EC", "Ecuador"),
+("EG", "Egypt"),
+("SV", "El Salvador"),
+("GQ", "Equatorial Guinea"),
+("ER", "Eritrea"),
+("EE", "Estonia"),
+("ET", "Ethiopia"),
+("FK", "Falkland Islands  [Malvinas]"),
+("FO", "Faroe Islands"),
+("FJ", "Fiji"),
+("FI", "Finland"),
+("FR", "France"),
+("GF", "French Guiana"),
+("PF", "French Polynesia"),
+("TF", "French Southern Territories"),
+("GA", "Gabon"),
+("GM", "Gambia"),
+("GE", "Georgia"),
+("DE", "Germany"),
+("GH", "Ghana"),
+("GI", "Gibraltar"),
+("GR", "Greece"),
+("GL", "Greenland"),
+("GD", "Grenada"),
+("GP", "Guadeloupe"),
+("GU", "Guam"),
+("GT", "Guatemala"),
+("GG", "Guernsey"),
+("GN", "Guinea"),
+("GW", "Guinea-Bissau"),
+("GY", "Guyana"),
+("HT", "Haiti"),
+("HM", "Heard Island and McDonald Islands"),
+("VA", "Holy See"),
+("HN", "Honduras"),
+("HK", "Hong Kong"),
+("HU", "Hungary"),
+("IS", "Iceland"),
+("IN", "India"),
+("ID", "Indonesia"),
+("IR", "Iran (Islamic Republic of)"),
+("IQ", "Iraq"),
+("IE", "Ireland"),
+("IM", "Isle of Man"),
+("IL", "Israel"),
+("IT", "Italy"),
+("JM", "Jamaica"),
+("JP", "Japan"),
+("JE", "Jersey"),
+("JO", "Jordan"),
+("KZ", "Kazakhstan"),
+("KE", "Kenya"),
+("KI", "Kiribati"),
+("KP", "Korea (the Democratic People's Republic of)"),
+("KR", "Korea (the Republic of)"),
+("KW", "Kuwait"),
+("KG", "Kyrgyzstan"),
+("LA", "Lao People's Democratic Republic"),
+("LV", "Latvia"),
+("LB", "Lebanon"),
+("LS", "Lesotho"),
+("LR", "Liberia"),
+("LY", "Libya"),
+("LI", "Liechtenstein"),
+("LT", "Lithuania"),
+("LU", "Luxembourg"),
+("MO", "Macao"),
+("MK", "Macedonia (the former Yugoslav Republic of)"),
+("MG", "Madagascar"),
+("MW", "Malawi"),
+("MY", "Malaysia"),
+("MV", "Maldives"),
+("ML", "Mali"),
+("MT", "Malta"),
+("MH", "Marshall Islands"),
+("MQ", "Martinique"),
+("MR", "Mauritania"),
+("MU", "Mauritius"),
+("YT", "Mayotte"),
+("MX", "Mexico"),
+("FM", "Micronesia (Federated States of)"),
+("MD", "Moldova (the Republic of)"),
+("MC", "Monaco"),
+("MN", "Mongolia"),
+("ME", "Montenegro"),
+("MS", "Montserrat"),
+("MA", "Morocco"),
+("MZ", "Mozambique"),
+("MM", "Myanmar"),
+("NA", "Namibia"),
+("NR", "Nauru"),
+("NP", "Nepal"),
+("NL", "Netherlands"),
+("NC", "New Caledonia"),
+("NZ", "New Zealand"),
+("NI", "Nicaragua"),
+("NE", "Niger"),
+("NG", "Nigeria"),
+("NU", "Niue"),
+("NF", "Norfolk Island"),
+("MP", "Northern Mariana Islands"),
+("NO", "Norway"),
+("OM", "Oman"),
+("PK", "Pakistan"),
+("PW", "Palau"),
+("PS", "Palestine, State of"),
+("PA", "Panama"),
+("PG", "Papua New Guinea"),
+("PY", "Paraguay"),
+("PE", "Peru"),
+("PH", "Philippines"),
+("PN", "Pitcairn"),
+("PL", "Poland"),
+("PT", "Portugal"),
+("PR", "Puerto Rico"),
+("QA", "Qatar"),
+("RE", "Réunion"),
+("RO", "Romania"),
+("RU", "Russian Federation"),
+("RW", "Rwanda"),
+("BL", "Saint Barthélemy"),
+("SH", "Saint Helena, Ascension and Tristan da Cunha"),
+("KN", "Saint Kitts and Nevis"),
+("LC", "Saint Lucia"),
+("MF", "Saint Martin French part)"),
+("PM", "Saint Pierre and Miquelon"),
+("VC", "Saint Vincent and the Grenadines"),
+("WS", "Samoa"),
+("SM", "San Marino"),
+("ST", "Sao Tome and Principe"),
+("SA", "Saudi Arabia"),
+("SN", "Senegal"),
+("RS", "Serbia"),
+("SC", "Seychelles"),
+("SL", "Sierra Leone"),
+("SG", "Singapore"),
+("SX", "Sint Maarten Dutch part)"),
+("SK", "Slovakia"),
+("SI", "Slovenia"),
+("SB", "Solomon Islands"),
+("SO", "Somalia"),
+("ZA", "South Africa"),
+("GS", "South Georgia and the South Sandwich Islands"),
+("SS", "South Sudan"),
+("ES", "Spain"),
+("LK", "Sri Lanka"),
+("SD", "Sudan"),
+("SR", "Suriname"),
+("SJ", "Svalbard and Jan Mayen"),
+("SZ", "Swaziland"),
+("SE", "Sweden"),
+("CH", "Switzerland"),
+("SY", "Syrian Arab Republic"),
+("TW", "Taiwan (Province of China)"),
+("TJ", "Tajikistan"),
+("TZ", "Tanzania, United Republic of"),
+("TH", "Thailand"),
+("TL", "Timor-Leste"),
+("TG", "Togo"),
+("TK", "Tokelau"),
+("TO", "Tonga"),
+("TT", "Trinidad and Tobago"),
+("TN", "Tunisia"),
+("TR", "Turkey"),
+("TM", "Turkmenistan"),
+("TC", "Turks and Caicos Islands"),
+("TV", "Tuvalu"),
+("UG", "Uganda"),
+("UA", "Ukraine"),
+("AE", "United Arab Emirates"),
+("GB", "United Kingdom of Great Britain and Northern Ireland"),
+("UM", "United States Minor Outlying Islands"),
+("US", "United States of America"),
+("UY", "Uruguay"),
+("UZ", "Uzbekistan"),
+("VU", "Vanuatu"),
+("VE", "Venezuela (Bolivarian Republic of)"),
+("VN", "Viet Nam"),
+("VG", "Virgin Islands (British)"),
+("VI", "Virgin Islands (U.S.)"),
+("WF", "Wallis and Futuna"),
+("EH", "Western Sahara"),
+("YE", "Yemen"),
+("ZM", "Zambia"),
+("ZW", "Zimbabwe"),
+)
+
+""" CURRENCY_CHOICES """
+CURRENCY_CHOICES = (
+('AED', 'UAE Dirham'),
+('AFN', 'Afghani'),
+('ALL', 'Lek'),
+('AMD', 'Armenian Dram'),
+('ANG', 'Netherlands Antillian Guilder'),
+('AOA', 'Kwanza'),
+('ARS', 'Argentine Peso'),
+('AUD', 'Australian Dollar'),
+('AWG', 'Aruban Guilder'),
+('AZN', 'Azerbaijanian Manat'),
+('BAM', 'Convertible Marks'),
+('BBD', 'Barbados Dollar'),
+('BDT', 'Taka'),
+('BGN', 'Bulgarian Lev'),
+('BHD', 'Bahraini Dinar'),
+('BIF', 'Burundi Franc'),
+('BMD', 'Bermudian Dollar (customarily known as Bermuda Dollar),'),
+('BND', 'Brunei Dollar'),
+('BRL', 'Brazilian Real'),
+('BSD', 'Bahamian Dollar'),
+('BTN', 'Bhutanese ngultrum'),
+('BWP', 'Pula'),
+('BYR', 'Belarussian Ruble'),
+('BZD', 'Belize Dollar'),
+('CAD', 'Canadian Dollar'),
+('CDF', 'Congolese franc'),
+('CHF', 'Swiss Franc'),
+('CLP', 'Chilean peso'),
+('CNY', 'Yuan Renminbi'),
+('COP', 'Colombian peso'),
+('CRC', 'Costa Rican Colon'),
+('CUC', 'Cuban convertible peso'),
+('CUP', 'Cuban Peso'),
+('CVE', 'Cape Verde Escudo'),
+('CZK', 'Czech Koruna'),
+('DJF', 'Djibouti Franc'),
+('DKK', 'Danish Krone'),
+('DOP', 'Dominican Peso'),
+('DZD', 'Algerian Dinar'),
+('EGP', 'Egyptian Pound'),
+('ERN', 'Nakfa'),
+('ETB', 'Ethiopian Birr'),
+('EUR', 'Euro'),
+('FJD', 'Fiji Dollar'),
+('FKP', 'Falkland Islands Pound'),
+('GBP', 'Pound Sterling'),
+('GEL', 'Lari'),
+('GHS', 'Ghana Cedi'),
+('GIP', 'Gibraltar Pound'),
+('GMD', 'Dalasi'),
+('GNF', 'Guinea Franc',),
+('GTQ', 'Quetzal'),
+('GYD', 'Guyana Dollar'),
+('HKD', 'Hong Kong Dollar'),
+('HNL', 'Lempira'),
+('HRK', 'Croatian Kuna'),
+('HTG', 'Haitian gourde'),
+('HUF', 'Forint'),
+('IDR', 'Rupiah'),
+('ILS', 'New Israeli Sheqel'),
+('IMP', 'Isle of Man pount'),
+('INR', 'Indian Rupee'),
+('IQD', 'Iraqi Dinar'),
+('IRR', 'Iranian Rial'),
+('ISK', 'Iceland Krona'),
+('JMD', 'Jamaican Dollar'),
+('JOD', 'Jordanian Dinar'),
+('JPY', 'Yen'),
+('KES', 'Kenyan Shilling'),
+('KGS', 'Som'),
+('KHR', 'Riel'),
+('KMF', 'Comoro Franc'),
+('KPW', 'North Korean Won'),
+('KRW', 'Won'),
+('KWD', 'Kuwaiti Dinar'),
+('KYD', 'Cayman Islands Dollar'),
+('KZT', 'Tenge'),
+('LAK', 'Kip'),
+('LBP', 'Lebanese Pound'),
+('LKR', 'Sri Lanka Rupee'),
+('LRD', 'Liberian Dollar'),
+('LSL', 'Lesotho loti'),
+('LTL', 'Lithuanian Litas'),
+('LVL', 'Latvian Lats'),
+('LYD', 'Libyan Dinar'),
+('MAD', 'Moroccan Dirham'),
+('MDL', 'Moldovan Leu'),
+('MGA', 'Malagasy Ariary'),
+('MKD', 'Denar'),
+('MMK', 'Kyat'),
+('MNT', 'Tugrik'),
+('MOP', 'Pataca'),
+('MRO', 'Ouguiya'),
+('MUR', 'Mauritius Rupee'),
+('MVR', 'Rufiyaa'),
+('MWK', 'Malawian Kwacha'),
+('MXN', 'Mexican peso'),
+('MYR', 'Malaysian Ringgit'),
+('MZN', 'Metical'),
+('NAD', 'Namibian Dollar'),
+('NGN', 'Naira'),
+('NIO', 'Cordoba Oro'),
+('NOK', 'Norwegian Krone'),
+('NPR', 'Nepalese Rupee'),
+('NZD', 'New Zealand Dollar'),
+('OMR', 'Rial Omani'),
+('PEN', 'Nuevo Sol'),
+('PGK', 'Kina'),
+('PHP', 'Philippine Peso'),
+('PKR', 'Pakistan Rupee'),
+('PLN', 'Zloty'),
+('PYG', 'Guarani'),
+('QAR', 'Qatari Rial'),
+('RON', 'New Leu'),
+('RSD', 'Serbian Dinar'),
+('RUB', 'Russian Ruble'),
+('RWF', 'Rwanda Franc'),
+('SAR', 'Saudi Riyal'),
+('SBD', 'Solomon Islands Dollar'),
+('SCR', 'Seychelles Rupee'),
+('SDG', 'Sudanese Pound'),
+('SEK', 'Swedish Krona'),
+('SGD', 'Singapore Dollar'),
+('SHP', 'Saint Helena Pound'),
+('SLL', 'Leone'),
+('SOS', 'Somali Shilling'),
+('SRD', 'Surinam Dollar'),
+('STD', 'Dobra'),
+('SYP', 'Syrian Pound'),
+('SZL', 'Lilangeni'),
+('THB', 'Baht'),
+('TJS', 'Somoni'),
+('TMM', 'Manat'),
+('TND', 'Tunisian Dinar'),
+('TOP', 'Paanga'),
+('TRY', 'Turkish Lira'),
+('TTD', 'Trinidad and Tobago Dollar'),
+('TVD', 'Tuvalu dollar'),
+('TWD', 'New Taiwan Dollar'),
+('TZS', 'Tanzanian Shilling'),
+('UAH', 'Hryvnia'),
+('UGX', 'Uganda Shilling'),
+('USD', 'US Dollar'),
+('UYU', 'Uruguayan peso'),
+('UZS', 'Uzbekistan Sum'),
+('VEF', 'Bolivar Fuerte'),
+('VND', 'Dong'),
+('VUV', 'Vatu'),
+('WST', 'Tala'),
+('XAF', 'CFA franc BEAC'),
+('XAG', 'Silver'),
+('XAU', 'Gold'),
+('XBA', 'Bond Markets Units European Composite Unit (EURCO)'),
+('XBB', 'European Monetary Unit (E.M.U.-6)'),
+('XBC', 'European Unit of Account 9(E.U.A.-9)'),
+('XBD', 'European Unit of Account 17(E.U.A.-17)'),
+('XCD', 'East Caribbean Dollar'),
+('XDR', 'SDR'),
+('XFO', 'Gold-Franc'),
+('XFU', 'UIC-Franc'),
+('XOF', 'CFA Franc BCEAO'),
+('XPD', 'Palladium'),
+('XPF', 'CFP Franc'),
+('XPT', 'Platinum'),
+('XTS', 'Codes specifically reserved for testing purposes'),
+('YER', 'Yemeni Rial'),
+('ZAR', 'Rand'),
+('ZMK', 'Zambian Kwacha'),
+('ZMW', 'Zambian Kwacha'),
+('ZWD', 'Zimbabwe Dollar A/06'),
+('ZWL', 'Zimbabwe dollar A/09'),
+('ZWN', 'Zimbabwe dollar A/08'),
+)
+
+""" CATEGORY_CHOICES """
+FOOD_AND_DRINK = 'food and drink'
+HEALTH_BEAUTY = 'health and beauty'
+FASHION_AND_APPAREL = 'fashion and apparel'
+HOME_AND_GARDEN = 'home and garden'
+SPORTS_AND_HOBBIES = 'sports and hobbies'
+OTHER_CATEGORY = 'other'
+
+CATEGORY_CHOICES = (
+(FOOD_AND_DRINK, 'Food and Drink'),
+(HEALTH_BEAUTY , 'Health and Beauty'),
+(FASHION_AND_APPAREL, 'Fashion and Apparel'),
+(HOME_AND_GARDEN, 'Home and Garden'),
+(SPORTS_AND_HOBBIES, 'Sports and Hobbies'),
+(OTHER_CATEGORY, 'Other'),
+)
+
+""" TYPE_CHOICES  """
+BAR = 'bar'
+BAKERY = 'bakery'
+CAFE_AND_RESTAURANT = 'cafe and restaurant'
+GROCERY = 'grocery'
+DRUGSTORE = 'drugstore'
+SALON_AND_BABERSHOP = 'salon and barbershop'
+OTHER_TYPE = 'other'
+
+TYPE_CHOICES = (
+(BAR, 'Bar'),
+(BAKERY, 'Bakery'),
+(CAFE_AND_RESTAURANT, 'Cafe and Restaurant'),
+(GROCERY, 'Grocery'),
+(DRUGSTORE, 'Drugstore'),
+(SALON_AND_BABERSHOP, 'Salon and Barbershop'),
+(OTHER_TYPE, 'Other'),
+)
+
+""" SIZE_CHOICES  """
+S = 's'
+M = 'm'
+L = 'l'
+XL = 'xl'
+
+SIZE_CHOICES = (
+(S, '1-3 employee'),
+(M, '4-10 employee'),
+(L, '11-20 employee'),
+(XL, '20+ employee'),
+)
+
+""" CRM_POINTS_CHOICES """
+FIVE = 5
+TEN = 10
+FIFTEEN = 15
+
+CRM_POINTS_CHOICES = (
+(FIVE, '5%'),
+(TEN, '10%'),
+(FIFTEEN, '15%'),
+)
+
+""" TAGS_CHOICES """
+GREY = 'grey'
+RED = 'red'
+YELLOW = 'yellow'
+BLUE = 'blue'
+ORANGE = 'orange'
+GREEN = 'green'
+PURPLE = 'purple'
+
+TAGS_CHOICES = (
+(GREY, 'Grey'),
+(RED, 'Red'),
+(YELLOW, 'Yellow'),
+(BLUE, 'Blue'),
+(ORANGE , 'Orange'),
+(GREEN, 'Green'),
+(PURPLE, 'Purple'),
+)
+
 # CATEGORY_CHOICES = (
 # (1000, 'Arts, crafts, and collectibles'),
 # (1001, 'Baby'),
@@ -750,44 +838,4 @@
 # 2295	Towing service
 # 2296	Truck and utility trailer rental
 # 2297	Accessories
-# )
-# 
-# S = 's'
-# M = 'm'
-# L = 'l'
-# XL = 'xl'
-#
-# SIZE_CHOICES = (
-# (S, '1-3 employee'),
-# (M, '4-10 employee'),
-# (L, '11-20 employee'),
-# (XL, '20+ employee'),
-# )
-#
-# FIVE = 5
-# TEN = 10
-# FIFTEEN = 15
-#
-# CRM_POINTS_CHOICES = (
-# (FIVE, '5%'),
-# (TEN, '10%'),
-# (FIFTEEN, '15%'),
-# )
-#
-# GREY = 'grey'
-# RED = 'red'
-# YELLOW = 'yellow'
-# BLUE = 'blue'
-# ORANGE = 'orange'
-# GREEN = 'green'
-# PURPLE = 'purple'
-#
-# TAGS_CHOICES = (
-# (GREY, 'Grey'),
-# (RED, 'Red'),
-# (YELLOW, 'Yellow'),
-# (BLUE, 'Blue'),
-# (ORANGE , 'Orange'),
-# (GREEN, 'Green'),
-# (PURPLE, 'Purple'),
 # )

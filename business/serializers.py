@@ -21,6 +21,7 @@ class BusinessSerializer(serializers.ModelSerializer):
             'currency',
             'crm_points',
             'category',
+            'type',
             'employees',
             'customers',
             'suppliers',

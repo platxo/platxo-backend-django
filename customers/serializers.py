@@ -10,7 +10,7 @@ class PointSerializer(serializers.ModelSerializer):
             'id',
             'customer',
             'business',
-            'quantity',
+            'balance',
             'created',
             'updated',
             'url'

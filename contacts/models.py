@@ -2,13 +2,14 @@ from __future__ import unicode_literals
 
 from django.db import models
 from business.models import Business
+from business.models import Customer
 from products.models import Product
 from services.models import Service
 
 class Contact(models.Model):
     business = models.ForeignKey(Business, related_name='contacts')
+    customer = models.ForeignKey(Customer, related_name='contacts')
     claim = models.CharField(max_length=255)
-    customer = models.CharField(max_length=255)
     state = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
