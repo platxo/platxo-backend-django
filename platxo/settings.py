@@ -21,6 +21,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # DJANGO AND DJANGAE
     'djangae',
     'djangae.contrib.security',
     'django.contrib.admin',
@@ -30,10 +31,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # THIRD
     'rest_framework',
     'rest_framework_jwt',
     'django_filters',
+    'django_countries',
+    'djmoney',
     'corsheaders',
+    # PLATXO APPS
     'users.apps.UsersConfig',
     'accounts.apps.AccountsConfig',
     'business.apps.BusinessConfig',

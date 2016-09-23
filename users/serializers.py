@@ -121,7 +121,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         if action in ['update', 'partial_update']:
             kwargs = extra_kwargs.get('password', {})
-            kwargs['read-_only'] = True
+            kwargs['read_only'] = True
             kwargs['write_only'] = False
             extra_kwargs['password'] = kwargs
 
