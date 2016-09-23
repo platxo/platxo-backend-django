@@ -2,8 +2,47 @@ from __future__ import unicode_literals
 
 from django.db import models
 from djangae import fields
+from django_countries.fields import CountryField
+import moneyed
 
 from accounts.models import Owner, Employee, Customer, Supplier
+
+
+CURRENCY_CHOICES = moneyed.CURRENCIES
+
+BAR = 'bar'
+BAKER = 'baker'
+RESTAURANT = 'restaurant'
+OTHER = 'other'
+
+CATEGORY_CHOICES = (
+(BAR, 'Bar'),
+(BAKER, 'Baker'),
+(RESTAURANT, 'Restaurant'),
+(OTHER, 'Other'),
+)
+
+S = 's'
+M = 'm'
+L = 'l'
+XL = 'xl'
+
+SIZE_CHOICES = (
+(S, '1-3 employee'),
+(M, '4-10 employee'),
+(L, '11-20 employee'),
+(XL, '20+ employee'),
+)
+
+FIVE = 5
+TEN = 10
+FIFTEEN = 15
+
+CRM_POINTS_CHOICES = (
+(FIVE, '5%'),
+(TEN, '10%'),
+(FIFTEEN, '15%'),
+)
 
 GREY = 'grey'
 RED = 'red'
@@ -23,10 +62,17 @@ TAGS_CHOICES = (
 (PURPLE, 'Purple'),
 )
 
-
 class Business(models.Model):
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='business')
     name = models.CharField(max_length=255)
+    country = CountryField()
+    city = models.CharField(max_length=255)
+    currency = models.CharField(choices=CURRENCY_CHOICES)
+    crm_points = models.IntegerField(max_length=2, choices=CRM_POINTS_CHOICES)
+    category = models.CharField(choices=CATEGORY_CHOICES)
+    email = models.EmailField(max_length=254)
+    website = models.URLField(max_length=200)
+    telephone = models.CharField(max_length=255)
     employees = fields.RelatedSetField(Employee, related_name='business')
     customers = fields.RelatedSetField(Customer, related_name='business')
     suppliers = fields.RelatedSetField(Supplier, related_name='business')

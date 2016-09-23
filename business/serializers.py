@@ -12,7 +12,22 @@ class BusinessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Business
-        fields = ('id', 'owner', 'name', 'employees', 'customers', 'suppliers', 'created', 'updated', 'url')
+        fields = (
+            'id',
+            'owner',
+            'name',
+            'country',
+            'city',
+            'currency',
+            'crm_points',
+            'category',
+            'employees',
+            'customers',
+            'suppliers',
+            'created',
+            'updated',
+            'url'
+            )
 
 
 class DataSerializer(serializers.ModelSerializer):

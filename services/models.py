@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from djmoney.models.fields import MoneyField
 
 from business.models import Business
 from accounts.models import Employee
@@ -47,7 +48,7 @@ class Service(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     supplier = models.CharField(max_length=255, blank=True, null=True)
-    price = models.DecimalField(max_digits=12, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='service/image', blank=True, null=True)
     picture = models.ImageField(upload_to='service/picture', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)

@@ -88,6 +88,30 @@ indexes:
   - name: created
     direction: desc
 
+- kind: contacts_contact
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: contacts_promotion
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: customers_point
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: customers_point
+  properties:
+  - name: customer_id
+  - name: created
+    direction: desc
+
 - kind: django_admin_log
   properties:
   - name: user_id
@@ -155,6 +179,12 @@ indexes:
 - kind: sales_purchaseorder
   properties:
   - name: business_id
+  - name: created_at
+    direction: desc
+
+- kind: sales_purchaseorder
+  properties:
+  - name: customer_id
   - name: created_at
     direction: desc
 

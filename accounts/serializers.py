@@ -33,7 +33,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ('id', 'user', 'business', 'created', 'updated', 'url')
+        fields = ('id', 'user', 'business', 'points', 'created', 'updated', 'url')
 
 
 class SupplierSerializer(serializers.ModelSerializer):
