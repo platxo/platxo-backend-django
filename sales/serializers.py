@@ -3,42 +3,36 @@ from copy import copy
 from django.db.models import F
 from rest_framework import serializers
 
-from sales.validators import OneProductOrService, UserInBusiness, DoNotUpdateAfter
-from .models import Sale, PurchaseOrder
+from sales.validators import OneProductOrService, UserInBusiness, DoNotUpdateAfter, CustomerPoints
+from .models import Sale, Sale
 from products.models import Product
 from services.models import Service
 
 
 class SaleSerializer(serializers.ModelSerializer):
-    products = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
-    services = serializers.PrimaryKeyRelatedField(many=True, queryset=Service.objects.all())
-
-    class Meta:
-        model = Sale
-        fields = ('id', 'business', 'employee', 'customer', 'products', 'services', 'payment', 'total', 'created', 'updated', 'url')
-
-
-class OrderRequestSerializer(serializers.ModelSerializer):
     customer_username = serializers.CharField(read_only=True)
     employee_username = serializers.CharField(read_only=True)
     products = serializers.ListField(required=False)
     services = serializers.ListField(required=False)
     subtotal = serializers.FloatField(read_only=True)
+    customer_points = serializers.FloatField(default=0)
     discount = serializers.IntegerField(default=0)
     total = serializers.FloatField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
 
     class Meta:
-        model = PurchaseOrder
+        model = Sale
         fields = ('id', 'customer',
                   'customer_username', 'employee',
                   'employee_username', 'business',
                   'payment_method', 'products',
                   'services', 'discount',
-                  'subtotal', 'total', 'created_at')
+                  'subtotal', 'customer_points',
+                  'total', 'created_at')
         validators = [OneProductOrService(),
                       UserInBusiness(field='employee'),
                       UserInBusiness(field='customer', anonymous=True),
+                      CustomerPoints()
                       # DoNotUpdateAfter(time=5)
                       ]
 
@@ -175,7 +169,17 @@ class OrderRequestSerializer(serializers.ModelSerializer):
                 subtotal += float(service['details']['price'] * service['qty']) * (1 - (service['discount'] / 100.0))
 
         total = round(subtotal * (1 - (self.validated_data['discount'] / 100.0)), 2)
-        purchase_order = PurchaseOrder(subtotal=subtotal, total=round(total, 2), **self.validated_data)
+        # One customer_point equals one unit in current currency.
+        # This validation needs somehow to be out of this save block.
+        max_points_allowed = float(self.validated_data['business'].crm_points/100.0) * total
+        self.validated_data['customer_points'] = \
+            self.validated_data['customer_points'] if \
+            self.validated_data['customer_points'] <= max_points_allowed else \
+            max_points_allowed
+
+        total -= self.validated_data['customer_points']
+        purchase_order = Sale(subtotal=subtotal, total=round(total, 2), **self.validated_data)
+
         purchase_order.save()
 
         return purchase_order
