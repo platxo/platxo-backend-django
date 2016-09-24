@@ -47,16 +47,40 @@ class PurchaseOrder(models.Model):
         (DEBIT_CARD, 'debit card')
     )
 
+    # Information of the actors involved in the transaction.
     employee = models.ForeignKey(Employee)
     employee_username = models.CharField(max_length=255, blank=True, null=True)
+
     business = models.ForeignKey(Business)
     business_name = models.CharField(max_length=255, blank=True, null=True)
+
     customer = models.ForeignKey(Customer, blank=True, null=True)
     customer_username = models.CharField(max_length=255, blank=True, null=True)
+
+    # Payment method used in the transaction. The customer points are optional.
     payment_method = models.CharField(max_length=150, choices=PAYMENT_CHOICES)
+
+    # Products and services bought
+    # An array field expecting the contents {
+    #                                      id: product/service id,
+    #                                      qty: total items bought,
+    #                                      discount: (optional} Integer number of the independent discount to the item.}
     products = fields.JSONField()
     services = fields.JSONField()
-    total = models.FloatField()
+
+    # The value before applying any deduction or increment due to taxex, points
+    subtotal = models.FloatField(help_text='Brute total')
+    # Percentage of discount applied to subtotal
+    discount = models.IntegerField(help_text='A discount to apply to the whole purchase', blank=True, default=0)
+    # Net value received
+    total = models.FloatField(help_text='The final and payed value')
+
+    # In case the order has been canceled, instead of deleting the record, it is canceled.
+    OK = 'ACCEPTED'
+    CANCEL = 'CANCELED'
+    status_choices = ((OK, OK), (CANCEL, CANCEL))
+    status = models.CharField(max_length=10, choices=status_choices, default=OK)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
