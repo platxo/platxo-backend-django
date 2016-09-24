@@ -1,6 +1,13 @@
 from rest_framework import serializers
 from .models import Owner, Employee, Customer, Supplier
 from business.models import Business
+from customers.models import Point
+
+class CustomerPointSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Point
+        fields = ('id', 'business', 'balance')
 
 class AccountsBusinessSerializer(serializers.ModelSerializer):
 
@@ -30,6 +37,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class CustomerSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     business = AccountsBusinessSerializer(many=True, read_only=True)
+    points = CustomerPointSerializer(many=True, read_only=True)
 
     class Meta:
         model = Customer
