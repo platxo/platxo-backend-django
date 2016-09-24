@@ -483,11 +483,13 @@ SIZE_CHOICES = (
 )
 
 """ CRM_POINTS_CHOICES """
+ZERO = 0
 FIVE = 5
 TEN = 10
 FIFTEEN = 15
 
 CRM_POINTS_CHOICES = (
+(ZERO, '0%'),
 (FIVE, '5%'),
 (TEN, '10%'),
 (FIFTEEN, '15%'),

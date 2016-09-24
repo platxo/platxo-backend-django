@@ -3,25 +3,16 @@ from __future__ import unicode_literals
 
 from django.db import models
 from djangae import fields
-from .choices import (
-COUNTRY_CHOICES,
-CURRENCY_CHOICES,
-CATEGORY_CHOICES,
-TYPE_CHOICES,
-SIZE_CHOICES,
-CRM_POINTS_CHOICES,
-TAGS_CHOICES
-)
+from .choices import *
 from accounts.models import Owner, Employee, Customer, Supplier
 
 class Business(models.Model):
     owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='business')
     name = models.CharField(max_length=255)
-    #country = CountryField()
     country = models.CharField(choices=COUNTRY_CHOICES)
     city = models.CharField(max_length=255)
     currency = models.CharField(choices=CURRENCY_CHOICES)
-    crm_points = models.IntegerField(max_length=2, choices=CRM_POINTS_CHOICES)
+    crm_points = models.IntegerField(max_length=2, choices=CRM_POINTS_CHOICES, default=ZERO)
     category = models.CharField(choices=CATEGORY_CHOICES)
     type = models.CharField(choices=TYPE_CHOICES)
     email = models.EmailField(max_length=254)
