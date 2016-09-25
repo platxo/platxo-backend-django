@@ -8,7 +8,7 @@ from django.dispatch import receiver
 
 from accounts.models import Customer
 from business.models import Business
-from sales.models import PurchaseOrder
+from sales.models import Sale
 
 
 class Point(models.Model):
@@ -26,7 +26,7 @@ class Point(models.Model):
     def __str__(self):
         return self.customer.user.username
 
-    @receiver(post_save, sender=PurchaseOrder)
+    @receiver(post_save, sender=Sale)
     def create_user_points(sender, instance, created, **kwargs):
         """
         Add customer points to the customer. After a purchase is made.
@@ -52,4 +52,3 @@ class Point(models.Model):
             point.balance += Decimal(gained_points)
 
             point.save()
-

@@ -4,7 +4,7 @@ from django.db.models import F
 from rest_framework import serializers
 
 from sales.validators import OneProductOrService, UserInBusiness, DoNotUpdateAfter, CustomerPoints
-from .models import Sale, Sale
+from .models import Sale
 from products.models import Product
 from services.models import Service
 

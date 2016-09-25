@@ -9,7 +9,7 @@ from rest_framework_jwt.views import verify_jwt_token
 
 from products.views import ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet, LocationViewSet
 from services.views import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
-from sales.views import  OrderPurchaseViewSet
+from sales.views import  SaleViewSet
 from customers.views import PointViewSet
 from purchases.views import PurchaseViewSet
 from contacts.views import ContactViewSet
@@ -39,7 +39,7 @@ router.register(r'owners', OwnerViewSet)
 router.register(r'employees', EmployeeViewSet)
 router.register(r'customers', CustomerViewSet)
 router.register(r'suppliers', SupplierViewSet)
-router.register(r'sales', OrderPurchaseViewSet, base_name='sales')
+router.register(r'sales', SaleViewSet, base_name='sales')
 router.register(r'points', PointViewSet)
 router.register(r'parametrizations', ParametrizationViewSet, base_name='parametrizations')
 

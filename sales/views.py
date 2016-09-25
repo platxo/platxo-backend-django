@@ -9,15 +9,11 @@ from rest_framework.generics import CreateAPIView
 
 from business.models import Business
 from .models import Sale, Sale
-from .serializers import SaleSerializer, SaleSerializer
+from .serializers import SaleSerializer
 
 
-class SaleViewSet(viewsets.ModelViewSet):
-    queryset = Sale.objects.all()
-    serializer_class = SaleSerializer
 
-
-class OrderPurchaseViewSet(viewsets.ViewSet):
+class SaleViewSet(viewsets.ViewSet):
 
     queryset = Sale.objects.all()
     read_serializer = SaleSerializer
