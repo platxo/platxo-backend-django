@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import filters
 
-from .models import Business, Data, Information, Knowledge
-from .serializers import BusinessSerializer, DataSerializer, InformationSerializer, KnowledgeSerializer
+from .models import Business, Tax, Data, Information, Knowledge
+from .serializers import BusinessSerializer, TaxSerializer, DataSerializer, InformationSerializer, KnowledgeSerializer
 from .filters import DataFilter
 
 
@@ -29,6 +29,17 @@ class BusinessViewSet(viewsets.ModelViewSet):
             return None
 
 
+class TaxViewSet(viewsets.ModelViewSet):
+    queryset = Tax.objects.all()
+    serializer_class = TaxSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_owner and user.owner.business:
+            business_query = user.owner.business.all()
+        else:
+            business_query = list()
+        return self.queryset.filter(business__in=business_query)
 
 
 class DataViewSet(viewsets.ModelViewSet):

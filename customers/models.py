@@ -7,7 +7,7 @@ from business.models import Business
 class Point(models.Model):
     customer = models.ForeignKey(Customer, related_name='points')
     business = models.ForeignKey(Business, related_name='points')
-    balance = models.DecimalField(max_digits=10, decimal_places=2)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

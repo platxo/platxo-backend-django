@@ -434,11 +434,11 @@ CURRENCY_CHOICES = (
 )
 
 """ CATEGORY_CHOICES """
-FOOD_AND_DRINK = 'food and drink'
-HEALTH_BEAUTY = 'health and beauty'
-FASHION_AND_APPAREL = 'fashion and apparel'
-HOME_AND_GARDEN = 'home and garden'
-SPORTS_AND_HOBBIES = 'sports and hobbies'
+FOOD_AND_DRINK = 'food_and_drink'
+HEALTH_BEAUTY = 'health_and_beauty'
+FASHION_AND_APPAREL = 'fashion_and_apparel'
+HOME_AND_GARDEN = 'home_and_garden'
+SPORTS_AND_HOBBIES = 'sports_and_hobbies'
 OTHER_CATEGORY = 'other'
 
 CATEGORY_CHOICES = (
@@ -453,10 +453,10 @@ CATEGORY_CHOICES = (
 """ TYPE_CHOICES  """
 BAR = 'bar'
 BAKERY = 'bakery'
-CAFE_AND_RESTAURANT = 'cafe and restaurant'
+CAFE_AND_RESTAURANT = 'cafe_and_restaurant'
 GROCERY = 'grocery'
 DRUGSTORE = 'drugstore'
-SALON_AND_BABERSHOP = 'salon and barbershop'
+SALON_AND_BABERSHOP = 'salon_and_barbershop'
 OTHER_TYPE = 'other'
 
 TYPE_CHOICES = (
@@ -504,7 +504,7 @@ ORANGE = 'orange'
 GREEN = 'green'
 PURPLE = 'purple'
 
-TAGS_CHOICES = (
+TAG_CHOICES = (
 (GREY, 'Grey'),
 (RED, 'Red'),
 (YELLOW, 'Yellow'),

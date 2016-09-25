@@ -1,7 +1,13 @@
 from rest_framework import serializers
 
-from .models import Product, ProductCategory, ProductType
+from .models import Product, ProductCategory, ProductType, Location
 
+
+class LocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Location
+        fields = ('id', 'business', 'employee', 'name', 'created', 'updated', 'url')
 
 class ProductCategorySerializer(serializers.ModelSerializer):
 

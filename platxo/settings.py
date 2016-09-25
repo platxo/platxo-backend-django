@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'djmoney',
     'corsheaders',
     # PLATXO APPS
+    'parametrization.apps.ParametrizationConfig',
     'users.apps.UsersConfig',
     'accounts.apps.AccountsConfig',
     'business.apps.BusinessConfig',
