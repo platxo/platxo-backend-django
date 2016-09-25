@@ -3,6 +3,7 @@ from django.utils import timezone
 from rest_framework import serializers
 
 from business.models import Business
+from customers.models import Point
 
 
 class OneProductOrService(object):
@@ -62,3 +63,29 @@ class DoNotUpdateAfter(object):
         now = timezone.now()
         if hasattr(self, 'instance') and hasattr(self.instance, 'created_at') and self.instance.created_at < (now+timedelta(minutes=-self.time)):
             raise serializers.ValidationError({'created_at': 'Operation after allowed time.'})
+
+
+class CustomerPoints(object):
+    """
+    Validate the user can use his/her customer points ensuring he owns the points used and that those points belongs
+    to the business where the purchase is being made.
+    """
+    def __init__(self):
+        pass
+
+    def __call__(self, attrs):
+        if not attrs['customer_points']:
+            # No validation is necessary
+            return
+        elif attrs['customer_points'] and not attrs.get('customer'):
+            raise serializers.ValidationError({'customer_points': 'Sent without customer.'})
+
+        # Validate the user has points in the business
+        try:
+            points_in_business = Point.objects.get(business=attrs['business'], customer=attrs['customer'])
+        except Point.DoesNotExist:
+            raise serializers.ValidationError({'customer_points'})
+
+        if points_in_business.balance and points_in_business.balance < attrs['customer_points']:
+            raise serializers.ValidationError({'customer_points': 'Not enough points.'})
+

@@ -18,35 +18,6 @@ class Sale(models.Model):
         (DEBIT_CARD, 'debit card')
     )
 
-    business = models.ForeignKey(Business, related_name='sales')
-    employee = models.ForeignKey(Employee, related_name='sales')
-    customer = models.ForeignKey(Customer, related_name='sales', blank=True, null=True)
-    products = fields.RelatedSetField(Product, related_name='sales')
-    services = fields.RelatedSetField(Service, related_name='sales')
-    payment = models.CharField(max_length=150, choices=PAYMENT_CHOICES)
-    total = models.DecimalField(max_digits=12, decimal_places=2)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ('-created',)
-        verbose_name = 'sale'
-        verbose_name_plural = 'sales'
-
-    def __str__(self):
-        return self.customer
-        
-
-class PurchaseOrder(models.Model):
-    CASH = 'cash'
-    CREDIT_CARD = 'credit_card'
-    DEBIT_CARD = 'debit_card'
-    PAYMENT_CHOICES = (
-        (CASH, 'cash'),
-        (CREDIT_CARD, 'credit card'),
-        (DEBIT_CARD, 'debit card')
-    )
-
     # Information of the actors involved in the transaction.
     employee = models.ForeignKey(Employee)
     employee_username = models.CharField(max_length=255, blank=True, null=True)
@@ -72,10 +43,12 @@ class PurchaseOrder(models.Model):
     subtotal = models.FloatField(help_text='Brute total')
     # Percentage of discount applied to subtotal
     discount = models.IntegerField(help_text='A discount to apply to the whole purchase', blank=True, default=0)
+    # Amount of customer points used in the transaction.
+    customer_points = models.FloatField(blank=True, default=0)
     # Net value received
     total = models.FloatField(help_text='The final and payed value')
 
-    # In case the order has been canceled, instead of deleting the record, it is canceled.
+        # In case the order has been canceled, instead of deleting the record, it is canceled.
     OK = 'ACCEPTED'
     CANCEL = 'CANCELED'
     status_choices = ((OK, OK), (CANCEL, CANCEL))

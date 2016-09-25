@@ -8,8 +8,8 @@ from rest_framework import status
 from rest_framework.generics import CreateAPIView
 
 from business.models import Business
-from .models import Sale, PurchaseOrder
-from .serializers import SaleSerializer, OrderRequestSerializer
+from .models import Sale, Sale
+from .serializers import SaleSerializer, SaleSerializer
 
 
 class SaleViewSet(viewsets.ModelViewSet):
@@ -19,8 +19,8 @@ class SaleViewSet(viewsets.ModelViewSet):
 
 class OrderPurchaseViewSet(viewsets.ViewSet):
 
-    queryset = PurchaseOrder.objects.all()
-    read_serializer = OrderRequestSerializer
+    queryset = Sale.objects.all()
+    read_serializer = SaleSerializer
 
     def get_queryset(self):
         """
@@ -58,7 +58,7 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         try:
             return Response(self.read_serializer(self.get_queryset().get(pk=pk)).data)
-        except PurchaseOrder.DoesNotExist:
+        except Sale.DoesNotExist:
             return Response({'Error': 'Sale not found.'}, status.HTTP_404_NOT_FOUND)
 
     def create(self, request, format=None):
@@ -81,7 +81,7 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
         if not order:
             return Response({'error': 'Missing order field.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        order_serialized = OrderRequestSerializer(data=order)
+        order_serialized = SaleSerializer(data=order)
         if not order_serialized.is_valid():
             return Response({'error': order_serialized.errors}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -100,8 +100,8 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
         if True:
             return Response({'message', 'Not implemented'}, status=status.HTTP_501_NOT_IMPLEMENTED)
         try:
-            original_order = PurchaseOrder.objects.get(pk=pk)
-        except PurchaseOrder.DoesNotExist:
+            original_order = Sale.objects.get(pk=pk)
+        except Sale.DoesNotExist:
             return Response({'error': 'Order does not exists.'}, status=status.HTTP_400_BAD_REQUEST)
 
         order = request.data.get('order')
@@ -109,7 +109,7 @@ class OrderPurchaseViewSet(viewsets.ViewSet):
         if not order:
             return Response({'error': 'Missing order field.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        order_serialized = OrderRequestSerializer(original_order, data=order, partial=True)
+        order_serialized = SaleSerializer(original_order, data=order, partial=True)
         if not order_serialized.is_valid():
             return Response({'error': order_serialized.errors}, status=status.HTTP_400_BAD_REQUEST)
 
