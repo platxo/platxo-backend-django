@@ -16,8 +16,24 @@ class Location(models.Model):
 
     class Meta:
         ordering = ('-created',)
-        verbose_name = 'Location'
+        verbose_name = 'location'
         verbose_name_plural = 'locations'
+
+    def __str__(self):
+        return self.name
+
+class Section(models.Model):
+    business = models.ForeignKey(Business, related_name='sections')
+    employee = models.ForeignKey(Employee, related_name='sections')
+    location = models.ForeignKey(Location, related_name='sections')
+    name = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'section'
+        verbose_name_plural = 'sections'
 
     def __str__(self):
         return self.name
@@ -63,6 +79,7 @@ class Product(models.Model):
     product_category = models.ForeignKey(ProductCategory, related_name='products')
     product_type = models.ForeignKey(ProductType, related_name='products')
     location = models.ForeignKey(Location, related_name='products', blank=True, null=True)
+    section = models.ForeignKey(Section, related_name='products', blank=True, null=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     supply_price = models.DecimalField(max_digits=10, decimal_places=2)

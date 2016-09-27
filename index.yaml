@@ -16,6 +16,18 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: products_location
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
+- kind: business_tax
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
 - kind: business_business
   properties:
   - name: customers_ids
@@ -166,34 +178,6 @@ indexes:
   - name: created
     direction: desc
 
-- kind: sales_purchaseorder
-  properties:
-  - name: business_id
-  - name: _idx_year_created_at
-
-- kind: sales_purchaseorder
-  properties:
-  - name: business_id
-  - name: created_at
-
-- kind: sales_purchaseorder
-  properties:
-  - name: business_id
-  - name: created_at
-    direction: desc
-
-- kind: sales_purchaseorder
-  properties:
-  - name: customer_id
-  - name: created_at
-    direction: desc
-
-- kind: sales_purchaseorder
-  properties:
-  - name: employee_id
-  - name: created_at
-    direction: desc
-
 - kind: sales_sale
   properties:
   - name: business_id
@@ -203,13 +187,13 @@ indexes:
 - kind: sales_sale
   properties:
   - name: customer_id
-  - name: created
+  - name: created_at
     direction: desc
 
 - kind: sales_sale
   properties:
   - name: employee_id
-  - name: created
+  - name: created_at
     direction: desc
 
 - kind: sales_sale
