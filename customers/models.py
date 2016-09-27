@@ -44,11 +44,11 @@ class Point(models.Model):
             try:
                 point = Point.objects.get(customer=instance.customer, business=instance.business)
             except Point.DoesNotExist:
-                point =Point(customer=instance.customer, business=instance.business, balance=0)
+                point = Point(customer=instance.customer, business=instance.business, balance=0)
 
             # Validate how many points the business allows from the purchase.
             points_percentage = getattr(instance.business, 'crm_points', 0) if getattr(instance.business, 'crm_points') else 0
             gained_points = (points_percentage/100.0) * instance.total
-            point.balance += Decimal(gained_points)
+            point.balance += Decimal(gained_points-instance.customer_points)
 
             point.save()

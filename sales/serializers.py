@@ -88,7 +88,7 @@ class SaleSerializer(serializers.ModelSerializer):
                                               'product_type': product.product_type.id,
                                               'product_type_name': product.product_type.name,
                                               'name': product.name,
-                                              'price': product.price
+                                              'price': product.retail_price
                                               }
                 mapped_products.append(product_object)
 
@@ -100,7 +100,7 @@ class SaleSerializer(serializers.ModelSerializer):
                 # Extract the id of the services to search them in database. And validate initial structure.
                 services_id = [service['id'] for service in data.get('services')]
             except KeyError as e:
-                print e.message
+                print (e.message)
                 raise serializers.ValidationError({'service': 'Missing id.'})
 
             # All services exists and belongs to the same business
