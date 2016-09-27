@@ -88,6 +88,12 @@ indexes:
   - name: created
     direction: desc
 
+- kind: business_tax
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+
 - kind: contacts_contact
   properties:
   - name: business_id

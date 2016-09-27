@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from djmoney.models.fields import MoneyField
 
-from business.models import Business
+from business.models import Business, Tax
 from accounts.models import Employee
 
 
@@ -43,6 +43,7 @@ class ServiceType(models.Model):
 class Service(models.Model):
     business = models.ForeignKey(Business, related_name='products')
     employee = models.ForeignKey(Employee, related_name='services')
+    tax = models.ForeignKey(Tax, related_name='services', blank=True, null=True)
     service_category = models.ForeignKey(ServiceCategory, related_name='services')
     service_type = models.ForeignKey(ServiceType, related_name='services')
     name = models.CharField(max_length=255)
