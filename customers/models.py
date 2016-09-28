@@ -22,6 +22,7 @@ class Point(models.Model):
         ordering = ('-created',)
         verbose_name = 'point'
         verbose_name_plural = 'points'
+        unique_together = ("customer", "business")
 
     def __str__(self):
         return self.customer.user.username
