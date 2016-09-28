@@ -101,7 +101,7 @@ class SaleSerializer(serializers.ModelSerializer):
                 # Extract the id of the services to search them in database. And validate initial structure.
                 services_id = [service['id'] for service in data.get('services')]
             except KeyError as e:
-                print e.message
+                print (e.message)
                 raise serializers.ValidationError({'service': 'Missing id.'})
 
             # All services exists and belongs to the same business

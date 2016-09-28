@@ -476,10 +476,10 @@ L = 'l'
 XL = 'xl'
 
 SIZE_CHOICES = (
-(S, '1-3 employee'),
-(M, '4-10 employee'),
-(L, '11-20 employee'),
-(XL, '20+ employee'),
+(S, '1-3 Employees'),
+(M, '4-10 Employees'),
+(L, '11-20 Employees'),
+(XL, '20+ Employees'),
 )
 
 """ CRM_POINTS_CHOICES """
