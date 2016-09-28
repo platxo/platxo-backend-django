@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'sales.apps.SalesConfig',
     'purchases.apps.PurchasesConfig',
     'contacts.apps.ContactsConfig',
+    'analytics.apps.AnalyticsConfig',
 ]
 
 MIDDLEWARE_CLASSES = [

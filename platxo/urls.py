@@ -1,5 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib import admin
+
+from analytics.views import AnalyticsTest
 from views import IndexView
 
 from rest_framework import routers
@@ -43,6 +45,7 @@ router.register(r'suppliers', SupplierViewSet)
 router.register(r'sales', SaleViewSet, base_name='sales')
 router.register(r'points', PointViewSet)
 router.register(r'parametrizations', ParametrizationViewSet, base_name='parametrizations')
+router.register(r'analytics', AnalyticsTest, base_name='analytics')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
