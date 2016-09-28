@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Product, ProductCategory, ProductType, Location
+from .models import Product, ProductCategory, ProductType, Location, Section
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -8,6 +8,12 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = ('id', 'business', 'employee', 'name', 'created', 'updated', 'url')
+
+class SectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Section
+        fields = ('id', 'business', 'employee', 'location', 'name', 'created', 'updated', 'url')
 
 class ProductCategorySerializer(serializers.ModelSerializer):
 
@@ -30,12 +36,14 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'business',
                   'employee',
+                  'tax',
+                  'supplier',
                   'product_category',
                   'product_type',
+                  'location',
+                  'section',
                   'name',
                   'description',
-                  'supplier',
-                  'location',
                   'supply_price',
                   'retail_price',
                   'inventory',

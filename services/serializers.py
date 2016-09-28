@@ -21,4 +21,18 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Service
-        fields = ('id', 'business', 'employee', 'service_category', 'service_type', 'name', 'description', 'supplier', 'price', 'image', 'picture', 'created', 'updated', 'url')
+        fields = ('id',
+                  'business',
+                  'employee',
+                  'tax',
+                  'service_category',
+                  'service_type',
+                  'name',
+                  'description',
+                  'price',
+                  'image',
+                  'picture',
+                  'created',
+                  'updated',
+                  'url'
+                  )
