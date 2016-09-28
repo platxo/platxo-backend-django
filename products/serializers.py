@@ -46,6 +46,7 @@ class ProductSerializer(serializers.ModelSerializer):
                   'description',
                   'supply_price',
                   'retail_price',
+                  'tax',
                   'inventory',
                   'quantity',
                   'image',

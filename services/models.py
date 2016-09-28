@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from djmoney.models.fields import MoneyField
 
-from business.models import Business
+from business.models import Business, Tax
 from accounts.models import Employee
 
 

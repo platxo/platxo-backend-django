@@ -88,7 +88,8 @@ class SaleSerializer(serializers.ModelSerializer):
                                               'product_type': product.product_type.id,
                                               'product_type_name': product.product_type.name,
                                               'name': product.name,
-                                              'price': product.retail_price
+                                              'price': product.retail_price,
+                                              'tax': product.tax.rate if getattr(product, 'tax') else 0
                                               }
                 mapped_products.append(product_object)
 
@@ -131,7 +132,8 @@ class SaleSerializer(serializers.ModelSerializer):
                                              'service_type': service.service_type.id,
                                              'service_type_name': service.service_type.name,
                                              'name': service.name,
-                                             'price': service.price
+                                             'price': service.price,
+                                             'tax': service.tax.rate if getattr(service, 'tax') else 0
                                              }
                 mapped_services.append(service_object)
 
@@ -159,26 +161,35 @@ class SaleSerializer(serializers.ModelSerializer):
         :return:
         """
         subtotal = 0.0
+        tax_total = 0.0
+        get_rate = lambda rate: (1 - rate/100.0)
+        discount_rate = get_rate((self.validated_data['discount']))
         if self.validated_data.get('products'):
             for product in self.validated_data.get('products'):
                 Product.objects.filter(pk=product['id']).update(quantity=F('quantity')-product['qty'])
-                subtotal += float(product['details']['price'] * product['qty']) * (1 - (product['discount']/100.0))
+                price_products = float(product['details']['price'] * product['qty']) * get_rate(product['discount'])
+                subtotal += price_products
+                tax_total += price_products * (get_rate(product['details']['tax']) - discount_rate)
 
+        print subtotal, tax_total
         if self.validated_data.get('services'):
             for service in self.validated_data.get('services'):
-                subtotal += float(service['details']['price'] * service['qty']) * (1 - (service['discount'] / 100.0))
+                price_services = float(service['details']['price'] * service['qty']) * get_rate(service['discount'])
+                subtotal += price_services
+                tax_total += price_services * (get_rate(service['details']['tax']) - discount_rate)
 
-        total = round(subtotal * (1 - (self.validated_data['discount'] / 100.0)), 2)
+        total = round(subtotal * get_rate(self.validated_data['discount']), 2)
         # One customer_point equals one unit in current currency.
         # This validation needs somehow to be out of this save block.
-        max_points_allowed = float(self.validated_data['business'].crm_points/100.0) * total
+        max_points_allowed = float(get_rate(self.validated_data['business'].crm_points)) * total
         self.validated_data['customer_points'] = \
             self.validated_data['customer_points'] if \
             self.validated_data['customer_points'] <= max_points_allowed else \
             max_points_allowed
 
-        total -= self.validated_data['customer_points']
-        purchase_order = Sale(subtotal=subtotal, total=round(total, 2), **self.validated_data)
+        print ('%d, %d' % (tax_total, total))
+        total += tax_total - self.validated_data['customer_points']
+        purchase_order = Sale(subtotal=subtotal, tax_total=tax_total, total=round(total, 2), **self.validated_data)
 
         purchase_order.save()
 
