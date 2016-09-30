@@ -83,7 +83,12 @@ class SaleViewSet(viewsets.ViewSet):
 
         order_saved = order_serialized.save()
 
-        return Response({'message': 'Order stored.', 'total': order_saved.total})
+        return Response({'message': 'Order stored.',
+                         'subtotal': order_saved.subtotal,
+                         'tax': order_saved.total_tax,
+                         'discount': order_saved.total_discount,
+                         'customer_point': order_saved.customer_points,
+                         'total': order_saved.total})
 
     def update(self, request, pk=None):
         """

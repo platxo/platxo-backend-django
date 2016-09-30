@@ -14,9 +14,11 @@ class SaleSerializer(serializers.ModelSerializer):
     employee_username = serializers.CharField(read_only=True)
     products = serializers.ListField(required=False)
     services = serializers.ListField(required=False)
-    subtotal = serializers.FloatField(read_only=True)
-    customer_points = serializers.FloatField(default=0)
     discount = serializers.IntegerField(default=0)
+    subtotal = serializers.FloatField(read_only=True)
+    total_discount = serializers.FloatField(read_only=True)
+    total_tax = serializers.FloatField(read_only=True)
+    customer_points = serializers.FloatField(default=0.0)
     total = serializers.FloatField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
 
@@ -28,6 +30,7 @@ class SaleSerializer(serializers.ModelSerializer):
                   'payment_method', 'products',
                   'services', 'discount',
                   'subtotal', 'customer_points',
+                  'total_discount', 'total_tax',
                   'total', 'created_at')
         validators = [OneProductOrService(),
                       UserInBusiness(field='employee'),
@@ -162,23 +165,30 @@ class SaleSerializer(serializers.ModelSerializer):
         """
         subtotal = 0.0
         tax_total = 0.0
+        partial_discount = 0.0
+        partial_rate = lambda price, rate: price * rate / 100.0
         get_rate = lambda rate: (1 - rate/100.0)
-        discount_rate = get_rate((self.validated_data['discount']))
         if self.validated_data.get('products'):
             for product in self.validated_data.get('products'):
+                # Update product stock
                 Product.objects.filter(pk=product['id']).update(quantity=F('quantity')-product['qty'])
-                price_products = float(product['details']['price'] * product['qty']) * get_rate(product['discount'])
+                # Partial subtotal
+                price_products = float(product['details']['price'] * product['qty'])
                 subtotal += price_products
-                tax_total += price_products * (get_rate(product['details']['tax']) - discount_rate)
+                partial_discount += partial_rate(price_products, product['discount'])
+                tax_total += price_products * get_rate(product['details']['tax'])
 
-        print subtotal, tax_total
         if self.validated_data.get('services'):
             for service in self.validated_data.get('services'):
-                price_services = float(service['details']['price'] * service['qty']) * get_rate(service['discount'])
+                # Services don`t have inventory and the update is not necessary.
+                # Partial subtotal
+                price_services = float(service['details']['price'] * service['qty'])
                 subtotal += price_services
-                tax_total += price_services * (get_rate(service['details']['tax']) - discount_rate)
+                partial_discount += partial_rate(price_services, service['discount'])
+                tax_total += price_services * get_rate(service['details']['tax'])
 
-        total = round(subtotal * get_rate(self.validated_data['discount']), 2)
+        total_discount = partial_discount + ((subtotal - partial_discount) * get_rate(self.validated_data['discount']))
+        total = subtotal - total_discount
         # One customer_point equals one unit in current currency.
         # This validation needs somehow to be out of this save block.
         max_points_allowed = float(get_rate(self.validated_data['business'].crm_points)) * total
@@ -187,9 +197,9 @@ class SaleSerializer(serializers.ModelSerializer):
             self.validated_data['customer_points'] <= max_points_allowed else \
             max_points_allowed
 
-        print ('%d, %d' % (tax_total, total))
         total += tax_total - self.validated_data['customer_points']
-        purchase_order = Sale(subtotal=subtotal, tax_total=tax_total, total=round(total, 2), **self.validated_data)
+        purchase_order = Sale(subtotal=round(subtotal, 2), total_discount=round(total_discount, 2),
+                              total_tax=round(tax_total, 2), total=round(total, 2), **self.validated_data)
 
         purchase_order.save()
 
