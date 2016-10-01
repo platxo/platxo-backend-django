@@ -43,10 +43,8 @@ class Sale(models.Model):
     subtotal = models.FloatField(help_text='Brute total')
     # Percentage of discount applied to subtotal
     discount = models.IntegerField(help_text='A discount to apply to the whole purchase', blank=True, default=0)
-    # The total value of the discounts
-    total_discount = models.FloatField(blank=True, default=0)
     # The total value in taxes charged.
-    total_tax = models.FloatField(blank=True, default=0)
+    total_taxes = models.FloatField(blank=True, default=0)
     # Amount of customer points used in the transaction.
     customer_points = models.FloatField(blank=True, default=0)
     # Net value received

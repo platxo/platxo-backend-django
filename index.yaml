@@ -16,6 +16,12 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: services_service
+  properties:
+  - name: tax_id
+  - name: created
+    direction: desc
+
 - kind: business_business
   properties:
   - name: customers_ids
