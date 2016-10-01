@@ -14,7 +14,7 @@ from services.views import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceVi
 from sales.views import  SaleViewSet
 from customers.views import PointViewSet
 from purchases.views import PurchaseViewSet
-from contacts.views import ContactViewSet
+from contacts.views import ContactViewSet, PromotionViewSet
 from business.views import BusinessViewSet, TaxViewSet, DataViewSet, InformationViewSet, KnowledgeViewSet
 from users.views import UserViewSet, GroupViewSet
 from accounts.views import OwnerViewSet, EmployeeViewSet, CustomerViewSet, SupplierViewSet
@@ -32,6 +32,7 @@ router.register(r'services', ServiceViewSet)
 router.register(r'purchases', PurchaseViewSet)
 router.register(r'contact', ContactViewSet)
 router.register(r'business', BusinessViewSet)
+router.register(r'promotions', PromotionViewSet)
 router.register(r'taxes', TaxViewSet)
 router.register(r'datas', DataViewSet)
 router.register(r'informations', InformationViewSet)

@@ -17,37 +17,50 @@ class AccountsBusinessSerializer(serializers.ModelSerializer):
 
 
 class OwnerSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()
     business = AccountsBusinessSerializer(many=True, read_only=True)
+    extra = serializers.SerializerMethodField()
+
+    def get_extra(self, obj):
+        return ({'owner_name':obj.user.username})
 
     class Meta:
         model = Owner
-        fields = ('id', 'user', 'business', 'created', 'updated', 'url')
+        fields = ('id', 'user', 'business', 'extra', 'created', 'updated', 'url')
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()
     business = AccountsBusinessSerializer(many=True, read_only=True)
+    extra = serializers.SerializerMethodField()
+
+    def get_extra(self, obj):
+        return ({'employee_name':obj.user.username})
 
     class Meta:
         model = Employee
-        fields = ('id', 'user', 'business', 'created', 'updated', 'url')
+        fields = ('id', 'user', 'business', 'extra', 'created', 'updated', 'url')
 
 
 class CustomerSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()
     business = AccountsBusinessSerializer(many=True, read_only=True)
     points = CustomerPointSerializer(many=True, read_only=True)
+    extra = serializers.SerializerMethodField()
+
+    def get_extra(self, obj):
+        return ({'customer_name':obj.user.username})
 
     class Meta:
         model = Customer
-        fields = ('id', 'user', 'business', 'points', 'created', 'updated', 'url')
+        fields = ('id', 'user', 'business', 'points', 'extra', 'created', 'updated', 'url')
 
 
 class SupplierSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     business = AccountsBusinessSerializer(many=True, read_only=True)
+    extra = serializers.SerializerMethodField()
+
+    def get_extra(self, obj):
+        return ({'supplier_name':obj.user.username})
 
     class Meta:
         model = Supplier
-        fields = ('id', 'user', 'business', 'created', 'updated', 'url')
+        fields = ('id', 'user', 'business', 'extra', 'created', 'updated', 'url')

@@ -30,13 +30,21 @@ class ProductTypeSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    extra = serializers.SerializerMethodField()
+
+    def get_extra(self, obj):
+        return ({'tax_name':obj.tax.name,
+                 'tax_rate':obj.tax.rate,
+                 'product_category_name':obj.product_category.name,
+                 'product_type_name':obj.product_type.name,
+                 'location_name':obj.location.name,
+                 'section_name':obj.section.name})
 
     class Meta:
         model = Product
         fields = ('id',
                   'business',
                   'employee',
-                  'tax',
                   'supplier',
                   'product_category',
                   'product_type',
@@ -51,7 +59,7 @@ class ProductSerializer(serializers.ModelSerializer):
                   'quantity',
                   'image',
                   'picture',
+                  'extra',
                   'created',
                   'updated',
-                  'url'
-                  )
+                  'url')

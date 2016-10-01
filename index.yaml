@@ -94,6 +94,12 @@ indexes:
   - name: created
     direction: desc
 
+- kind: business_tax
+  properties:
+  - name: owner_id
+  - name: created
+    direction: desc
+
 - kind: contacts_contact
   properties:
   - name: business_id
@@ -138,6 +144,18 @@ indexes:
 
 - kind: products_product
   properties:
+  - name: created
+    direction: desc
+  - name: name
+
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
+  - name: quantity
+
+- kind: products_product
+  properties:
   - name: employee_id
   - name: created
     direction: desc
@@ -151,6 +169,12 @@ indexes:
 - kind: products_product
   properties:
   - name: product_type_id
+  - name: created
+    direction: desc
+
+- kind: products_product
+  properties:
+  - name: tax_id
   - name: created
     direction: desc
 
@@ -174,7 +198,23 @@ indexes:
 
 - kind: products_producttype
   properties:
+  - name: created
+    direction: desc
+  - name: business_id
+  - name: employee_id
+  - name: name
   - name: product_category_id
+  - name: updated
+
+- kind: products_producttype
+  properties:
+  - name: product_category_id
+  - name: created
+    direction: desc
+
+- kind: products_section
+  properties:
+  - name: business_id
   - name: created
     direction: desc
 
