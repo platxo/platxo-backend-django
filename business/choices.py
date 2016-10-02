@@ -514,6 +514,49 @@ TAG_CHOICES = (
 (PURPLE, 'Purple'),
 )
 
+""" APP_CHOICES """
+PRODUCTS = 'products'
+SERVICES = 'services'
+SALES = 'sales'
+
+APP_CHOICES = (
+(PRODUCTS, 'Products'),
+(SERVICES, 'Services'),
+(SALES, 'Sales'),
+)
+
+
+""" MODEL_PRODUCT_CHOICES """
+PRODUCT = 'product'
+
+MODEL_PRODUCT_CHOICES = (
+(PRODUCT, 'Product'),
+)
+
+""" MODEL_SERVICE_CHOICES """
+SERVICE = 'service'
+
+MODEL_SERVICES_CHOICES = (
+(SERVICE, 'Service'),
+)
+
+""" MODEL_SALES_CHOICES """
+SALE = 'sale'
+
+MODEL_SALES_CHOICES = (
+(SALE, 'Sale'),
+)
+
+""" FIELD_PRODUCT_CHOICES """
+QUANTITY = 'quantity'
+
+""" FIELD_SERVICE_CHOICES """
+
+""" FIELD_SALE_CHOICES """
+TOTAL = 'total'
+
+
+
 # CATEGORY_CHOICES = (
 # (1000, 'Arts, crafts, and collectibles'),
 # (1001, 'Baby'),

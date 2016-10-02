@@ -17,7 +17,7 @@ class SaleSerializer(serializers.ModelSerializer):
     discount = serializers.IntegerField(default=0)
     subtotal = serializers.FloatField(read_only=True)
     total_discount = serializers.FloatField(read_only=True)
-    total_tax = serializers.FloatField(read_only=True)
+    total_taxes = serializers.FloatField(read_only=True)
     customer_points = serializers.FloatField(default=0.0)
     total = serializers.FloatField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
@@ -30,7 +30,7 @@ class SaleSerializer(serializers.ModelSerializer):
                   'payment_method', 'products',
                   'services', 'discount',
                   'subtotal', 'customer_points',
-                  'total_discount', 'total_tax',
+                  'total_discount', 'total_taxes',
                   'total', 'created_at')
         validators = [OneProductOrService(),
                       UserInBusiness(field='employee'),
@@ -198,12 +198,12 @@ class SaleSerializer(serializers.ModelSerializer):
             max_points_allowed
 
         total += tax_total - self.validated_data['customer_points']
-        purchase_order = Sale(subtotal=round(subtotal, 2), total_discount=round(total_discount, 2),
-                              total_tax=round(tax_total, 2), total=round(total, 2), **self.validated_data)
+        sale = Sale(subtotal=round(subtotal, 2), total_discount=round(total_discount, 2),
+                              total_taxes=round(tax_total, 2), total=round(total, 2), **self.validated_data)
 
-        purchase_order.save()
+        sale.save()
 
-        return purchase_order
+        return sale
 
     def update(self, instance, validated_data):
         """
