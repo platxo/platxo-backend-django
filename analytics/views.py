@@ -17,13 +17,23 @@ class AnalyticsTest(viewsets.ViewSet):
         fields = self.request.query_params.getlist('fields[]')
 
         if app and model:
-            a = apps.get_app_config(app).get_model(model).objects.all()
+            a = apps.get_app_config(app).get_model(model)
+            if not hasattr(a, 'analytics_fields'):
+                # The model must be analytics eligible
+                raise Exception('Incorrect model name.')
             if field:
-                a = a.values(field)
+                if field not in a.analytics_fields:
+                    # The field is not parametrized in analytics_fields
+                    raise Exception('Wrong field choice.')
+                a = a.objects.all().values(field)
             elif fields:
-                a = a.values(*fields)
+                for value in fields:
+                    if value not in a.analytics_fields:
+                        # The field is not parametrized in analytics_fields
+                        raise Exception('Wrong field choice.')
+                a = a.objects.all().values(*fields)
             else:
-                a = a.values()
+                a = a.objects.all().values()
             return a
 
     def list(self, request):
@@ -31,12 +41,15 @@ class AnalyticsTest(viewsets.ViewSet):
         Return the available operations or the requested information.
 
         Note: An application to be eligible in the analytics module must have its apps.AppConfig.analytics=True
+        And a model must have `analytics_fields` as a variable and a tuple with the desired fields ex. (name, pk)
+
         :param request:
         :return:
         """
         try:
             a = self.get_queryset()
-        except Exception:
+        except Exception as e:
+            print e.message
             return Response({'error': 'Bad query'}, status.HTTP_400_BAD_REQUEST)
         if a:
             return Response(a)
@@ -45,6 +58,6 @@ class AnalyticsTest(viewsets.ViewSet):
 
         for app in apps.get_app_configs():
             if getattr(app, 'analytics', False):
-                app_names[app.name] = dict([(model.__name__, [field.name for field in model._meta.get_fields()]) for model in app.get_models()])
+                app_names[app.name] = dict([(model.__name__, [field.name for field in model._meta.get_fields() if field.name in model.analytics_fields]) for model in app.get_models() if hasattr(model, 'analytics_fields')])
 
         return Response(app_names)
