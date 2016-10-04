@@ -81,19 +81,19 @@ class SaleSerializer(serializers.ModelSerializer):
                 # Discount must be between 0% and 100% and is optional
                 if not prod_id.get("discount"):
                     prod_id['discount'] = 0
-                elif prod_id.get('discount') and not(0 <= prod_id.get("discount") <= 100):
+                elif prod_id.get('discount') and not (0 <= prod_id.get("discount") <= 100):
                     raise serializers.ValidationError({'product': {'id': product.id,
                                                                    'message': 'Discount not in range.'}})
                 # Populate the product field
                 product_object = copy(prod_id)
                 product_object['details'] = {'product_category': product.product_category.id,
-                                              'product_category_name': product.product_category.name,
-                                              'product_type': product.product_type.id,
-                                              'product_type_name': product.product_type.name,
-                                              'name': product.name,
-                                              'price': product.retail_price,
-                                              'tax': product.tax.rate if getattr(product, 'tax') else 0
-                                              }
+                                             'product_category_name': product.product_category.name,
+                                             'product_type': product.product_type.id,
+                                             'product_type_name': product.product_type.name,
+                                             'name': product.name,
+                                             'price': product.retail_price,
+                                             'tax': product.tax.rate if getattr(product, 'tax') else 0
+                                             }
                 mapped_products.append(product_object)
 
             # Product now contains all information and save() van use this data.
@@ -125,7 +125,7 @@ class SaleSerializer(serializers.ModelSerializer):
                 # Discount must be between 0% and 100%
                 if not serv_id.get("discount"):
                     serv_id['discount'] = 0
-                if not(0 <= serv_id.get("discount") <= 100):
+                if not (0 <= serv_id.get("discount") <= 100):
                     raise serializers.ValidationError({'service': {'id': service.id,
                                                                    'message': 'Discount not in range.'}})
                 # Populate the product field
@@ -167,11 +167,11 @@ class SaleSerializer(serializers.ModelSerializer):
         tax_total = 0.0
         partial_discount = 0.0
         partial_rate = lambda price, rate: price * rate / 100.0
-        get_rate = lambda rate: (1 - rate/100.0)
+        get_rate = lambda rate: (1 - rate / 100.0)
         if self.validated_data.get('products'):
             for product in self.validated_data.get('products'):
                 # Update product stock
-                Product.objects.filter(pk=product['id']).update(quantity=F('quantity')-product['qty'])
+                Product.objects.filter(pk=product['id']).update(quantity=F('quantity') - product['qty'])
                 # Partial subtotal
                 price_products = float(product['details']['price'] * product['qty'])
                 subtotal += price_products
@@ -199,7 +199,7 @@ class SaleSerializer(serializers.ModelSerializer):
 
         total += tax_total - self.validated_data['customer_points']
         sale = Sale(subtotal=round(subtotal, 2), total_discount=round(total_discount, 2),
-                              total_taxes=round(tax_total, 2), total=round(total, 2), **self.validated_data)
+                    total_taxes=round(tax_total, 2), total=round(total, 2), **self.validated_data)
 
         sale.save()
 
