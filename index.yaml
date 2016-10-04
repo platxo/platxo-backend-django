@@ -16,18 +16,6 @@ indexes:
   - name: __key__
     direction: desc
 
-- kind: sales_sale
-  properties:
-  - name: created_at
-    direction: desc
-  - name: employee_id
-
-- kind: sales_sale
-  properties:
-  - name: created_at
-    direction: desc
-  - name: customer_id
-
 - kind: business_business
   properties:
   - name: customers_ids
@@ -164,7 +152,21 @@ indexes:
   properties:
   - name: created
     direction: desc
+  - name: inventory
   - name: name
+
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
+  - name: name
+
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
+  - name: name
+  - name: quantity
 
 - kind: products_product
   properties:
@@ -175,6 +177,12 @@ indexes:
 - kind: products_product
   properties:
   - name: employee_id
+  - name: created
+    direction: desc
+
+- kind: products_product
+  properties:
+  - name: name
   - name: created
     direction: desc
 
@@ -204,6 +212,21 @@ indexes:
 
 - kind: products_productcategory
   properties:
+  - name: created
+    direction: desc
+  - name: business_id
+  - name: employee_id
+  - name: name
+  - name: updated
+
+- kind: products_productcategory
+  properties:
+  - name: created
+    direction: desc
+  - name: name
+
+- kind: products_productcategory
+  properties:
   - name: employed_id
   - name: created
     direction: desc
@@ -219,10 +242,48 @@ indexes:
   - name: created
     direction: desc
   - name: business_id
+
+- kind: products_producttype
+  properties:
+  - name: created
+    direction: desc
+  - name: business_id
+  - name: employee_id
+
+- kind: products_producttype
+  properties:
+  - name: created
+    direction: desc
+  - name: business_id
   - name: employee_id
   - name: name
   - name: product_category_id
   - name: updated
+
+- kind: products_producttype
+  properties:
+  - name: created
+    direction: desc
+  - name: employee_id
+
+- kind: products_producttype
+  properties:
+  - name: created
+    direction: desc
+  - name: name
+
+- kind: products_producttype
+  properties:
+  - name: created
+    direction: desc
+  - name: name
+  - name: product_category_id
+
+- kind: products_producttype
+  properties:
+  - name: created
+    direction: desc
+  - name: product_category_id
 
 - kind: products_producttype
   properties:
@@ -235,6 +296,16 @@ indexes:
   - name: business_id
   - name: created
     direction: desc
+
+- kind: products_section
+  properties:
+  - name: created
+    direction: desc
+  - name: business_id
+  - name: employee_id
+  - name: location_id
+  - name: name
+  - name: updated
 
 - kind: sales_sale
   properties:
