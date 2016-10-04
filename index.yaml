@@ -16,18 +16,6 @@ indexes:
   - name: __key__
     direction: desc
 
-- kind: sales_sale
-  properties:
-  - name: created_at
-    direction: desc
-  - name: employee_id
-
-- kind: sales_sale
-  properties:
-  - name: created_at
-    direction: desc
-  - name: customer_id
-
 - kind: business_business
   properties:
   - name: customers_ids

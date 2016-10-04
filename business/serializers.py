@@ -47,7 +47,7 @@ class DataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Data
-        fields = ('id', 'business', 'owner', 'name', 'tag', 'informations', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name', 'tag', 'data_url', 'informations', 'created', 'updated', 'url')
 
 
 class InformationSerializer(serializers.ModelSerializer):

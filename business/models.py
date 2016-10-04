@@ -54,13 +54,10 @@ class Tax(models.Model):
 
 class Data(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='datas')
-    # app = tag = models.CharField(max_length=255, choices=choices.APP_CHOICES)
-    # model = models.CharField(max_length=255, choices=choices.MODEL_CHOICES)
-    # field = models.CharField(max_length=255, choices=choices.FIELD_CHOICES)
-    # fields = models.CharField(max_length=255, choices=choices.FIELDS_CHOICES)
     owner = models.ForeignKey(Owner, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=choices.TAG_CHOICES)
+    data_url = models.URLField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
