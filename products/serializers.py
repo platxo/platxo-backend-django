@@ -33,12 +33,36 @@ class ProductSerializer(serializers.ModelSerializer):
     extra = serializers.SerializerMethodField()
 
     def get_extra(self, obj):
-        return ({'tax_name':obj.tax.name,
-                 'tax_rate':obj.tax.rate,
-                 'product_category_name':obj.product_category.name,
-                 'product_type_name':obj.product_type.name,
-                 'location_name':obj.location.name,
-                 'section_name':obj.section.name})
+        try:
+            tax_name = obj.tax.name
+        except Exception:
+            tax_name = None
+        try:
+            tax_rate = obj.tax.rate
+        except Exception:
+            tax_rate = None
+        try:
+            product_category_name = obj.product_category.name
+        except Exception:
+            product_category_name = None
+        try:
+            product_type_name = obj.product_category.name
+        except Exception:
+            product_type_name = None
+        try:
+            location_name = obj.location.name
+        except Exception:
+            location_name = None
+        try:
+            section_name = obj.section.name
+        except Exception:
+            section_name = None
+        return ({'tax_name': tax_name,
+                 'tax_rate': tax_rate,
+                 'product_category_name': product_category_name,
+                 'product_type_name': product_type_name,
+                 'location_name': location_name,
+                 'section_name': section_name})
 
     class Meta:
         model = Product
