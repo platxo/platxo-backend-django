@@ -85,7 +85,7 @@ class SaleViewSet(viewsets.ViewSet):
 
         return Response({'message': 'Order stored.',
                          'subtotal': order_saved.subtotal,
-                         'tax': order_saved.total_tax,
+                         'tax': order_saved.total_taxes,
                          'discount': order_saved.total_discount,
                          'customer_point': order_saved.customer_points,
                          'total': order_saved.total})

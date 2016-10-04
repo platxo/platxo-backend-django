@@ -59,8 +59,11 @@ class Sale(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    # Analytics module registration.
+    analytics_fields = ('products', )
+
     def __str__(self):
         return "Products: {product}, by: {employee} in: {business}".format(product=len(self.products), employee=self.employee.__str__(), business=self.business.name)
 
-    class Meta():
+    class Meta:
         ordering = ('-created_at',)

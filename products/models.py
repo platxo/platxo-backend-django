@@ -91,6 +91,9 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    # Analytics module registration.
+    analytics_fields = ('name', 'inventory', 'retail_price', 'product_category')
+
     class Meta:
         ordering = ('-created',)
         verbose_name = 'product'
