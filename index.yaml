@@ -16,6 +16,13 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
+  - name: business_id
+  - name: employee_id
+
 - kind: business_business
   properties:
   - name: customers_ids
