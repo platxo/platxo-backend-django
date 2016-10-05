@@ -57,7 +57,9 @@ class Data(models.Model):
     owner = models.ForeignKey(Owner, related_name='datas')
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=choices.TAG_CHOICES)
-    data_url = models.URLField()
+    data_app = models.CharField(max_length=255, blank=True, null=True)
+    data_model = models.CharField(max_length=255, blank=True, null=True)
+    data_fields = fields.ListField(models.CharField(max_length=255))
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

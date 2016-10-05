@@ -20,8 +20,9 @@ indexes:
   properties:
   - name: created
     direction: desc
-  - name: business_id
-  - name: employee_id
+  - name: inventory
+  - name: name
+  - name: retail_price
 
 - kind: business_business
   properties:
@@ -154,6 +155,13 @@ indexes:
   - name: business_id
   - name: created
     direction: desc
+
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
+  - name: business_id
+  - name: employee_id
 
 - kind: products_product
   properties:
