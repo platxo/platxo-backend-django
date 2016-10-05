@@ -25,16 +25,19 @@ class AnalyticsTest(viewsets.ViewSet):
                 if field not in a.analytics_fields:
                     # The field is not parametrized in analytics_fields
                     raise Exception('Wrong field choice.')
-                a = a.objects.all().values(field)
+                query_fields = list(field)
             elif fields:
                 for value in fields:
                     if value not in a.analytics_fields:
                         # The field is not parametrized in analytics_fields
                         raise Exception('Wrong field choice.')
-                a = a.objects.all().values(*fields)
+                query_fields = fields
             else:
-                a = a.objects.all().values()
-            return a
+                return a.objects.all().values(*a.analytics_fields)
+
+            filter_fields = dict([(field, self.request.query_params.get(field)) for field in query_fields if self.request.query_params.get(field, None)])
+
+            return a.objects.all().filter(**filter_fields).values(*query_fields)
 
     def list(self, request):
         """
