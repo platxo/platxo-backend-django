@@ -514,46 +514,16 @@ TAG_CHOICES = (
 (PURPLE, 'Purple'),
 )
 
-""" APP_CHOICES """
-PRODUCTS = 'products'
-SERVICES = 'services'
-SALES = 'sales'
+""" TYPE_QUERY_CHOICES """
+ALL = 'all'
+FILTER = 'filter'
+SINGLE = 'single'
 
-APP_CHOICES = (
-(PRODUCTS, 'Products'),
-(SERVICES, 'Services'),
-(SALES, 'Sales'),
+TYPE_QUERY_CHOICES = (
+(ALL, 'All'),
+(FILTER, 'Filter'),
+(SINGLE, 'Single'),
 )
-
-
-""" MODEL_PRODUCT_CHOICES """
-PRODUCT = 'product'
-
-MODEL_PRODUCT_CHOICES = (
-(PRODUCT, 'Product'),
-)
-
-""" MODEL_SERVICE_CHOICES """
-SERVICE = 'service'
-
-MODEL_SERVICES_CHOICES = (
-(SERVICE, 'Service'),
-)
-
-""" MODEL_SALES_CHOICES """
-SALE = 'sale'
-
-MODEL_SALES_CHOICES = (
-(SALE, 'Sale'),
-)
-
-""" FIELD_PRODUCT_CHOICES """
-QUANTITY = 'quantity'
-
-""" FIELD_SERVICE_CHOICES """
-
-""" FIELD_SALE_CHOICES """
-TOTAL = 'total'
 
 
 

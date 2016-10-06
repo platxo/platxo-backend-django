@@ -12,6 +12,7 @@ PARAMETRIZATIONS_SOURCES = {
     'crm_points_choices' : busines_choices.CRM_POINTS_CHOICES,
     'category_choices' : busines_choices.CATEGORY_CHOICES,
     'type_choices' : busines_choices.TYPE_CHOICES,
+    'type_query_choices' : busines_choices.TYPE_QUERY_CHOICES,
 }
 
 class ParametrizationViewSet(viewsets.ViewSet):

@@ -16,14 +16,6 @@ indexes:
   - name: __key__
     direction: desc
 
-- kind: products_product
-  properties:
-  - name: created
-    direction: desc
-  - name: inventory
-  - name: name
-  - name: retail_price
-
 - kind: business_business
   properties:
   - name: customers_ids
@@ -177,12 +169,31 @@ indexes:
   - name: inventory
   - name: name
   - name: product_category_id
+  - name: quantity
   - name: retail_price
 
 - kind: products_product
   properties:
   - name: created
     direction: desc
+  - name: inventory
+  - name: name
+  - name: product_category_id
+  - name: retail_price
+
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
+  - name: inventory
+  - name: name
+  - name: quantity
+
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
+  - name: inventory
   - name: name
   - name: retail_price
 
@@ -198,6 +209,13 @@ indexes:
     direction: desc
   - name: name
   - name: quantity
+
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
+  - name: name
+  - name: retail_price
 
 - kind: products_product
   properties:

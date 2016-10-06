@@ -48,8 +48,8 @@ class DataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Data
-        fields = ('id', 'business', 'owner', 'name',
-                  'tag', 'data_app', 'data_model',
+        fields = ('id', 'business', 'owner', 'query_type',
+                'name', 'tag', 'data_app', 'data_model',
                   'data_fields', 'informations',
                    'created','updated', 'url')
 
