@@ -3,6 +3,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 
+from business.models import Business
+
 
 class AnalyticsTest(viewsets.ViewSet):
 
@@ -15,6 +17,8 @@ class AnalyticsTest(viewsets.ViewSet):
         model = self.request.query_params.get('model')
         field = self.request.query_params.get('field')
         fields = self.request.query_params.getlist('fields[]')
+
+        business = self.request.user.owner.business.all()
 
         if app and model:
             a = apps.get_app_config(app).get_model(model)
@@ -33,11 +37,11 @@ class AnalyticsTest(viewsets.ViewSet):
                         raise Exception('Wrong field choice.')
                 query_fields = fields
             else:
-                return a.objects.all().values(*a.analytics_fields)
+                return a.objects.filter(business__in=business).values(*a.analytics_fields)
 
             filter_fields = dict([(field, self.request.query_params.get(field)) for field in query_fields if self.request.query_params.get(field, None)])
 
-            return a.objects.all().filter(**filter_fields).values(*query_fields)
+            return a.objects.all().filter(business__in=business, **filter_fields).values(*query_fields)
 
     def list(self, request):
         """
@@ -49,6 +53,10 @@ class AnalyticsTest(viewsets.ViewSet):
         :param request:
         :return:
         """
+        # Only owners can access and only their own information
+        if not self.request.user.is_owner and not self.request.user.is_owner:
+            return Response({'error': 'You are not owner.'}, status.HTTP_403_FORBIDDEN)
+
         try:
             a = self.get_queryset()
         except Exception as e:
@@ -56,6 +64,8 @@ class AnalyticsTest(viewsets.ViewSet):
             return Response({'error': 'Bad query'}, status.HTTP_400_BAD_REQUEST)
         if a:
             return Response(a)
+        elif a is not None:
+            return Response({'message': 'Filter did not match any item.'})
 
         app_names = {}
 
