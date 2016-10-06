@@ -29,7 +29,7 @@ class AnalyticsTest(viewsets.ViewSet):
                 if field not in a.analytics_fields:
                     # The field is not parametrized in analytics_fields
                     raise Exception('Wrong field choice.')
-                query_fields = list(field)
+                query_fields = list((field,))
             elif fields:
                 for value in fields:
                     if value not in a.analytics_fields:
