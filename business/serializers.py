@@ -44,14 +44,16 @@ class TaxSerializer(serializers.ModelSerializer):
 class DataSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=choices.TAG_CHOICES, default='grey')
     informations = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    data_type = serializers.ChoiceField(choices=choices.DATA_TYPE_CHOICES, default='all')
     data_fields = serializers.ListField(child=serializers.CharField(max_length=255))
+    data_filters = serializers.ListField(child=serializers.CharField(max_length=255))
 
     class Meta:
         model = Data
-        fields = ('id', 'business', 'owner', 'query_type',
-                'name', 'tag', 'data_app', 'data_model',
-                  'data_fields', 'informations',
-                   'created','updated', 'url')
+        fields = ('id', 'business', 'owner', 'name',
+                  'tag', 'data_type', 'data_app', 'data_model',
+                  'data_fields', 'data_filters', 'data_id',
+                  'informations', 'created','updated', 'url')
 
 
 class InformationSerializer(serializers.ModelSerializer):

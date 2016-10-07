@@ -55,12 +55,14 @@ class Tax(models.Model):
 class Data(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='datas')
     owner = models.ForeignKey(Owner, related_name='datas')
-    query_type = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     tag = models.CharField(max_length=255, default='grey', choices=choices.TAG_CHOICES)
+    data_type = models.CharField(max_length=255, default='all', choices=choices.DATA_TYPE_CHOICES)
     data_app = models.CharField(max_length=255, blank=True, null=True)
     data_model = models.CharField(max_length=255, blank=True, null=True)
     data_fields = fields.ListField(models.CharField(max_length=255))
+    data_filters = fields.ListField(models.CharField(max_length=255))
+    data_id = models.BigIntegerField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

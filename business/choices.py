@@ -514,12 +514,12 @@ TAG_CHOICES = (
 (PURPLE, 'Purple'),
 )
 
-""" TYPE_QUERY_CHOICES """
+""" TYPE_DATA_CHOICES """
 ALL = 'all'
 FILTER = 'filter'
 SINGLE = 'single'
 
-TYPE_QUERY_CHOICES = (
+DATA_TYPE_CHOICES = (
 (ALL, 'All'),
 (FILTER, 'Filter'),
 (SINGLE, 'Single'),
