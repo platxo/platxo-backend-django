@@ -150,6 +150,30 @@ indexes:
 
 - kind: products_product
   properties:
+  - name: business_id
+  - name: created
+    direction: desc
+  - name: inventory
+  - name: name
+  - name: product_category_id
+  - name: retail_price
+
+- kind: products_product
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+  - name: name
+
+- kind: products_product
+  properties:
+  - name: business_id
+  - name: name
+  - name: created
+    direction: desc
+
+- kind: products_product
+  properties:
   - name: created
     direction: desc
   - name: business_id
