@@ -152,3 +152,30 @@ class User(AbstractUser):
     class Meta(AbstractUser.Meta):
         app_label = "users"
         swappable = 'AUTH_USER_MODEL'
+
+
+class ForgotPassword(models.Model):
+    """
+    Forgot password flow storage.
+    """
+    # User information
+    user = models.ForeignKey('User')
+    user_email = models.EmailField()
+
+    # Recovery information
+    # Step one, Recovery code sent to mail.
+    code = models.CharField(max_length=7)
+    # Step two, the recovery token only known by client.
+    token = models.CharField(max_length=125, null=True)
+
+    # The status, if usable or not
+    VALID = 'val'
+    INVALID = 'inv'
+    STATUS_CHOICE = (
+        (VALID, 'Valid'),
+        (INVALID, 'Invalid'),
+    )
+    status = models.CharField(max_length=3, choices=STATUS_CHOICE, default=VALID)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
