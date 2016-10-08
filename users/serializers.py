@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from users.apps import CODE_EXPIRE_MIN, TOKEN_EXPIRE_MIN
+from users.validators import NotBeforeValidator, NotBeforeUpdateValidator, BothMatch
 from .models import User
 from accounts.models import Owner, Employee, Customer, Supplier
 from business.models import Business
@@ -7,11 +9,13 @@ from djangae.contrib.gauth.datastore.models import Group
 from django.contrib.auth.models import Permission
 from django.db import IntegrityError
 
+
 class AccountsBusinessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Business
         fields = ('id', 'name')
+
 
 class UserOwnerSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
@@ -21,6 +25,7 @@ class UserOwnerSerializer(serializers.ModelSerializer):
         model = Owner
         fields = ('id', 'user', 'business')
 
+
 class UserEmployeeSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     business = AccountsBusinessSerializer(many=True, read_only=True)
@@ -28,6 +33,7 @@ class UserEmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = ('id', 'user', 'business')
+
 
 class UserCustomerSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
@@ -37,6 +43,7 @@ class UserCustomerSerializer(serializers.ModelSerializer):
         model = Customer
         fields = ('id', 'user', 'business')
 
+
 class UserSupplierSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     business = AccountsBusinessSerializer(many=True, read_only=True)
@@ -44,6 +51,7 @@ class UserSupplierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Supplier
         fields = ('id', 'user', 'business')
+
 
 class UserSerializer(serializers.ModelSerializer):
     is_owner = serializers.BooleanField(default=False)
@@ -112,7 +120,6 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(error)
         return user
 
-
     def get_extra_kwargs(self):
         extra_kwargs = super(UserSerializer, self).get_extra_kwargs()
         if 'view' not in self.context:
@@ -127,9 +134,44 @@ class UserSerializer(serializers.ModelSerializer):
 
         return extra_kwargs
 
+
+class Validator(object):
+    """
+
+    """
+    def __init__(self):
+        pass
+
+    def __call__(self, attrs):
+        pass
+
+
 class GroupSerializer(serializers.ModelSerializer):
     permissions = serializers.PrimaryKeyRelatedField(many=True, queryset=Permission.objects.all())
 
     class Meta:
         model = Group
         fields = ('id', 'name', 'permissions', 'url')
+
+
+class ForgotPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class ForgotPasswordValidateSerializer(ForgotPasswordSerializer):
+    code = serializers.CharField()
+
+    class Meta:
+        validators = [NotBeforeValidator(field='created_at', time=CODE_EXPIRE_MIN)]
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    token = serializers.CharField()
+    new_password = serializers.CharField()
+    validate_password = serializers.CharField()
+
+    class Meta:
+        validators = [
+            NotBeforeUpdateValidator(field='updated_at', time=TOKEN_EXPIRE_MIN),
+            BothMatch(reference='new_password', compare='validate_password')
+        ]
