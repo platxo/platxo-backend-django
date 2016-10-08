@@ -65,7 +65,8 @@ class ForgotPasswordViewSet(viewsets.ViewSet):
                                            created_at__gte=timezone.now()-timedelta(minutes=CODE_EXPIRE_MIN),
                                            status=self.model.VALID)
         if exists and not exists[0].token:
-            return Response({'message': 'A key was sent to the user email.', 'key': exists[0].code})
+            send_mail(exists[0].code, exists[0].user_email)
+            return Response({'message': 'A key was sent to the user email.'})
 
         if exists and exists[0].token:
             exists.update(status=self.model.INVALID)
