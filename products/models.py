@@ -92,7 +92,7 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     # Analytics module registration.
-    analytics_fields = ('name', 'inventory', 'quantity', 'retail_price', 'product_category')
+    analytics_fields = ('id', 'name', 'inventory', 'quantity', 'retail_price', 'product_category')
 
     class Meta:
         ordering = ('-created',)

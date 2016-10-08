@@ -221,6 +221,13 @@ indexes:
   properties:
   - name: created
     direction: desc
+  - name: product_category_id
+  - name: quantity
+
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
   - name: quantity
 
 - kind: products_product
