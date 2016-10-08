@@ -211,6 +211,14 @@ indexes:
     direction: desc
   - name: inventory
   - name: name
+  - name: quantity
+
+- kind: products_product
+  properties:
+  - name: created
+    direction: desc
+  - name: inventory
+  - name: name
   - name: retail_price
 
 - kind: products_product
