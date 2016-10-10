@@ -144,6 +144,23 @@ indexes:
 
 - kind: products_product
   properties:
+  - name: _idx_icontains_name_0
+  - name: _idx_icontains_quantity_0
+  - name: created
+    direction: desc
+  - name: name
+  - name: quantity
+
+- kind: products_product
+  properties:
+  - name: _idx_icontains_quantity_0
+  - name: created
+    direction: desc
+  - name: name
+  - name: quantity
+
+- kind: products_product
+  properties:
   - name: business_id
   - name: created
     direction: desc
@@ -240,13 +257,6 @@ indexes:
     direction: desc
   - name: name
   - name: retail_price
-
-- kind: products_product
-  properties:
-  - name: created
-    direction: desc
-  - name: product_category_id
-  - name: quantity
 
 - kind: products_product
   properties:
@@ -293,9 +303,24 @@ indexes:
 
 - kind: products_product
   properties:
+  - name: quantity
+  - name: created
+    direction: desc
+
+- kind: products_product
+  properties:
   - name: tax_id
   - name: created
     direction: desc
+
+- kind: products_product
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
+  - name: name
+  - name: product_category_id
+  - name: quantity
 
 - kind: products_productcategory
   properties:
@@ -522,3 +547,9 @@ indexes:
   - name: service_category_id
   - name: created
     direction: desc
+
+- kind: users_forgotpassword
+  properties:
+  - name: status
+  - name: user_email
+  - name: created_at
