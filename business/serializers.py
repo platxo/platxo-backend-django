@@ -13,26 +13,12 @@ class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Business
         fields = (
-            'id',
-            'owner',
-            'name',
-            'size',
-            'category',
-            'type',
-            'currency',
-            'crm_points',
-            'country',
-            'city',
-            'email',
-            'website',
-            'telephone',
-            'employees',
-            'customers',
-            'suppliers',
-            'created',
-            'updated',
-            'url'
-            )
+            'id', 'owner', 'name',
+            'size', 'category', 'type',
+            'currency', 'crm_points', 'country',
+            'city', 'email', 'website',
+            'telephone', 'employees', 'customers',
+            'suppliers', 'created', 'updated', 'url')
 
 class TaxSerializer(serializers.ModelSerializer):
 
@@ -45,8 +31,8 @@ class DataSerializer(serializers.ModelSerializer):
     tag = serializers.ChoiceField(choices=choices.TAG_CHOICES, default='grey')
     informations = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     data_type = serializers.ChoiceField(choices=choices.DATA_TYPE_CHOICES, default='all')
-    data_fields = serializers.ListField(child=serializers.CharField(max_length=255))
-    data_filters = serializers.ListField(child=serializers.CharField(max_length=255))
+    data_fields = serializers.ListField(required=False, child=serializers.CharField(max_length=255))
+    data_filters = serializers.ListField(required=False, child=serializers.CharField(allow_blank=True, max_length=255))
 
     class Meta:
         model = Data
@@ -64,7 +50,9 @@ class InformationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Information
-        fields = ('id', 'business', 'owner', 'name', 'tag', 'datas', 'knowledges', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name',
+                 'tag', 'datas', 'knowledges', 'created',
+                 'updated', 'url')
 
 
 class KnowledgeSerializer(serializers.ModelSerializer):
@@ -73,4 +61,6 @@ class KnowledgeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Knowledge
-        fields = ('id', 'business', 'owner', 'name', 'tag', 'informations', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'owner', 'name',
+                  'tag', 'informations', 'created',
+                  'updated', 'url')

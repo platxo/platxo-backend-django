@@ -19,6 +19,10 @@ handlers:
 includes:
 - static.yaml
 
+libraries:
+- name: PIL
+  version: "latest"
+
 skip_files:
 - manage.py
 - requirements.txt
@@ -27,3 +31,4 @@ skip_files:
 - (.*)\-info
 - README.md
 - .gitignore
+- lib/PIL*

@@ -136,6 +136,10 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+DEFAULT_FILE_STORAGE = 'djangae.storage.CloudStorage'
+
+BUCKET_KEY = 'platxo-bi.appspot.com'
+
 AUTH_USER_MODEL = 'users.User'
 
 # EMAIL_HOST = 'localhost'

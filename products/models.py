@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from djmoney.models.fields import MoneyField
+from djangae import fields, storage
 
 from business.models import Business
 from accounts.models import Employee, Supplier
 from business.models import Tax
+
+public_storage = storage.CloudStorage(google_acl='public-read')
 
 class Location(models.Model):
     business = models.ForeignKey(Business, related_name='locations')
@@ -86,8 +88,8 @@ class Product(models.Model):
     retail_price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.BooleanField(default=True)
     quantity = models.IntegerField()
-    image = models.ImageField(upload_to='product/image', blank=True, null=True)
-    picture = models.ImageField(upload_to='product/picture', blank=True, null=True)
+    image = models.ImageField(upload_to='product/image', storage=public_storage, blank=True, null=True)
+    picture = models.ImageField(upload_to='product/picture', storage=public_storage, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
