@@ -20,7 +20,7 @@ class NotBeforeValidator(object):
         except self.model.DoesNotExist:
             raise serializers.ValidationError({'code': 'Not found.'})
 
-        if recovery.status is recovery.INVALID or getattr(recovery, self.field) > timezone.now()-timedelta(minutes=self.time_limit):
+        if recovery.status is recovery.INVALID or getattr(recovery, self.field) > timezone.now()+timedelta(minutes=self.time_limit):
             raise serializers.ValidationError({'code': 'Expired.'})
 
 
@@ -39,7 +39,7 @@ class NotBeforeUpdateValidator(object):
         except self.model.DoesNotExist:
             raise serializers.ValidationError({'code': 'Not found.'})
 
-        if recovery.status is recovery.INVALID or getattr(recovery, self.field) > timezone.now()-timedelta(minutes=self.time_limit):
+        if recovery.status is recovery.INVALID or getattr(recovery, self.field) > timezone.now()+timedelta(minutes=self.time_limit):
             raise serializers.ValidationError({'code': 'Expired.'})
 
 
