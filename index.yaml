@@ -185,6 +185,15 @@ indexes:
 - kind: products_product
   properties:
   - name: business_id
+  - name: created
+    direction: desc
+  - name: name
+  - name: product_category_id
+  - name: quantity
+
+- kind: products_product
+  properties:
+  - name: business_id
   - name: name
   - name: created
     direction: desc
@@ -312,15 +321,6 @@ indexes:
   - name: tax_id
   - name: created
     direction: desc
-
-- kind: products_product
-  properties:
-  - name: business_id
-  - name: created
-    direction: desc
-  - name: name
-  - name: product_category_id
-  - name: quantity
 
 - kind: products_productcategory
   properties:
@@ -551,5 +551,10 @@ indexes:
 - kind: users_forgotpassword
   properties:
   - name: status
+  - name: user_email
+  - name: created_at
+
+- kind: users_forgotpassword
+  properties:
   - name: user_email
   - name: created_at
