@@ -20,8 +20,8 @@ class AnalyticsTest(viewsets.ViewSet):
         query_type = self.request.query_params.get('type')
         app = self.request.query_params.get('app')
         model = self.request.query_params.get('model')
-        fields = self.request.query_params.getlist('fields[]', [])
-        filters = self.request.query_params.getlist('filters[]', [])
+        fields = self.request.query_params.getlist('fields', [])
+        filters = self.request.query_params.getlist('filters', [])
         query_id = self.request.query_params.get('id')
 
         # Business queryset filter
@@ -33,12 +33,23 @@ class AnalyticsTest(viewsets.ViewSet):
             return None
 
         if query_type == choices.ALL:
-            return a.objects.filter(business__in=business).values(*a.analytics_fields)
-        elif query_type == choices.SINGLE:
-            return a.objects.filter(business__in=business).values(*a.analytics_fields).get(pk=query_id)
-        elif query_type == choices.FILTER:
             return a.objects.filter(business__in=business)\
-                            .filter(reduce(operator.or_, [Q(query) for query in zip(fields, filters)])).values(*fields)
+                            .values(*fields)
+        elif query_type == choices.SINGLE:
+            return a.objects.filter(business__in=business)\
+                            .values(*fields).get(pk=query_id)
+        elif query_type == choices.FILTER:
+            queries = []
+            for (field, filter) in zip(fields, filters):
+                kwargs = {field: filter}
+                print kwargs
+                if filter is not u'':
+                    queries.append(Q(**kwargs))
+                    print queries
+            q = reduce(operator.or_, queries)
+            print q
+            return a.objects.filter(business__in=business)\
+                            .filter(q).values(*fields)
         else:
             return None
 

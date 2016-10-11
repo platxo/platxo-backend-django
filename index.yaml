@@ -164,6 +164,14 @@ indexes:
   - name: business_id
   - name: created
     direction: desc
+  - name: name
+  - name: quantity
+
+- kind: products_product
+  properties:
+  - name: business_id
+  - name: created
+    direction: desc
 
 - kind: products_product
   properties:
@@ -347,6 +355,25 @@ indexes:
   - name: tax_id
   - name: created
     direction: desc
+
+- kind: products_product
+  ancestor: yes
+  properties:
+  - name: __key__
+  - name: business_id
+  - name: inventory
+  - name: name
+  - name: product_category_id
+  - name: quantity
+  - name: retail_price
+
+- kind: products_product
+  ancestor: yes
+  properties:
+  - name: __key__
+  - name: business_id
+  - name: name
+  - name: quantity
 
 - kind: products_productcategory
   properties:
