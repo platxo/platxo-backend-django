@@ -1,4 +1,6 @@
+import operator
 from django.apps import apps
+from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
@@ -35,7 +37,8 @@ class AnalyticsTest(viewsets.ViewSet):
         elif query_type == choices.SINGLE:
             return a.objects.filter(business__in=business).values(*a.analytics_fields).get(pk=query_id)
         elif query_type == choices.FILTER:
-            return a.objects.filter(business__in=business).filter(**dict(zip(fields, filters))).values(*fields)
+            return a.objects.filter(business__in=business)\
+                            .filter(reduce(operator.or_, [Q(query) for query in zip(fields, filters)])).values(*fields)
         else:
             return None
 
