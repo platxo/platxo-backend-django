@@ -16,8 +16,8 @@ from customers.views import PointViewSet
 from purchases.views import PurchaseViewSet
 from contacts.views import ContactViewSet, PromotionViewSet
 from business.views import BusinessViewSet, TaxViewSet, DataViewSet, InformationViewSet, KnowledgeViewSet
-from users.views import UserViewSet, GroupViewSet, ForgotPasswordViewSet, ForgotPasswordValidateViewSet, \
-    ResetPasswordViewSet
+from users.views import (UserViewSet, GroupViewSet, ForgotPasswordViewSet, ForgotPasswordValidateViewSet,
+                         ResetPasswordViewSet)
 from accounts.views import OwnerViewSet, EmployeeViewSet, CustomerViewSet, SupplierViewSet
 from parametrization.views import ParametrizationViewSet
 
@@ -38,10 +38,10 @@ router.register(r'taxes', TaxViewSet)
 router.register(r'datas', DataViewSet)
 router.register(r'informations', InformationViewSet)
 router.register(r'knowledges', KnowledgeViewSet)
-router.register(r'users/reset_password', ResetPasswordViewSet, base_name='reset_password')
 router.register(r'users', UserViewSet)
-router.register(r'forgot_password', ForgotPasswordViewSet, base_name='forgot_password')
-router.register(r'forgot_password/validate', ForgotPasswordValidateViewSet, base_name='validate_forgot_password')
+router.register(r'reset-password', ResetPasswordViewSet, base_name='reset-password')
+router.register(r'forgot-password', ForgotPasswordViewSet, base_name='forgot-password')
+router.register(r'forgot-password-validate', ForgotPasswordValidateViewSet, base_name='forgot-password-validate')
 router.register(r'groups', GroupViewSet)
 router.register(r'owners', OwnerViewSet)
 router.register(r'employees', EmployeeViewSet)
