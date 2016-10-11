@@ -3,7 +3,9 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 
-from business.models import Business
+from business import choices
+from business.choices import DATA_TYPE_CHOICES
+from business.models import Business, Data
 
 
 class AnalyticsTest(viewsets.ViewSet):
@@ -13,35 +15,29 @@ class AnalyticsTest(viewsets.ViewSet):
         Get the specified fields from the specified model.
         :return:
         """
+        query_type = self.request.query_params.get('type')
         app = self.request.query_params.get('app')
         model = self.request.query_params.get('model')
-        field = self.request.query_params.get('field')
-        fields = self.request.query_params.getlist('fields[]')
+        fields = self.request.query_params.getlist('fields[]', [])
+        filters = self.request.query_params.getlist('filters[]', [])
+        query_id = self.request.query_params.get('id')
 
+        # Business queryset filter
         business = self.request.user.owner.business.all()
 
         if app and model:
             a = apps.get_app_config(app).get_model(model)
-            if not hasattr(a, 'analytics_fields'):
-                # The model must be analytics eligible
-                raise Exception('Incorrect model name.')
-            if field:
-                if field not in a.analytics_fields:
-                    # The field is not parametrized in analytics_fields
-                    raise Exception('Wrong field choice.')
-                query_fields = list((field,))
-            elif fields:
-                for value in fields:
-                    if value not in a.analytics_fields:
-                        # The field is not parametrized in analytics_fields
-                        raise Exception('Wrong field choice.')
-                query_fields = fields
-            else:
-                return a.objects.filter(business__in=business).values(*a.analytics_fields)
+        else:
+            return None
 
-            filter_fields = dict([(field, self.request.query_params.get(field)) for field in query_fields if self.request.query_params.get(field, None)])
-
-            return a.objects.all().filter(business__in=business, **filter_fields).values(*query_fields)
+        if query_type == choices.ALL:
+            return a.objects.filter(business__in=business).values(*a.analytics_fields)
+        elif query_type == choices.SINGLE:
+            return a.objects.filter(business__in=business).values(*a.analytics_fields).get(pk=query_id)
+        elif query_type == choices.FILTER:
+            return a.objects.filter(business__in=business).filter(**dict(zip(fields, filters))).values(*fields)
+        else:
+            return None
 
     def list(self, request):
         """
