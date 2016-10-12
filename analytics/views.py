@@ -33,11 +33,9 @@ class AnalyticsTest(viewsets.ViewSet):
             return None
 
         if query_type == choices.ALL:
-            return a.objects.filter(business__in=business)\
-                            .values(*fields)
+            return a.objects.filter(business__in=business).values(*fields)
         elif query_type == choices.SINGLE:
-            return a.objects.filter(business__in=business)\
-                            .values(*fields).get(pk=query_id)
+            return list(a.objects.filter(business__in=business).values(*fields).get(pk=query_id))
         elif query_type == choices.FILTER:
             queries = []
             for (field, filter) in zip(fields, filters):
@@ -48,8 +46,7 @@ class AnalyticsTest(viewsets.ViewSet):
                     print queries
             q = reduce(operator.or_, queries)
             print q
-            return a.objects.filter(business__in=business)\
-                            .filter(q).values(*fields)
+            return list(a.objects.filter(business__in=business).filter(q).values(*fields))
         else:
             return None
 
