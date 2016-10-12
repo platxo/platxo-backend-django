@@ -6,8 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from business import choices
-from business.choices import DATA_TYPE_CHOICES
-from business.models import Business, Data
 
 
 class AnalyticsTest(viewsets.ViewSet):
@@ -35,17 +33,14 @@ class AnalyticsTest(viewsets.ViewSet):
         if query_type == choices.ALL:
             return a.objects.filter(business__in=business).values(*fields)
         elif query_type == choices.SINGLE:
-            return list(a.objects.filter(business__in=business).values(*fields).get(pk=query_id))
+            return [a.objects.filter(business__in=business).values(*fields).get(pk=query_id)]
         elif query_type == choices.FILTER:
             queries = []
-            for (field, filter) in zip(fields, filters):
-                kwargs = {field: filter}
-                print kwargs
-                if filter is not u'':
+            for (query_field, query_filter) in zip(fields, filters):
+                kwargs = {query_field: query_filter}
+                if query_filter is not u'':
                     queries.append(Q(**kwargs))
-                    print queries
             q = reduce(operator.or_, queries)
-            print q
             return list(a.objects.filter(business__in=business).filter(q).values(*fields))
         else:
             return None

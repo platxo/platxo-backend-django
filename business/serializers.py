@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from drf_extra_fields.fields import Base64ImageField
 
 from .models import Business, Tax, Data, Information, Knowledge
 from accounts.models import Employee, Customer, Supplier
@@ -9,6 +10,15 @@ class BusinessSerializer(serializers.ModelSerializer):
     employees = serializers.PrimaryKeyRelatedField(many=True, queryset=Employee.objects.all())
     customers = serializers.PrimaryKeyRelatedField(many=True, queryset=Customer.objects.all())
     suppliers = serializers.PrimaryKeyRelatedField(many=True, queryset=Supplier.objects.all())
+    picture = Base64ImageField(required=False, allow_null=True, write_only=True)
+    extra = serializers.SerializerMethodField()
+
+    def get_extra(self, obj):
+        try:
+            picture_url = obj.picture.url
+        except Exception:
+            picture_url = None
+        return ({'picture_url': picture_url})
 
     class Meta:
         model = Business
@@ -16,9 +26,9 @@ class BusinessSerializer(serializers.ModelSerializer):
             'id', 'owner', 'name',
             'size', 'category', 'type',
             'currency', 'crm_points', 'country',
-            'city', 'email', 'website',
+            'city', 'email', 'website', 'picture',
             'telephone', 'employees', 'customers',
-            'suppliers', 'created', 'updated', 'url')
+            'suppliers', 'extra', 'created', 'updated', 'url')
 
 class TaxSerializer(serializers.ModelSerializer):
 

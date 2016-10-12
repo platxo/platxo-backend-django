@@ -1,10 +1,11 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.db import models
-from djangae import fields
+from djangae import fields, storage
 from . import choices
 from accounts.models import Owner, Employee, Customer, Supplier
+
+public_storage = storage.CloudStorage(google_acl='public-read')
 
 
 class Business(models.Model):
@@ -20,6 +21,7 @@ class Business(models.Model):
     email = models.EmailField(max_length=254)
     website = models.URLField(max_length=200, blank=True)
     telephone = models.CharField(max_length=20)
+    picture = models.ImageField(upload_to='business/picture', storage=public_storage, blank=True, null=True)
     employees = fields.RelatedSetField(Employee, related_name='business')
     customers = fields.RelatedSetField(Customer, related_name='business')
     suppliers = fields.RelatedSetField(Supplier, related_name='business')
