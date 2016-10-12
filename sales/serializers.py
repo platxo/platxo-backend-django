@@ -15,9 +15,7 @@ class SaleSerializer(serializers.ModelSerializer):
     employee_username = serializers.CharField(read_only=True)
     products = serializers.ListField(required=False)
     services = serializers.ListField(required=False)
-    # discount = serializers.IntegerField(default=0)
     subtotal = serializers.FloatField(read_only=True)
-    # total_discount = serializers.FloatField(read_only=True)
     total_taxes = serializers.FloatField(read_only=True)
     customer_points = serializers.FloatField(default=0.0)
     total = serializers.FloatField(read_only=True)
@@ -191,7 +189,7 @@ class SaleSerializer(serializers.ModelSerializer):
                 partial_discount += partial_rate(price_services, service['discount'])
                 tax_total += price_services * get_rate(service['details']['tax'])
 
-        total_discount = partial_discount + ((subtotal - partial_discount) * get_rate(self.validated_data['total_discount']))
+        total_discount = partial_discount + ((subtotal - partial_discount) * get_rate(self.validated_data.get('total_discount', 0)))
         del self.validated_data['total_discount']
         total = subtotal - total_discount
         # One customer_point equals one unit in current currency.
