@@ -10,13 +10,12 @@ from services.models import Service
 
 
 class SaleSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(read_only=True)
     customer_username = serializers.CharField(read_only=True)
     employee_username = serializers.CharField(read_only=True)
     products = serializers.ListField(required=False)
     services = serializers.ListField(required=False)
-    discount = serializers.IntegerField(default=0)
     subtotal = serializers.FloatField(read_only=True)
-    total_discount = serializers.FloatField(read_only=True)
     total_taxes = serializers.FloatField(read_only=True)
     customer_points = serializers.FloatField(default=0.0)
     total = serializers.FloatField(read_only=True)
@@ -24,14 +23,17 @@ class SaleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Sale
-        fields = ('id', 'customer',
+        fields = ('id', 'name', 'customer',
                   'customer_username', 'employee',
                   'employee_username', 'business',
                   'payment_method', 'products',
-                  'services', 'discount',
+                  'services',
                   'subtotal', 'customer_points',
                   'total_discount', 'total_taxes',
                   'total', 'created_at')
+        extra_kwargs = {
+            'discount': {'write_only': True}
+        }
         validators = [OneProductOrService(),
                       UserInBusiness(field='employee'),
                       UserInBusiness(field='customer', anonymous=True),
@@ -187,7 +189,8 @@ class SaleSerializer(serializers.ModelSerializer):
                 partial_discount += partial_rate(price_services, service['discount'])
                 tax_total += price_services * get_rate(service['details']['tax'])
 
-        total_discount = partial_discount + ((subtotal - partial_discount) * get_rate(self.validated_data['discount']))
+        total_discount = partial_discount + ((subtotal - partial_discount) * get_rate(self.validated_data.get('total_discount', 0)))
+        del self.validated_data['total_discount']
         total = subtotal - total_discount
         # One customer_point equals one unit in current currency.
         # This validation needs somehow to be out of this save block.
@@ -197,6 +200,8 @@ class SaleSerializer(serializers.ModelSerializer):
             self.validated_data['customer_points'] <= max_points_allowed else \
             max_points_allowed
 
+        if 'discount' in self.validated_data:
+            del self.validated_data['discount']
         total += tax_total - self.validated_data['customer_points']
         sale = Sale(subtotal=round(subtotal, 2), total_discount=round(total_discount, 2),
                     total_taxes=round(tax_total, 2), total=round(total, 2), **self.validated_data)

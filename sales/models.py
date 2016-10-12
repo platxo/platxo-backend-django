@@ -17,6 +17,8 @@ class Sale(models.Model):
         (CREDIT_CARD, 'credit card'),
         (DEBIT_CARD, 'debit card')
     )
+    # Consecutive number of the bill.
+    name = models.CharField(max_length=128)
 
     # Information of the actors involved in the transaction.
     employee = models.ForeignKey(Employee)
@@ -42,7 +44,7 @@ class Sale(models.Model):
     # The value before applying any deduction or increment due to taxex, points
     subtotal = models.FloatField(help_text='Brute total')
     # Percentage of discount applied to subtotal
-    discount = models.IntegerField(help_text='A discount to apply to the whole purchase', blank=True, default=0)
+    total_discount = models.IntegerField(help_text='A discount to apply to the whole purchase', blank=True, default=0)
     # The total value in taxes charged.
     total_taxes = models.FloatField(blank=True, default=0)
     # Amount of customer points used in the transaction.
@@ -67,3 +69,29 @@ class Sale(models.Model):
 
     class Meta:
         ordering = ('-created_at',)
+
+    def save(self):
+        bill_number, created = BillNumber.objects.get_or_create(business=self.business)
+        if not created and hasattr(self.business, 'sale_begin'):
+            self.name = self.business.sale_begin
+        self.name = bill_number.last_number + 1
+        bill_number.last_number = self.name
+        bill_number.save()
+        super(Sale, self).save()
+
+
+class BillNumber(models.Model):
+    """
+    Keeps the bill number of the business.
+    """
+    # Business doing it.
+    business = models.ForeignKey(Business, related_name='business')
+
+    # The last bill number used.
+    last_number = models.IntegerField(default=0)
+
+    def __str__(self):
+        return '{name}: {number}'.format(name=self.business.name, number=self.last_number)
+
+
+
