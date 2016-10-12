@@ -84,6 +84,7 @@ class SaleViewSet(viewsets.ViewSet):
         order_saved = order_serialized.save()
 
         return Response({'message': 'Order stored.',
+                         'name': order_saved.name,
                          'subtotal': order_saved.subtotal,
                          'tax': order_saved.total_taxes,
                          'discount': order_saved.total_discount,
