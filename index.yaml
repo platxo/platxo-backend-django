@@ -470,6 +470,12 @@ indexes:
 
 - kind: products_section
   properties:
+  - name: location_id
+  - name: created
+    direction: desc
+
+- kind: products_section
+  properties:
   - name: created
     direction: desc
   - name: business_id

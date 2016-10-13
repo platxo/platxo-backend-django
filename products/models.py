@@ -1,11 +1,18 @@
 from __future__ import unicode_literals
+import StringIO
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.dispatch import receiver
+
 from djangae import fields, storage
 
 from business.models import Business
 from accounts.models import Employee, Supplier
 from business.models import Tax
+import qrcode
+
 
 public_storage = storage.CloudStorage(google_acl='public-read')
 
@@ -103,3 +110,38 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Code(models.Model):
+    product = models.OneToOneField(Product)
+    qrcode = models.ImageField(upload_to='product/code', storage=public_storage, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'code'
+        verbose_name_plural = 'codes'
+
+    def __str__(self):
+        return str(self.id)
+
+    @receiver(post_save, sender=Product)
+    def create_code(sender, instance, created, **kwargs):
+        if created:
+              data = instance.id
+              qr = qrcode.QRCode(
+                  version=1,
+                  error_correction=qrcode.constants.ERROR_CORRECT_L,
+                  box_size=10,
+                  border=4,)
+              qr.add_data(data)
+              qr.make(fit=True)
+              img = qr.make_image()
+              buffer = StringIO.StringIO()
+              img.save(buffer, 'png')
+              buffer.seek(0)
+              filename = '%s.png' % (data)
+              filebuffer = InMemoryUploadedFile(
+                  buffer, None, filename, 'image/png', buffer.len, None)
+              code, new = Code.objects.get_or_create(product=instance,
+                                                     qrcode=filebuffer)

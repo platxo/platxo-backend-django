@@ -57,12 +57,17 @@ class ProductSerializer(serializers.ModelSerializer):
             section_name = obj.section.name
         except Exception:
             section_name = None
+        try:
+            code_url = obj.code.qrcode.url
+        except Exception:
+            code_url = None
         return ({'tax_name': tax_name,
                  'tax_rate': tax_rate,
                  'product_category_name': product_category_name,
                  'product_type_name': product_type_name,
                  'location_name': location_name,
-                 'section_name': section_name})
+                 'section_name': section_name,
+                 'code_url': code_url})
 
     class Meta:
         model = Product
