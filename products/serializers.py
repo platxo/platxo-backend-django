@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from drf_extra_fields.fields import Base64ImageField
 
 from .models import Product, ProductCategory, ProductType, Location, Section
 
@@ -30,6 +31,7 @@ class ProductTypeSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    picture = Base64ImageField(required=False, allow_null=True, write_only=True)
     extra = serializers.SerializerMethodField()
 
     def get_extra(self, obj):
@@ -61,13 +63,18 @@ class ProductSerializer(serializers.ModelSerializer):
             code_url = obj.code.qrcode.url
         except Exception:
             code_url = None
+        try:
+            picture_url = obj.picture.url
+        except Exception:
+            picture_url = None
         return ({'tax_name': tax_name,
                  'tax_rate': tax_rate,
                  'product_category_name': product_category_name,
                  'product_type_name': product_type_name,
                  'location_name': location_name,
                  'section_name': section_name,
-                 'code_url': code_url})
+                 'code_url': code_url,
+                 'picture_url': picture_url})
 
     class Meta:
         model = Product

@@ -315,6 +315,12 @@ indexes:
 
 - kind: products_product
   properties:
+  - name: section_id
+  - name: created
+    direction: desc
+
+- kind: products_product
+  properties:
   - name: inventory
   - name: created
     direction: desc
