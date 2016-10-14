@@ -104,7 +104,8 @@ class ForgotPasswordValidateViewSet(viewsets.ViewSet):
         # Validate the code exists
         try:
             recovery = self.model.objects.get(user_email=form_data.validated_data.get('email'),
-                                              created_at__gte=timezone.now()-timedelta(minutes=CODE_EXPIRE_MIN))
+                                              created_at__gte=timezone.now()-timedelta(minutes=CODE_EXPIRE_MIN),
+                                              status=self.model.VALID)
         except self.model.DoesNotExist:
             return Response({'error': 'Not valid.'}, status.HTTP_400_BAD_REQUEST)
 

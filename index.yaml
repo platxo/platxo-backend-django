@@ -315,12 +315,6 @@ indexes:
 
 - kind: products_product
   properties:
-  - name: section_id
-  - name: created
-    direction: desc
-
-- kind: products_product
-  properties:
   - name: inventory
   - name: created
     direction: desc
@@ -353,6 +347,12 @@ indexes:
 - kind: products_product
   properties:
   - name: quantity
+  - name: created
+    direction: desc
+
+- kind: products_product
+  properties:
+  - name: section_id
   - name: created
     direction: desc
 
@@ -476,12 +476,6 @@ indexes:
 
 - kind: products_section
   properties:
-  - name: location_id
-  - name: created
-    direction: desc
-
-- kind: products_section
-  properties:
   - name: created
     direction: desc
   - name: business_id
@@ -489,6 +483,12 @@ indexes:
   - name: location_id
   - name: name
   - name: updated
+
+- kind: products_section
+  properties:
+  - name: location_id
+  - name: created
+    direction: desc
 
 - kind: sales_sale
   properties:
@@ -610,6 +610,24 @@ indexes:
 - kind: services_servicetype
   properties:
   - name: service_category_id
+  - name: created
+    direction: desc
+
+- kind: products_location
+  properties:
+  - name: employee_id
+  - name: created
+    direction: desc
+
+- kind: products_section
+  properties:
+  - name: employee_id
+  - name: created
+    direction: desc
+
+- kind: contacts_promotion
+  properties:
+  - name: employee_id
   - name: created
     direction: desc
 

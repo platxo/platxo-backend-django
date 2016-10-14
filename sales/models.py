@@ -62,7 +62,7 @@ class Sale(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Analytics module registration.
-    analytics_fields = ('id', 'products', )
+    analytics_fields = ('id', 'name', 'total', 'products', 'services', 'status')
 
     def __str__(self):
         return "Products: {product}, by: {employee} in: {business}".format(product=len(self.products), employee=self.employee.__str__(), business=self.business.name)
@@ -92,6 +92,3 @@ class BillNumber(models.Model):
 
     def __str__(self):
         return '{name}: {number}'.format(name=self.business.name, number=self.last_number)
-
-
-

@@ -31,9 +31,15 @@ class AnalyticsTest(viewsets.ViewSet):
             return None
 
         if query_type == choices.ALL:
-            return a.objects.filter(business__in=business).values(*fields)
+            r = a.objects.filter(business__in=business).values(*a.analytics_fields)
+            if fields:
+                r = a.objects.filter(business__in=business).values(*fields)
+            return r
         elif query_type == choices.SINGLE:
-            return [a.objects.filter(business__in=business).values(*fields).get(pk=query_id)]
+            r = [a.objects.filter(business__in=business).values(*a.analytics_fields).get(pk=query_id)]
+            if fields:
+                r = [a.objects.filter(business__in=business).values(*fields).get(pk=query_id)]
+            return r
         elif query_type == choices.FILTER:
             queries = []
             for (query_field, query_filter) in zip(fields, filters):
