@@ -64,6 +64,10 @@ class Sale(models.Model):
     # Analytics module registration.
     analytics_fields = ('id', 'products', )
 
+    # When updated it is replaced by a new object.
+    # It is stored as CharField to avoid the foreign key link.
+    sale_replacement = models.CharField(max_length=32, null=True)
+
     def __str__(self):
         return "Products: {product}, by: {employee} in: {business}".format(product=len(self.products), employee=self.employee.__str__(), business=self.business.name)
 
