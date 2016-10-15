@@ -114,6 +114,12 @@ indexes:
 
 - kind: contacts_promotion
   properties:
+  - name: employee_id
+  - name: created
+    direction: desc
+
+- kind: contacts_promotion
+  properties:
   - name: product_id
   - name: created
     direction: desc
@@ -136,28 +142,23 @@ indexes:
   - name: action_time
     direction: desc
 
+- kind: products_code
+  properties:
+  - name: product_id
+  - name: created
+    direction: desc
+
 - kind: products_location
   properties:
   - name: business_id
   - name: created
     direction: desc
 
-- kind: products_product
+- kind: products_location
   properties:
-  - name: _idx_icontains_name_0
-  - name: _idx_icontains_quantity_0
+  - name: employee_id
   - name: created
     direction: desc
-  - name: name
-  - name: quantity
-
-- kind: products_product
-  properties:
-  - name: _idx_icontains_quantity_0
-  - name: created
-    direction: desc
-  - name: name
-  - name: quantity
 
 - kind: products_product
   properties:
@@ -486,6 +487,12 @@ indexes:
 
 - kind: products_section
   properties:
+  - name: employee_id
+  - name: created
+    direction: desc
+
+- kind: products_section
+  properties:
   - name: location_id
   - name: created
     direction: desc
@@ -545,12 +552,6 @@ indexes:
   properties:
   - name: employee_id
   - name: created_at
-    direction: desc
-
-- kind: sales_sale
-  properties:
-  - name: product_id
-  - name: created
     direction: desc
 
 - kind: services_service
@@ -613,24 +614,6 @@ indexes:
   - name: created
     direction: desc
 
-- kind: products_location
-  properties:
-  - name: employee_id
-  - name: created
-    direction: desc
-
-- kind: products_section
-  properties:
-  - name: employee_id
-  - name: created
-    direction: desc
-
-- kind: contacts_promotion
-  properties:
-  - name: employee_id
-  - name: created
-    direction: desc
-
 - kind: users_forgotpassword
   properties:
   - name: status
@@ -641,3 +624,9 @@ indexes:
   properties:
   - name: user_email
   - name: created_at
+  
+- kind: products_product
+  properties:
+  - name: location_id
+  - name: created
+    direction: desc
