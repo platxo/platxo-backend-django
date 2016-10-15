@@ -52,7 +52,7 @@ class Sale(models.Model):
     # Net value received
     total = models.FloatField(help_text='The final and payed value')
 
-        # In case the order has been canceled, instead of deleting the record, it is canceled.
+    # In case the order has been canceled, instead of deleting the record, it is canceled.
     OK = 'ACCEPTED'
     CANCEL = 'CANCELED'
     status_choices = ((OK, OK), (CANCEL, CANCEL))

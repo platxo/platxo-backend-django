@@ -40,8 +40,9 @@ class Point(models.Model):
         :param kwargs:
         :return:
         """
-        if created and instance.customer:
+        if created and instance.customer and not instance.sale_replacement:
             # Only customers deserve points
+            # And the sale must no replace other sale.
             try:
                 point = Point.objects.get(customer=instance.customer, business=instance.business)
             except Point.DoesNotExist:

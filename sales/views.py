@@ -117,9 +117,13 @@ class SaleViewSet(viewsets.ViewSet):
         if not order_serialized.is_valid():
             return Response({'error': order_serialized.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-        order_serialized.update()
+        try:
+            order_serialized.delete()
+        except Exception:
+            return Response({'error': 'Error updating.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({'message': 'Order updated.', 'total': 0})
+        return self.create(request)
+        # return Response({'message': 'Order updated.', 'total': 0})
 
     def delete(self, request, pk=None):
         """
