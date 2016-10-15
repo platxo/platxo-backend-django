@@ -191,7 +191,7 @@ class SaleSerializer(serializers.ModelSerializer):
                 partial_discount += partial_rate(price_services, service['discount'])
                 tax_total += partial_rate(price_services, service['details']['tax'])
 
-        total_discount = partial_discount + ((subtotal - partial_discount) * get_rate(self.validated_data.get('total_discount', 0)))
+        total_discount = partial_discount + partial_rate((subtotal - partial_discount), self.validated_data.get('total_discount', 0))
         del self.validated_data['total_discount']
         total = subtotal - total_discount
         # One customer_point equals one unit in current currency.
