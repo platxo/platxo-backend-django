@@ -1,5 +1,7 @@
 from copy import copy
 
+from djangae.db import transaction
+from django.db import IntegrityError
 from django.db.models import F
 from rest_framework import serializers
 
@@ -178,7 +180,7 @@ class SaleSerializer(serializers.ModelSerializer):
                 price_products = float(product['details']['price'] * product['qty'])
                 subtotal += price_products
                 partial_discount += partial_rate(price_products, product['discount'])
-                tax_total += price_products * get_rate(product['details']['tax'])
+                tax_total += partial_rate(price_products, product['details']['tax'])
 
         if self.validated_data.get('services'):
             for service in self.validated_data.get('services'):
@@ -187,7 +189,7 @@ class SaleSerializer(serializers.ModelSerializer):
                 price_services = float(service['details']['price'] * service['qty'])
                 subtotal += price_services
                 partial_discount += partial_rate(price_services, service['discount'])
-                tax_total += price_services * get_rate(service['details']['tax'])
+                tax_total += partial_rate(price_services, service['details']['tax'])
 
         total_discount = partial_discount + ((subtotal - partial_discount) * get_rate(self.validated_data.get('total_discount', 0)))
         del self.validated_data['total_discount']
@@ -210,7 +212,8 @@ class SaleSerializer(serializers.ModelSerializer):
 
         return sale
 
-    def update(self, instance, validated_data):
+    @transaction.atomic
+    def update(self, **kwargs):  # , instance, validated_data):
         """
         Performs an update in the original order stored. Re-calculating the stock of products.
 
@@ -220,5 +223,72 @@ class SaleSerializer(serializers.ModelSerializer):
         :param validated_data:
         :return:
         """
+        try:
+            with transaction.atomic():
+                subtotal = 0.0
+                tax_total = 0.0
+                partial_discount = 0.0
+                partial_rate = lambda price, rate: price * rate / 100.0
+                get_rate = lambda rate: (1 - rate / 100.0)
+                if self.validated_data.get('products'):
+                    for product in self.validated_data.get('products'):
+                        # Update product stock
+                        prod = Product.objects.filter(pk=product['id'])
+                        orig_prod = None
+                        if self.instance.get('products'):
+                            for orig_list in self.instance.get('products'):
+                                if orig_list['id'] == product['id']:
+                                    orig_prod = orig_list['id']
+                                    # Calculate hypothetical re-stock and re delivery of the items
+                                    op_total = prod.quantity + orig_prod['qty'] - product['qty']
+                                    if op_total >= 0:
+                                        prod.update(quantity=F('quantity') + (orig_prod['qty'] - product['qty']))
+
+                                break
+
+                        # Partial subtotal
+                        price_products = float(product['details']['price'] * product['qty'])
+                        subtotal += price_products
+                        partial_discount += partial_rate(price_products, product['discount'])
+                        tax_total += price_products * get_rate(product['details']['tax'])
+
+
+        except IntegrityError as e:
+            return False
         # Products assignment
         pass
+
+    def delete(self, commit=False, **kwargs):
+        """
+        Set the status to cancelled and returns the taken items to inventory.
+
+        Currently the users gained points aren't discarded to the user.
+
+        :param commit:
+        :param kwargs:
+        :return:
+        """
+        # Do not do anything if the sale instance is already CANCELED
+        if self.instance.status == Sale.CANCEL:
+            raise Exception('Status is CANCEL.')
+        commit_list = list()
+        # Retrieve product items to stock.
+        # Services are not necessary since they are not tangible.
+        if self.instance.products:
+            for product in self.instance.products:
+                try:
+                    prod = Product.objects.get(pk=product['id'])
+                except Product.DoesNotExist:
+                    raise Exception('Missing Product {products}.'.format(products=product['id']))
+                prod.quantity += product['qty']
+                commit_list.append(prod)
+
+        self.instance.status = Sale.CANCEL
+        commit_list.append(self.instance)
+
+        # Commit all changes if nothing went wrong.
+        if commit:
+            return commit_list
+        else:
+            for commit in commit_list:
+                commit.save()

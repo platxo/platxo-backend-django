@@ -94,13 +94,15 @@ class SaleViewSet(viewsets.ViewSet):
     def update(self, request, pk=None):
         """
         Updated purchase order.
-        Not implemented yet
+
+        It cancels the original order and creates a new one.
+
         :param request:
         :param pk:
         :return:
         """
-        if True:
-            return Response({'message', 'Not implemented'}, status=status.HTTP_501_NOT_IMPLEMENTED)
+        # if True:
+        #     return Response({'message', 'Not implemented'}, status=status.HTTP_501_NOT_IMPLEMENTED)
         try:
             original_order = Sale.objects.get(pk=pk)
         except Sale.DoesNotExist:
@@ -115,4 +117,28 @@ class SaleViewSet(viewsets.ViewSet):
         if not order_serialized.is_valid():
             return Response({'error': order_serialized.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+        order_serialized.update()
+
         return Response({'message': 'Order updated.', 'total': 0})
+
+    def delete(self, request, pk=None):
+        """
+        Cancels the requested sale object.
+
+        :param request:
+        :param pk:
+        :return:
+        """
+        try:
+            original_order = Sale.objects.get(pk=pk)
+        except Sale.DoesNotExist:
+            return Response({'error': 'Order does not exists.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        order_serialized = SaleSerializer(original_order)
+
+        try:
+            order_serialized.delete()
+        except Exception as e:
+            return Response({'error': e.message}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'message': "Sale cancelled"})
