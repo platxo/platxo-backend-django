@@ -79,6 +79,21 @@ class ProductType(models.Model):
     def __str__(self):
         return self.name
 
+class Brand(models.Model):
+    business = models.ForeignKey(Business, related_name='brands')
+    employee = models.ForeignKey(Employee, related_name='brands')
+    name = models.CharField(max_length=255)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'brand'
+        verbose_name_plural = 'brands'
+
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     business = models.ForeignKey(Business, related_name='products')
@@ -87,6 +102,7 @@ class Product(models.Model):
     supplier = models.ForeignKey(Supplier, related_name='products', blank=True, null=True)
     product_category = models.ForeignKey(ProductCategory, related_name='products')
     product_type = models.ForeignKey(ProductType, related_name='products')
+    brand = models.ForeignKey(Brand, related_name='products', blank=True, null=True)
     location = models.ForeignKey(Location, related_name='products', blank=True, null=True)
     section = models.ForeignKey(Section, related_name='products', blank=True, null=True)
     name = models.CharField(max_length=255)
@@ -94,6 +110,7 @@ class Product(models.Model):
     supply_price = models.DecimalField(max_digits=10, decimal_places=2)
     retail_price = models.DecimalField(max_digits=10, decimal_places=2)
     inventory = models.BooleanField(default=True)
+    stock = models.BooleanField(default=True)
     quantity = models.IntegerField()
     image = models.ImageField(upload_to='product/image', storage=public_storage, blank=True, null=True)
     picture = models.ImageField(upload_to='product/picture', storage=public_storage, blank=True, null=True)
@@ -101,7 +118,7 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     # Analytics module registration.
-    analytics_fields = ('id', 'name', 'inventory', 'quantity', 'retail_price', 'product_category')
+    analytics_fields = ('id', 'name', 'inventory', 'quantity', 'retail_price', 'stock', 'brand')
 
     class Meta:
         ordering = ('-created',)

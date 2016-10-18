@@ -9,7 +9,8 @@ from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 
-from products.views import ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet, LocationViewSet, SectionViewSet
+from products.views import (ProductCategoryViewSet, ProductTypeViewSet, ProductViewSet,
+                            LocationViewSet, SectionViewSet, BrandViewSet)
 from services.views import ServiceCategoryViewSet, ServiceTypeViewSet, ServiceViewSet
 from sales.views import  SaleViewSet
 from customers.views import PointViewSet
@@ -27,6 +28,7 @@ router.register(r'product-types', ProductTypeViewSet)
 router.register(r'products', ProductViewSet)
 router.register(r'locations', LocationViewSet)
 router.register(r'sections', SectionViewSet)
+router.register(r'brands', BrandViewSet)
 router.register(r'service-categories', ServiceCategoryViewSet)
 router.register(r'service-types', ServiceTypeViewSet)
 router.register(r'services', ServiceViewSet)

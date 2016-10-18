@@ -2,13 +2,28 @@ from django.shortcuts import render
 from rest_framework import viewsets
 
 from business.models import Business
-from .models import ProductCategory, ProductType, Product, Location, Section
+from .models import ProductCategory, ProductType, Product, Location, Section, Brand
 from .serializers import (ProductCategorySerializer,
                           ProductTypeSerializer,
                           ProductSerializer,
                           LocationSerializer,
-                          SectionSerializer)
+                          SectionSerializer,
+                          BrandSerializer)
 
+
+class BrandViewSet(viewsets.ModelViewSet):
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_owner and user.owner.business:
+            business_query = user.owner.business.all()
+        elif user.is_employee:
+            business_query = Business.objects.filter(employees__contains=user.employee)
+        else:
+            business_query = list()
+        return self.queryset.filter(business__in=business_query)
 
 class SectionViewSet(viewsets.ModelViewSet):
     queryset = Section.objects.all()

@@ -1,7 +1,13 @@
 from rest_framework import serializers
 from drf_extra_fields.fields import Base64ImageField
 
-from .models import Product, ProductCategory, ProductType, Location, Section
+from .models import Product, ProductCategory, ProductType, Location, Section, Brand
+
+class BrandSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Brand
+        fields = ('id', 'business', 'employee', 'name', 'created', 'updated', 'url')
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -60,6 +66,10 @@ class ProductSerializer(serializers.ModelSerializer):
         except Exception:
             section_name = None
         try:
+            brand_name = obj.brand.name
+        except Exception:
+            brand_name = None
+        try:
             code_url = obj.code.qrcode.url
         except Exception:
             code_url = None
@@ -73,6 +83,7 @@ class ProductSerializer(serializers.ModelSerializer):
                  'product_type_name': product_type_name,
                  'location_name': location_name,
                  'section_name': section_name,
+                 'brand_name': brand_name,
                  'code_url': code_url,
                  'picture_url': picture_url})
 
@@ -86,12 +97,14 @@ class ProductSerializer(serializers.ModelSerializer):
                   'product_type',
                   'location',
                   'section',
+                  'brand',
                   'name',
                   'description',
                   'supply_price',
                   'retail_price',
                   'tax',
                   'inventory',
+                  'stock',
                   'quantity',
                   'image',
                   'picture',
