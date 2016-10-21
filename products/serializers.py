@@ -17,10 +17,18 @@ class LocationSerializer(serializers.ModelSerializer):
         fields = ('id', 'business', 'employee', 'name', 'created', 'updated', 'url')
 
 class SectionSerializer(serializers.ModelSerializer):
+    extra = serializers.SerializerMethodField()
+
+    def get_extra(self, obj):
+        try:
+            location_name = obj.location.name
+        except Exception:
+            location_name = None
+        return ({'location_name': location_name})
 
     class Meta:
         model = Section
-        fields = ('id', 'business', 'employee', 'location', 'name', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'location', 'name', 'extra', 'created', 'updated', 'url')
 
 class ProductCategorySerializer(serializers.ModelSerializer):
 
@@ -30,10 +38,18 @@ class ProductCategorySerializer(serializers.ModelSerializer):
 
 
 class ProductTypeSerializer(serializers.ModelSerializer):
+    extra = serializers.SerializerMethodField()
+
+    def get_extra(self, obj):
+        try:
+            product_category_name = obj.product_category.name
+        except Exception:
+            product_category_name = None
+        return ({'product_category_name': product_category_name})
 
     class Meta:
         model = ProductType
-        fields = ('id', 'business', 'employee', 'product_category', 'name', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'product_category', 'name', 'extra', 'created', 'updated', 'url')
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -54,7 +70,7 @@ class ProductSerializer(serializers.ModelSerializer):
         except Exception:
             product_category_name = None
         try:
-            product_type_name = obj.product_category.name
+            product_type_name = obj.product_type.name
         except Exception:
             product_type_name = None
         try:

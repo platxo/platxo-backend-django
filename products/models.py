@@ -27,6 +27,7 @@ class Location(models.Model):
         ordering = ('-created',)
         verbose_name = 'location'
         verbose_name_plural = 'locations'
+        unique_together = ('name', 'business')
 
     def __str__(self):
         return self.name
@@ -43,6 +44,7 @@ class Section(models.Model):
         ordering = ('-created',)
         verbose_name = 'section'
         verbose_name_plural = 'sections'
+        unique_together = ('name', 'business')
 
     def __str__(self):
         return self.name
@@ -58,6 +60,7 @@ class ProductCategory(models.Model):
         ordering = ('-created',)
         verbose_name = 'product_category'
         verbose_name_plural = 'product_categories'
+        unique_together = ('name', 'business')
 
     def __str__(self):
         return self.name
@@ -75,6 +78,7 @@ class ProductType(models.Model):
         ordering = ('-created',)
         verbose_name = 'product_type'
         verbose_name_plural = 'product_types'
+        unique_together = ('name', 'business')
 
     def __str__(self):
         return self.name
@@ -90,6 +94,7 @@ class Brand(models.Model):
         ordering = ('-created',)
         verbose_name = 'brand'
         verbose_name_plural = 'brands'
+        unique_together = ('name', 'business')
 
     def __str__(self):
         return self.name
@@ -107,11 +112,11 @@ class Product(models.Model):
     section = models.ForeignKey(Section, related_name='products', blank=True, null=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    supply_price = models.DecimalField(max_digits=10, decimal_places=2)
+    supply_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     retail_price = models.DecimalField(max_digits=10, decimal_places=2)
-    inventory = models.BooleanField(default=True)
+    inventory = models.BooleanField(default=False)
     stock = models.BooleanField(default=True)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(blank=True, null=True)
     image = models.ImageField(upload_to='product/image', storage=public_storage, blank=True, null=True)
     picture = models.ImageField(upload_to='product/picture', storage=public_storage, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -124,6 +129,7 @@ class Product(models.Model):
         ordering = ('-created',)
         verbose_name = 'product'
         verbose_name_plural = 'products'
+        unique_together = ('name', 'business')
 
     def __str__(self):
         return self.name
