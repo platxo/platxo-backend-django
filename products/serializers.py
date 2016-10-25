@@ -17,18 +17,10 @@ class LocationSerializer(serializers.ModelSerializer):
         fields = ('id', 'business', 'employee', 'name', 'created', 'updated', 'url')
 
 class SectionSerializer(serializers.ModelSerializer):
-    extra = serializers.SerializerMethodField()
-
-    def get_extra(self, obj):
-        try:
-            location_name = obj.location.name
-        except Exception:
-            location_name = None
-        return ({'location_name': location_name})
 
     class Meta:
         model = Section
-        fields = ('id', 'business', 'employee', 'location', 'name', 'extra', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'location', 'location_name', 'name', 'created', 'updated', 'url')
 
 class ProductCategorySerializer(serializers.ModelSerializer):
 
@@ -38,70 +30,29 @@ class ProductCategorySerializer(serializers.ModelSerializer):
 
 
 class ProductTypeSerializer(serializers.ModelSerializer):
-    extra = serializers.SerializerMethodField()
-
-    def get_extra(self, obj):
-        try:
-            product_category_name = obj.product_category.name
-        except Exception:
-            product_category_name = None
-        return ({'product_category_name': product_category_name})
 
     class Meta:
         model = ProductType
-        fields = ('id', 'business', 'employee', 'product_category', 'name', 'extra', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'product_category', 'product_category_name', 'name', 'created', 'updated', 'url')
 
 
 class ProductSerializer(serializers.ModelSerializer):
     picture = Base64ImageField(required=False, allow_null=True, write_only=True)
-    extra = serializers.SerializerMethodField()
+    product_category_name = serializers.CharField(read_only=True)
+    product_type_name = serializers.CharField(read_only=True)
+    location_name = serializers.CharField(read_only=True)
+    section_name = serializers.CharField(read_only=True)
+    brand_name = serializers.CharField(read_only=True)
+    tax_name = serializers.CharField(read_only=True)
+    tax_rate = serializers.IntegerField(read_only=True)
+    picture_url = serializers.SerializerMethodField()
 
-    def get_extra(self, obj):
-        try:
-            tax_name = obj.tax.name
-        except Exception:
-            tax_name = None
-        try:
-            tax_rate = obj.tax.rate
-        except Exception:
-            tax_rate = None
-        try:
-            product_category_name = obj.product_category.name
-        except Exception:
-            product_category_name = None
-        try:
-            product_type_name = obj.product_type.name
-        except Exception:
-            product_type_name = None
-        try:
-            location_name = obj.location.name
-        except Exception:
-            location_name = None
-        try:
-            section_name = obj.section.name
-        except Exception:
-            section_name = None
-        try:
-            brand_name = obj.brand.name
-        except Exception:
-            brand_name = None
-        try:
-            code_url = obj.code.qrcode.url
-        except Exception:
-            code_url = None
+    def get_picture_url(self, obj):
         try:
             picture_url = obj.picture.url
         except Exception:
             picture_url = None
-        return ({'tax_name': tax_name,
-                 'tax_rate': tax_rate,
-                 'product_category_name': product_category_name,
-                 'product_type_name': product_type_name,
-                 'location_name': location_name,
-                 'section_name': section_name,
-                 'brand_name': brand_name,
-                 'code_url': code_url,
-                 'picture_url': picture_url})
+        return picture_url
 
     class Meta:
         model = Product
@@ -114,17 +65,24 @@ class ProductSerializer(serializers.ModelSerializer):
                   'location',
                   'section',
                   'brand',
+                  'tax',
+                  'product_category_name',
+                  'product_type_name',
+                  'location_name',
+                  'section_name',
+                  'brand_name',
+                  'tax_name',
+                  'tax_rate',
                   'name',
                   'description',
                   'supply_price',
                   'retail_price',
-                  'tax',
                   'inventory',
                   'stock',
                   'quantity',
                   'image',
                   'picture',
-                  'extra',
+                  'picture_url',
                   'created',
                   'updated',
                   'url')

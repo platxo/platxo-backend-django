@@ -40,6 +40,9 @@ class Section(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    # Extra fields
+    location_name = models.CharField(max_length=255, blank=True, null=True)
+
     class Meta:
         ordering = ('-created',)
         verbose_name = 'section'
@@ -48,6 +51,10 @@ class Section(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.location_name = self.location.name
+        super(Section, self).save(*args, **kwargs)
 
 class ProductCategory(models.Model):
     business = models.ForeignKey(Business, related_name='product_categories')
@@ -74,6 +81,9 @@ class ProductType(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    # Extra fields
+    product_category_name = models.CharField(max_length=255, blank=True, null=True)
+
     class Meta:
         ordering = ('-created',)
         verbose_name = 'product_type'
@@ -82,6 +92,10 @@ class ProductType(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.product_category_name = self.product_category.name
+        super(ProductType, self).save(*args, **kwargs)
 
 class Brand(models.Model):
     business = models.ForeignKey(Business, related_name='brands')
@@ -122,6 +136,15 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    # Extra fields
+    product_category_name = models.CharField(max_length=255, blank=True, null=True)
+    product_type_name = models.CharField(max_length=255, blank=True, null=True)
+    location_name = models.CharField(max_length=255, blank=True, null=True)
+    section_name = models.CharField(max_length=255, blank=True, null=True)
+    brand_name = models.CharField(max_length=255, blank=True, null=True)
+    tax_name = models.CharField(max_length=255, blank=True, null=True)
+    tax_rate = models.IntegerField(blank=True, null=True)
+
     # Analytics module registration.
     analytics_fields = ('id', 'name', 'inventory', 'quantity', 'retail_price', 'stock', 'brand')
 
@@ -133,6 +156,32 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.product_category_name = self.product_category.name
+        self.product_type_name = self.product_type.name
+        try:
+            self.location_name = self.location.name
+        except Exception:
+            self.location_name = None
+        try:
+            self.section_name = self.section.name
+        except Exception:
+            self.section_name = None
+        try:
+            self.brand_name = self.brand.name
+        except Exception:
+            self.brand_name = None
+        try:
+            self.tax_name = self.tax.name
+        except Exception:
+            self.tax_name = None
+        try:
+            self.tax_rate = self.tax.rate
+        except Exception:
+            self.tax_rate = None
+        super(Product, self).save(*args, **kwargs)
+
 
 class Code(models.Model):
     product = models.OneToOneField(Product)
@@ -151,20 +200,20 @@ class Code(models.Model):
     @receiver(post_save, sender=Product)
     def create_code(sender, instance, created, **kwargs):
         if created:
-              data = instance.id
-              qr = qrcode.QRCode(
+            data = instance.id
+            qr = qrcode.QRCode(
                   version=1,
                   error_correction=qrcode.constants.ERROR_CORRECT_L,
                   box_size=10,
                   border=4,)
-              qr.add_data(data)
-              qr.make(fit=True)
-              img = qr.make_image()
-              buffer = StringIO.StringIO()
-              img.save(buffer, 'png')
-              buffer.seek(0)
-              filename = '%s.png' % (data)
-              filebuffer = InMemoryUploadedFile(
+            qr.add_data(data)
+            qr.make(fit=True)
+            img = qr.make_image()
+            buffer = StringIO.StringIO()
+            img.save(buffer, 'png')
+            buffer.seek(0)
+            filename = '%s.png' % (data)
+            filebuffer = InMemoryUploadedFile(
                   buffer, None, filename, 'image/png', buffer.len, None)
-              code, new = Code.objects.get_or_create(product=instance,
-                                                     qrcode=filebuffer)
+            code, new = Code.objects.get_or_create(product=instance,
+                                                   qrcode=filebuffer)
