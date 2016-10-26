@@ -3,37 +3,37 @@ from drf_extra_fields.fields import Base64ImageField
 
 from .models import Product, ProductCategory, ProductType, Location, Section, Brand
 
-class BrandSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Brand
-        fields = ('id', 'business', 'employee', 'name', 'created', 'updated', 'url')
-
-
 class LocationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Location
-        fields = ('id', 'business', 'employee', 'name', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'name', 'description', 'created', 'updated', 'url')
 
 class SectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Section
-        fields = ('id', 'business', 'employee', 'location', 'location_name', 'name', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'location', 'location_name', 'name', 'description', 'created', 'updated', 'url')
 
 class ProductCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductCategory
-        fields = ('id', 'business', 'employee', 'name', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'name', 'description', 'created', 'updated', 'url')
 
 
 class ProductTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductType
-        fields = ('id', 'business', 'employee', 'product_category', 'product_category_name', 'name', 'created', 'updated', 'url')
+        fields = ('id', 'business', 'employee', 'product_category', 'product_category_name', 'name', 'description', 'created', 'updated', 'url')
+
+
+class BrandSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Brand
+        fields = ('id', 'business', 'employee', 'name', 'description', 'created', 'updated', 'url')
 
 
 class ProductSerializer(serializers.ModelSerializer):

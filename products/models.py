@@ -20,6 +20,7 @@ class Location(models.Model):
     business = models.ForeignKey(Business, related_name='locations')
     employee = models.ForeignKey(Employee, related_name='locations')
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -37,6 +38,7 @@ class Section(models.Model):
     employee = models.ForeignKey(Employee, related_name='sections')
     location = models.ForeignKey(Location, related_name='sections')
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -60,6 +62,7 @@ class ProductCategory(models.Model):
     business = models.ForeignKey(Business, related_name='product_categories')
     employee = models.ForeignKey(Employee, related_name='product_categories')
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -78,6 +81,7 @@ class ProductType(models.Model):
     employee = models.ForeignKey(Employee, related_name='product_types')
     product_category = models.ForeignKey(ProductCategory, related_name='product_types')
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -101,6 +105,7 @@ class Brand(models.Model):
     business = models.ForeignKey(Business, related_name='brands')
     employee = models.ForeignKey(Employee, related_name='brands')
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
