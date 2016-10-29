@@ -642,3 +642,15 @@ indexes:
   - name: brand_id
   - name: created
     direction: desc
+
+- kind: contacts_contact
+  properties:
+  - name: customer_id
+  - name: created
+    direction: desc
+
+- kind: products_brand
+  properties:
+  - name: employee_id
+  - name: created
+    direction: desc

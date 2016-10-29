@@ -62,7 +62,14 @@ class Sale(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Analytics module registration.
-    analytics_fields = ('id', 'name', 'total', 'products', 'services', 'status')
+    analytics_fields = ('id',
+                        'name',
+                        'total',
+                        'products',
+                        'services',
+                        'employee_username',
+                        'customer_username',
+                        'status')
 
     # When updated it is replaced by a new object.
     # It is stored as CharField to avoid the foreign key link.

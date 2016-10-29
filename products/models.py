@@ -151,7 +151,16 @@ class Product(models.Model):
     tax_rate = models.IntegerField(blank=True, null=True)
 
     # Analytics module registration.
-    analytics_fields = ('id', 'name', 'inventory', 'quantity', 'retail_price', 'stock', 'brand')
+    analytics_fields = ('id',
+                        'name',
+                        'brand',
+                        'inventory',
+                        'location',
+                        'section',
+                        'stock',
+                        'quantity',
+                        'supply_price',
+                        'retail_price')
 
     class Meta:
         ordering = ('-created',)
