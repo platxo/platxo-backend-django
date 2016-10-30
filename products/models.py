@@ -16,47 +16,6 @@ import qrcode
 
 public_storage = storage.CloudStorage(google_acl='public-read')
 
-class Location(models.Model):
-    business = models.ForeignKey(Business, related_name='locations')
-    employee = models.ForeignKey(Employee, related_name='locations')
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ('-created',)
-        verbose_name = 'location'
-        verbose_name_plural = 'locations'
-        unique_together = ('name', 'business')
-
-    def __str__(self):
-        return self.name
-
-class Section(models.Model):
-    business = models.ForeignKey(Business, related_name='sections')
-    employee = models.ForeignKey(Employee, related_name='sections')
-    location = models.ForeignKey(Location, related_name='sections')
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    # Extra fields
-    location_name = models.CharField(max_length=255, blank=True, null=True)
-
-    class Meta:
-        ordering = ('-created',)
-        verbose_name = 'section'
-        verbose_name_plural = 'sections'
-        unique_together = ('name', 'business')
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        self.location_name = self.location.name
-        super(Section, self).save(*args, **kwargs)
 
 class ProductCategory(models.Model):
     business = models.ForeignKey(Business, related_name='product_categories')
@@ -117,6 +76,48 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
+
+class Location(models.Model):
+    business = models.ForeignKey(Business, related_name='locations')
+    employee = models.ForeignKey(Employee, related_name='locations')
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'location'
+        verbose_name_plural = 'locations'
+        unique_together = ('name', 'business')
+
+    def __str__(self):
+        return self.name
+
+class Section(models.Model):
+    business = models.ForeignKey(Business, related_name='sections')
+    employee = models.ForeignKey(Employee, related_name='sections')
+    location = models.ForeignKey(Location, related_name='sections')
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    # Extra fields
+    location_name = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'section'
+        verbose_name_plural = 'sections'
+        unique_together = ('name', 'business')
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.location_name = self.location.name
+        super(Section, self).save(*args, **kwargs)
 
 
 class Product(models.Model):
