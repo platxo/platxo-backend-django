@@ -11,14 +11,14 @@ class BusinessSerializer(serializers.ModelSerializer):
     customers = serializers.PrimaryKeyRelatedField(many=True, queryset=Customer.objects.all())
     suppliers = serializers.PrimaryKeyRelatedField(many=True, queryset=Supplier.objects.all())
     picture = Base64ImageField(required=False, allow_null=True, write_only=True)
-    extra = serializers.SerializerMethodField()
+    picture_url = serializers.SerializerMethodField()
 
-    def get_extra(self, obj):
+    def get_picture_url(self, obj):
         try:
             picture_url = obj.picture.url
         except Exception:
             picture_url = None
-        return ({'picture_url': picture_url})
+        return picture_url
 
     class Meta:
         model = Business
@@ -28,7 +28,7 @@ class BusinessSerializer(serializers.ModelSerializer):
             'currency', 'crm_points', 'country',
             'city', 'email', 'website', 'picture',
             'telephone', 'employees', 'customers',
-            'suppliers', 'extra', 'created', 'updated', 'url')
+            'suppliers', 'picture_url', 'created', 'updated', 'url')
 
 class TaxSerializer(serializers.ModelSerializer):
 

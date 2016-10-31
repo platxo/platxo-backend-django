@@ -654,3 +654,9 @@ indexes:
   - name: employee_id
   - name: created
     direction: desc
+
+- kind: contacts_promotion
+  properties:
+  - name: service_id
+  - name: created
+    direction: desc
