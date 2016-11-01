@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from drf_extra_fields.fields import Base64ImageField
 
-from .models import Business, Tax, Data, Information, Knowledge
+from .models import Business, Journal, Holiday, Tax, Data, Information, Knowledge
 from accounts.models import Employee, Customer, Supplier
 from . import choices
 
@@ -28,13 +28,54 @@ class BusinessSerializer(serializers.ModelSerializer):
             'currency', 'crm_points', 'country',
             'city', 'email', 'website', 'picture',
             'telephone', 'employees', 'customers',
+
             'suppliers', 'picture_url', 'created', 'updated', 'url')
+
+class JournalSerializer(serializers.ModelSerializer):
+    day = serializers.ChoiceField(choices=choices.DAY_CHOICES)
+
+    class Meta:
+        model = Journal
+        fields = ('id',
+                  'business',
+                  'owner',
+                  'day',
+                  'attention',
+                  'start',
+                  'end',
+                  'created',
+                  'updated',
+                  'url')
+
+
+class HolidaySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Holiday
+        fields = ('id',
+                  'business',
+                  'owner',
+                  'date',
+                  'attention',
+                  'start',
+                  'end',
+                  'created',
+                  'updated',
+                  'url')
+
 
 class TaxSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tax
-        fields = ('id', 'business', 'owner', 'name', 'rate', 'created', 'updated', 'url')
+        fields = ('id',
+                  'business',
+                  'owner',
+                  'name',
+                  'rate',
+                  'created',
+                  'updated',
+                  'url')
 
 
 class DataSerializer(serializers.ModelSerializer):

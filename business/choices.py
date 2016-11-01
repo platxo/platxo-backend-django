@@ -525,7 +525,24 @@ DATA_TYPE_CHOICES = (
 (SINGLE, 'Single'),
 )
 
+""" DAY_CHOICES """
+MON = 'mon'
+TUE = 'tue'
+WED = 'wed'
+THU = 'thu'
+FRI = 'fri'
+SAT = 'sat'
+SUN = 'sun'
 
+DAY_CHOICES = (
+(MON, 'Monday'),
+(TUE, 'Tuesday'),
+(WED, 'Wednesday'),
+(THU, 'Thursday'),
+(FRI, 'Friday'),
+(SAT, 'Saturday'),
+(SUN, 'Sunday'),
+)
 
 # CATEGORY_CHOICES = (
 # (1000, 'Arts, crafts, and collectibles'),

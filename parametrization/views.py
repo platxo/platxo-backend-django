@@ -13,6 +13,7 @@ PARAMETRIZATIONS_SOURCES = {
     'category_choices' : busines_choices.CATEGORY_CHOICES,
     'type_choices' : busines_choices.TYPE_CHOICES,
     'data_type_choices' : busines_choices.DATA_TYPE_CHOICES,
+    'day_choices' : busines_choices.DAY_CHOICES,
 }
 
 class ParametrizationViewSet(viewsets.ViewSet):

@@ -36,6 +36,42 @@ class Business(models.Model):
     def __str__(self):
         return self.name
 
+class Journal(models.Model):
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='journals')
+    owner = models.ForeignKey(Owner, related_name='journals')
+    day = models.CharField(max_length=255, choices=choices.DAY_CHOICES)
+    attention = models.BooleanField(default=True)
+    start = models.TimeField()
+    end = models.TimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'journal'
+        verbose_name_plural = 'journals'
+
+    def __str__(self):
+        return self.day
+
+class Holiday(models.Model):
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='holidays')
+    owner = models.ForeignKey(Owner, related_name='holidays')
+    date = models.DateField()
+    attention = models.BooleanField(default=False)
+    start = models.TimeField(blank=True, null=True)
+    end = models.TimeField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'holyday'
+        verbose_name_plural = 'holydays'
+
+    def __str__(self):
+        return self.date
+
 class Tax(models.Model):
     business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='taxes')
     owner = models.ForeignKey(Owner, related_name='taxes')
