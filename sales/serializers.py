@@ -47,6 +47,13 @@ class SaleSerializer(serializers.ModelSerializer):
         """
         Validate each product / service condition is applicable
         """
+        # Discount must be between 0% and 100%
+        if not data.get("total_discount"):
+            data['total_discount'] = 0
+        if not (0 <= data.get("total_discount") <= 100):
+            raise serializers.ValidationError({'total_discount': {'field': 'total_discount',
+                                               'message': 'Discount not in range.'}})
+
         if data.get('products'):
             try:
                 # Extract the id of the products to search them in database. And validate initial structure.

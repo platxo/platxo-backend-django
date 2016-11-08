@@ -44,7 +44,7 @@ class Sale(models.Model):
     # The value before applying any deduction or increment due to taxex, points
     subtotal = models.FloatField(help_text='Brute total')
     # Percentage of discount applied to subtotal
-    total_discount = models.IntegerField(help_text='A discount to apply to the whole purchase', blank=True, default=0)
+    total_discount = models.FloatField(help_text='A discount to apply to the whole purchase', blank=True, default=0)
     # The total value in taxes charged.
     total_taxes = models.FloatField(blank=True, default=0)
     # Amount of customer points used in the transaction.
